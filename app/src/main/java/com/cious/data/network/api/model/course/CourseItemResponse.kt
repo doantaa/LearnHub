@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 
 @Keep
-data class Course(
+data class CourseItemResponse(
     @SerializedName("about")
     val about: String?,
     @SerializedName("categoryId")
@@ -14,6 +14,8 @@ data class Course(
     val courseType: String?,
     @SerializedName("createdAt")
     val createdAt: String?,
+    @SerializedName("duration")
+    val duration: String?,
     @SerializedName("id")
     val id: Int?,
     @SerializedName("imageUrl")
@@ -24,6 +26,8 @@ data class Course(
     val level: String?,
     @SerializedName("moduleCount")
     val moduleCount: Int?,
+    @SerializedName("Modules")
+    val modules: List<Module?>,
     @SerializedName("objective")
     val objective: String?,
     @SerializedName("onboaring")
