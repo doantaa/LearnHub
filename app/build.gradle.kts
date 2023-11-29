@@ -45,11 +45,11 @@ android {
     flavorDimensions += "version"
     productFlavors {
         create("production") {
-            buildConfigField("String", "BASE_URL", "\"https://api-learnhub.up.railway.app/api/v1/course/\"")
+            buildConfigField("String", "BASE_URL", "\"https://api-learnhub.up.railway.app/api/v1/\"")
         }
 
         create("integration") {
-            buildConfigField("String", "BASE_URL", "\"https://api-learnhub.up.railway.app/api/v1/course/\"")
+            buildConfigField("String", "BASE_URL", "\"https://api-learnhub.up.railway.app/api/v1/\"")
         }
     }
 
