@@ -68,26 +68,18 @@
                 app:layout_constraintTop_toBottomOf="@id/constraintCircle"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputNameLay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
+                android:padding="10dp"
                 app:layout_constraintTop_toBottomOf="@id/tvName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:boxCornerRadiusBottomEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusTopStart="16dp"
                 android:layout_marginTop="4dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Jhon Doe">
+                android:background="@drawable/outline_input"
+                android:hint="Jhon Doe"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvEmail"
@@ -100,26 +92,17 @@
                 app:layout_constraintTop_toBottomOf="@id/inputNameLay"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputEmailLay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 app:layout_constraintTop_toBottomOf="@id/tvEmail"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:boxCornerRadiusBottomEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusTopStart="16dp"
+                android:padding="10dp"
                 android:layout_marginTop="4dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Johndoe@gmail.com">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                android:background="@drawable/outline_input"
+                android:hint="Johndoe@gmail.com"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvNoPhone"
@@ -132,26 +115,17 @@
                 app:layout_constraintTop_toBottomOf="@id/inputEmailLay"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputNoPhoneLay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 app:layout_constraintTop_toBottomOf="@id/tvNoPhone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:boxCornerRadiusBottomEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusTopStart="16dp"
+                android:padding="10dp"
                 android:layout_marginTop="4dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="+62 8123456789">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputNoPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                android:background="@drawable/outline_input"
+                android:hint="+62 8123456789"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvCountry"
@@ -164,26 +138,17 @@
                 app:layout_constraintTop_toBottomOf="@id/inputNoPhoneLay"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputCountryLay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 app:layout_constraintTop_toBottomOf="@id/tvCountry"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:boxCornerRadiusBottomEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusTopStart="16dp"
+                android:padding="10dp"
                 android:layout_marginTop="4dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Masukkan Negara tempat tinggal">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputCountry"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                android:background="@drawable/outline_input"
+                android:hint="Masukkan Negara tempat tinggal"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvCity"
@@ -196,26 +161,17 @@
                 app:layout_constraintTop_toBottomOf="@id/inputCountryLay"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputCityLay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 app:layout_constraintTop_toBottomOf="@id/tvCity"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:boxCornerRadiusBottomEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusTopStart="16dp"
+                android:padding="10dp"
                 android:layout_marginTop="4dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Masukkan kota tempat tinggal">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputCity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                android:background="@drawable/outline_input"
+                android:hint="Masukkan kota tempat tinggal"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSave"
