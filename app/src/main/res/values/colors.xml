@@ -9,6 +9,7 @@
     <color name="dark_blue_100">#6148FF</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
 
     <color name="dark_blue">#6148FF</color>
     <color name="black_alpha">#3D3D3D</color>
