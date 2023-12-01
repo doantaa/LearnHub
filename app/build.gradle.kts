@@ -124,21 +124,6 @@ dependencies {
     testImplementation("io.mockk:mockk-agent:1.13.8")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
     testImplementation("app.cash.turbine:turbine:1.0.0")
-    //GLide
-    implementation("com.github.bumptech.glide:glide:4.12.0")
-    implementation("com.squareup.picasso:picasso:2.8")
+
     testImplementation("androidx.arch.core:core-testing:2.2.0")
-
-    // view pager
-    implementation ("androidx.viewpager2:viewpager2:1.0.0")
-    implementation ("com.google.android.material:material:1.4.0")
-
-    // groupie
-    implementation ("com.github.lisawray.groupie:groupie:2.10.1")
-    implementation ("com.github.lisawray.groupie:groupie-viewbinding:2.10.1")
-    //circle img
-    implementation("de.hdodenhof:circleimageview:3.1.0")
-
-    // shimmer effect
-    implementation("com.facebook.shimmer:shimmer:0.5.0")
 }
