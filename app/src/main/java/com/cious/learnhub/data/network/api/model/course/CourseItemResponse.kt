@@ -1,8 +1,9 @@
-package com.cious.data.network.api.model.course
+package com.cious.learnhub.data.network.api.model.course
 
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import com.cious.learnhub.model.Course
 
 @Keep
 data class CourseItemResponse(
@@ -45,3 +46,24 @@ data class CourseItemResponse(
     @SerializedName("updatedAt")
     val updatedAt: String?
 )
+
+fun CourseItemResponse.toCourse() = Course(
+    id = this.id ?: 0,
+    title = this.title.orEmpty(),
+    categoryId = this.categoryId.orEmpty(),
+    courseType = this.courseType.orEmpty(),
+    price = this.price ?: 0,
+    rating = this.rating ?: 0.0,
+    instructor = this.instructor.orEmpty(),
+    level = this.level.orEmpty(),
+    moduleCount = this.moduleCount ?: 0,
+    totalDuration = this.totalDuration.orEmpty(),
+    imageUrl = this.imageUrl.orEmpty(),
+    onboaring = this.onboaring.orEmpty(),
+    objective = this.objective.orEmpty(),
+    about = this.about.orEmpty(),
+    telegramLink = this.telegramLink.orEmpty(),
+    createdAt = this.createdAt.orEmpty()
+)
+
+fun Collection<CourseItemResponse>.toCourseList() = this.map { it.toCourse() }

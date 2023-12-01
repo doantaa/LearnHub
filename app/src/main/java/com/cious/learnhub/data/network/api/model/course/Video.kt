@@ -1,4 +1,4 @@
-package com.cious.data.network.api.model.course
+package com.cious.learnhub.data.network.api.model.course
 
 
 import com.google.gson.annotations.SerializedName

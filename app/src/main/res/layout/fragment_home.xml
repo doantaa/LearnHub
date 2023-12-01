@@ -194,10 +194,19 @@
             app:layout_constraintTop_toBottomOf="@id/tv_popular_course_title"
             tools:listitem="@layout/item_category" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            app:layout_constraintTop_toBottomOf="@id/rv_course_category"
+        <TextView
+            android:id="@+id/tv_cek_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/rv_course_category"/>
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_course_list"
+            app:layout_constraintTop_toBottomOf="@id/rv_course_category"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_marginTop="9dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"

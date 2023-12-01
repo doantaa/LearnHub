@@ -1,13 +1,13 @@
-package com.cious.data.network.api.model.course
+package com.cious.learnhub.data.network.api.model.category
 
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 
 @Keep
-data class CoursesResponse(
+data class CategoriesResponse(
     @SerializedName("data")
-    val data: List<CourseItemResponse?>,
+    val data: Data?,
     @SerializedName("message")
     val message: String?,
     @SerializedName("success")

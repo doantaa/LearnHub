@@ -1,4 +1,4 @@
-package com.cious.data.network.api.model.course
+package com.cious.learnhub.data.network.api.model.course
 
 
 import com.google.gson.annotations.SerializedName
@@ -15,5 +15,5 @@ data class Module(
     @SerializedName("title:")
     val title: String?,
     @SerializedName("Videos")
-    val videos: List<Video?>?
+    val videos: List<Video?>
 )

@@ -110,6 +110,7 @@
                     android:layout_gravity="center"/>
 
                 <TextView
+                    android:id="@+id/tv_level"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Advanced"
@@ -138,6 +139,7 @@
                     android:layout_gravity="center"/>
 
                 <TextView
+                    android:id="@+id/tv_module_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="19 Modul"
@@ -164,6 +166,7 @@
                     android:layout_gravity="center"/>
 
                 <TextView
+                    android:id="@+id/tv_total_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="60 Menit"
@@ -174,6 +177,7 @@
 
 
             <TextView
+                android:id="@+id/tv_price"
                 android:background="@drawable/rounded_rectangle"
                 android:backgroundTint="@color/light_blue_100"
                 app:layout_constraintTop_toBottomOf="@id/ll_total_time"

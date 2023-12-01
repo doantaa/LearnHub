@@ -1,12 +1,13 @@
 package com.cious.learnhub.ui.home.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.cious.core.ViewHolderBinder
+import com.cious.learnhub.core.ViewHolderBinder
 import com.cious.learnhub.databinding.ItemCategoryBinding
 import com.cious.learnhub.model.Category
 import com.cious.learnhub.ui.home.adapter.viewholder.CategoryListViewHolder
@@ -27,6 +28,8 @@ class CategoryListAdapter(
     }
     )
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryListViewHolder {
         return CategoryListViewHolder(
             binding = ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false),
@@ -44,6 +47,7 @@ class CategoryListAdapter(
 
     fun setData(categoryList: List<Category>){
         differ.submitList(categoryList)
+        Log.d("DIFFER SIZE", categoryList.toString())
     }
 
 }
