@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import com.cious.learnhub.MainActivity
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.ActivityRegisterBinding
 import com.cious.learnhub.ui.authentication.login.LoginActivity

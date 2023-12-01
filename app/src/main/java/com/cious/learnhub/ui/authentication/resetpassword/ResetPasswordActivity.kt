@@ -3,8 +3,6 @@ package com.cious.learnhub.ui.authentication.resetpassword
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.cious.learnhub.MainActivity
-import com.cious.learnhub.R
 import com.cious.learnhub.databinding.ActivityResetPasswordBinding
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 
