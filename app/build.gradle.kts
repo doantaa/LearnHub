@@ -126,4 +126,12 @@ dependencies {
     testImplementation("app.cash.turbine:turbine:1.0.0")
 
     testImplementation("androidx.arch.core:core-testing:2.2.0")
+
+    // view pager
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    implementation ("com.google.android.material:material:1.4.0")
+
+    // groupie
+    implementation ("com.github.lisawray.groupie:groupie:2.10.1")
+    implementation ("com.github.lisawray.groupie:groupie-viewbinding:2.10.1")
 }
