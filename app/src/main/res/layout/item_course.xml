@@ -6,197 +6,186 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
     android:layout_marginTop="20dp"
+    android:background="@drawable/course_card"
+    android:backgroundTint="@color/white"
     android:clipToPadding="false"
+    android:elevation="10dp"
     android:paddingBottom="10dp">
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_course_image"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/courseImageView"
+        tools:src="@tools:sample/avatars" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="200dp"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/course_card"
-        android:backgroundTint="@color/white"
-        android:elevation="2dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/iv_course_image">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_course_image"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/courseImageView"
-            tools:src="@tools:sample/avatars" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_course_category"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="5dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Data Science"
+            android:textColor="@color/dark_blue"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            app:layout_constraintTop_toBottomOf="@id/iv_course_image">
+        <ImageView
+            android:id="@+id/iv_rating"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginEnd="1dp"
+            android:src="@drawable/ic_round_star"
+            app:layout_constraintEnd_toStartOf="@id/tv_rating"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_course_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="Data Science"
-                android:textColor="@color/dark_blue"
-                android:textSize="11sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_semibold"
+            android:text="4.7"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_course_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Belajar data cleaning dan sorting dengan Phyton"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_course_category" />
+
+        <TextView
+            android:id="@+id/tv_course_instructor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="by John Doe"
+            android:textSize="8sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_course_title" />
+
+        <LinearLayout
+            android:id="@+id/ll_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_course_instructor">
 
             <ImageView
-                android:id="@+id/iv_rating"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginEnd="1dp"
-                android:src="@drawable/ic_round_star"
-                app:layout_constraintEnd_toStartOf="@id/tv_rating"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginVertical="1dp"
+                android:layout_marginEnd="2dp"
+                android:src="@drawable/ic_level" />
 
             <TextView
-                android:id="@+id/tv_rating"
+                android:id="@+id/tv_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_semibold"
-                android:text="4.7"
-                android:textColor="@color/black"
-                android:textSize="11sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Advanced"
+                android:textColor="@color/dark_blue"
+                android:textSize="8sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_module_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@id/ll_level"
+            app:layout_constraintTop_toBottomOf="@id/tv_course_instructor">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginVertical="1dp"
+                android:layout_marginEnd="2dp"
+                android:src="@drawable/ic_module" />
 
             <TextView
-                android:id="@+id/tv_course_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="Belajar data cleaning dan sorting dengan Phyton"
-                android:textColor="@color/black"
-                android:textSize="11sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_course_category" />
-
-            <TextView
-                android:id="@+id/tv_course_instructor"
+                android:id="@+id/tv_module_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
-                android:text="by John Doe"
-                android:textSize="8sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_course_title" />
+                android:text="19 Modul"
+                android:textColor="@color/black"
+                android:textSize="8sp" />
+        </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_level"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_course_instructor">
+        <LinearLayout
+            android:id="@+id/ll_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_level">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_level"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginVertical="1dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:id="@+id/tv_level"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Advanced"
-                    android:textSize="8sp"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:textColor="@color/dark_blue"/>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/ll_module_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:orientation="horizontal"
-                android:layout_marginStart="10dp"
-                app:layout_constraintStart_toEndOf="@id/ll_level"
-                app:layout_constraintTop_toBottomOf="@id/tv_course_instructor">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_module"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginVertical="1dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:id="@+id/tv_module_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="19 Modul"
-                    android:textSize="8sp"
-                    android:fontFamily="@font/montserrat"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_total_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_level">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_time"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginVertical="1dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:id="@+id/tv_total_duration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="60 Menit"
-                    android:textSize="8sp"
-                    android:fontFamily="@font/montserrat"
-                    android:textColor="@color/black"/>
-            </LinearLayout>
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginVertical="1dp"
+                android:layout_marginEnd="2dp"
+                android:src="@drawable/ic_time" />
 
             <TextView
-                android:id="@+id/tv_price"
-                android:background="@drawable/rounded_rectangle"
-                android:backgroundTint="@color/light_blue_100"
-                app:layout_constraintTop_toBottomOf="@id/ll_total_time"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_width="match_parent"
-                android:textAlignment="center"
+                android:id="@+id/tv_total_duration"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:paddingHorizontal="15dp"
-                android:layout_marginTop="5dp"
-                android:textSize="12sp"
-                android:fontFamily="@font/montserrat_medium"
-                android:paddingVertical="3dp"
-                android:text="Rp. 29.000"/>
+                android:fontFamily="@font/montserrat"
+                android:text="60 Menit"
+                android:textColor="@color/black"
+                android:textSize="8sp" />
+        </LinearLayout>
 
 
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_rectangle"
+            android:backgroundTint="@color/light_blue_100"
+            android:fontFamily="@font/montserrat_medium"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="3dp"
+            android:text="Rp. 29.000"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_total_time" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

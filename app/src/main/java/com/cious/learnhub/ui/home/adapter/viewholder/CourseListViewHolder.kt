@@ -1,6 +1,7 @@
 package com.cious.learnhub.ui.home.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.cious.learnhub.core.ViewHolderBinder
 import com.cious.learnhub.databinding.ItemCourseBinding
 import com.cious.learnhub.model.Course
@@ -11,6 +12,7 @@ class CourseListViewHolder(
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Course> {
     override fun bind(item: Course) {
         with(item) {
+            binding.ivCourseImage.load("https://raw.githubusercontent.com/doantaa/BinarFoodApp-Resource/main/nasi_campur.png")
             binding.tvCourseCategory.text = item.categoryId
             binding.tvCourseTitle.text = item.title
             binding.tvRating.text = item.rating.toString()
