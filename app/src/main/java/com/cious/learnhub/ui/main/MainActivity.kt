@@ -1,4 +1,4 @@
-package com.cious.learnhub
+package com.cious.learnhub.ui.main
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.cious.learnhub.R
 import com.cious.learnhub.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

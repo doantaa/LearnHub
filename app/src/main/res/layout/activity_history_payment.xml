@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="20dp"
-    tools:context=".ui.profile.historypayment.HistoryPaymentFragment">
+    tools:context=".ui.historypayment.HistoryPaymentActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/btnBack"
+
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:src="@drawable/ic_arrow_back_24"
@@ -30,6 +31,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="14dp"
+        android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@id/tvHistoryPayment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,12 +40,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <androidx.recyclerview.widget.RecyclerView
+                android:scrollbarSize="0dp"
+                android:scrollbars="none"
                 android:id="@+id/rvHistoryPayment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_list_history_payment"
+                tools:listitem="@layout/item_list_history_payment_paid"
                 tools:itemCount="10"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
