@@ -1,6 +1,5 @@
 package com.cious.learnhub.ui.home.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -13,9 +12,9 @@ import com.cious.learnhub.ui.home.adapter.viewholder.CourseListViewHolder
 
 class CourseListAdapter(
     private val onItemClick: (Course) -> Unit
-): RecyclerView.Adapter<CourseListViewHolder>() {
+) : RecyclerView.Adapter<CourseListViewHolder>() {
 
-    private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<Course>(){
+    private val differ = AsyncListDiffer(this, object: DiffUtil.ItemCallback<Course>() {
         override fun areItemsTheSame(oldItem: Course, newItem: Course): Boolean {
             return oldItem.id == newItem.id
         }
@@ -41,9 +40,8 @@ class CourseListAdapter(
         (holder as ViewHolderBinder<Course>).bind(differ.currentList[position])
     }
 
-    fun setData(courseDataList: List<Course>){
-        differ.submitList(courseDataList)
-        Log.d("DIFFER SIZE", courseDataList.toString())
+    fun setData(data: List<Course>){
+        differ.submitList(data)
     }
 
 }

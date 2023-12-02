@@ -110,6 +110,11 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView() {
         setupCategoryRecyclerView()
+        setupCourseRecyclerView()
+    }
+
+    private fun setupCourseRecyclerView() {
+        binding.rvCourseList.adapter = courseListAdapter
     }
 
     private fun setupCategoryRecyclerView() {

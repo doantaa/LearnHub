@@ -184,6 +184,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:paddingLeft="20dp"
+            android:clipToPadding="false"
+            android:scrollbarSize="0dp"
             android:id="@+id/rv_course_category"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -203,6 +206,8 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:clipToPadding="false"
+            android:paddingStart="15dp"
             android:id="@+id/rv_course_list"
             app:layout_constraintTop_toBottomOf="@id/rv_course_category"
             android:layout_width="match_parent"
