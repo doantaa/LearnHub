@@ -41,6 +41,30 @@ class RegisterActivity : AppCompatActivity() {
         binding.tvIntentRegister.highLightWord(getString(R.string.text_highlight_login)) {
             navigateToLogin()
         }
+        binding.btnRegister.setOnClickListener {
+            doRegister()
+        }
+    }
+
+//    private fun isFormValid(): Boolean {
+//        val fullName = binding.etName.text.toString().trim()
+//        val email = binding.etEmail.text.toString().trim()
+//        val phoneNumber = binding.etPhoneNumber.text.toString().trim()
+//        val password = binding.etPassword.text.toString().trim()
+//
+//        return checkNameValidation(fullName)
+//    }
+
+//    private fun checkNameValidation(fullName: String): Boolean {
+//        return if (fullName.isEmpty()) {
+//            binding.
+//        }
+//    }
+
+    private fun doRegister() {
+//        if (isFormValid()) {
+//
+//        }
     }
 
     private fun navigateToLogin() {
