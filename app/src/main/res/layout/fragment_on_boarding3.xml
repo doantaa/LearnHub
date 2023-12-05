@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".onboarding.OnBoardingThirdFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/logoapp"
@@ -23,7 +22,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:fontFamily="@font/poppins_extrabold"
+        android:fontFamily="@font/montserrat_semibold"
         android:text="Belajar\ndari mana saja!"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -73,7 +72,7 @@
             android:background="@drawable/btn_rounded_blue"
             android:drawableEnd="@drawable/ic_next"
             android:drawablePadding="30dp"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@font/montserrat_semibold"
             android:paddingStart="30dp"
             android:paddingTop="15dp"
             android:paddingEnd="30dp"
@@ -94,7 +93,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
+                android:fontFamily="@font/montserrat"
                 android:text="Sudah punya akun?"
                 android:textSize="16dp" />
 
@@ -102,9 +101,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/montserrat_semibold"
                 android:text="Masuk di sini"
-                android:textColor="@color/bt"
+                android:textColor="@color/dark_blue"
                 android:textSize="16dp" />
         </LinearLayout>
 
@@ -112,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@font/montserrat_semibold"
             android:text="Masuk Tanpa Login"
             android:textColor="#489CFF"
             android:textSize="16dp" />

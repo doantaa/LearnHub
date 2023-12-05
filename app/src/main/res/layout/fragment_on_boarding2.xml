@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".onboarding.OnBoardingSecondFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/logoapp"
@@ -24,7 +23,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:fontFamily="@font/poppins_extrabold"
+        android:fontFamily="@font/montserrat_semibold"
         android:text="Belajar\ndari Praktisi Terbaik!"
         android:textAlignment="center"
         android:textColor="@color/black"

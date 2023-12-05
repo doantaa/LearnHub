@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".onboarding.OnBoardingFirstFragment">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/logoapp"
@@ -23,7 +22,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:fontFamily="@font/poppins_extrabold"
+        android:fontFamily="@font/montserrat_semibold"
         android:text="Belajar\ndari Pengalaman Terbaik!"
         android:textAlignment="center"
         android:textColor="@color/black"

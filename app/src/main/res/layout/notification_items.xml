@@ -17,58 +17,52 @@
 
         <ImageView
             android:id="@+id/image_notification"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_notification_blue" />
 
         <TextView
-            android:id="@+id/text_title"
+            android:id="@+id/text_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="title"
-            android:fontFamily="@font/poppins_semibold"
+            android:text="Promosi"
+            android:fontFamily="@font/montserrat"
             android:layout_marginStart="10dp"
             android:gravity="center_vertical"
-            android:textSize="20sp"
-            android:textColor="@color/bt"/>
+            android:textSize="13sp"
+            android:textColor="@color/dark_blue"/>
 
         <TextView
             android:id="@+id/text_datetime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="datetime"
-            android:fontFamily="@font/poppins_semibold"
-            android:textSize="18sp"
+            android:text="2 maret, 12.00"
+            android:fontFamily="@font/montserrat_semibold"
+            android:textSize="11sp"
             android:textColor="#8A8A8A" />
 
-        <ImageView
-            android:id="@+id/indicator"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/ic_indikator1" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="Dapatkan Potongan 50% selama Bulan Maret!"
+        android:fontFamily="@font/montserrat_semibold"
+        android:textSize="13sp"
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/text_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:text="description 1"
-        android:fontFamily="@font/poppins_semibold"
-        android:textSize="17sp"
-        android:textColor="@color/black" />
-
-    <TextView
-        android:id="@+id/text_description_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:text="description 2"
-        android:fontFamily="@font/poppins"
-        android:textSize="17sp"
+        android:text="Syarat dan Ketentuan berlaku!"
+        android:fontFamily="@font/montserrat"
+        android:textSize="13sp"
         android:textColor="#8A8A8A"/>
 
 </LinearLayout>
