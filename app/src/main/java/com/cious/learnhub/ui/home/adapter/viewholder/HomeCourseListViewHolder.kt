@@ -12,11 +12,16 @@ class HomeCourseListViewHolder(
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Course> {
     override fun bind(item: Course) {
         with(item) {
-            binding.ivCourseImage.load("https://raw.githubusercontent.com/doantaa/BinarFoodApp-Resource/main/nasi_campur.png")
+            binding.root.setOnClickListener{
+                onItemClick.invoke(item)
+            }
+            binding.ivCourseImage.load(item.imageUrl)
             binding.tvCourseCategory.text = item.categoryId
             binding.tvCourseTitle.text = item.title
             binding.tvRating.text = item.rating.toString()
             binding.tvCourseInstructor.text = item.instructor
+            binding.tvLevel.text = item.level
+            binding.tvModuleCount.text = "${item.moduleCount} Modul"
             binding.tvLevel.text = item.level
             binding.tvPrice.text = item.price.toCurrencyFormat()
         }

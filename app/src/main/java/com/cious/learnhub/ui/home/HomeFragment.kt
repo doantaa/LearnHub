@@ -30,11 +30,12 @@ class HomeFragment : Fragment() {
 
     private val categoryListAdapter: CategoryListAdapter by lazy {
         CategoryListAdapter {
+            viewModel.getCourses(category = it.id)
         }
     }
 
     private val homeCourseListAdapter: HomeCourseListAdapter by lazy {
-        HomeCourseListAdapter{
+        HomeCourseListAdapter {
 
         }
     }
@@ -62,13 +63,11 @@ class HomeFragment : Fragment() {
     private fun observeCourseData() {
         viewModel.courses.observe(viewLifecycleOwner) {
             it.proceedWhen(
-                doOnSuccess = { data ->
+                doOnSuccess = {data ->
                     binding.rvCourseList.isVisible = true
                     data.payload?.let {
                         homeCourseListAdapter.setData(it)
                     }
-
-
                 },
                 doOnLoading = {
 
@@ -85,9 +84,9 @@ class HomeFragment : Fragment() {
 
     private fun observeCategoryData() {
         viewModel.categories.observe(viewLifecycleOwner) {
-            it.proceedWhen(doOnSuccess = {data ->
+            it.proceedWhen(doOnSuccess = { data ->
                 binding.rvCourseCategory.isVisible = true
-                data.payload?.let {categoryList ->
+                data.payload?.let { categoryList ->
                     categoryListAdapter.setData(categoryList)
                 }
                 Log.d("CATEGORY", data.payload.toString())
