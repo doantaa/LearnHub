@@ -7,7 +7,7 @@ import com.cious.learnhub.databinding.ItemCourseBinding
 import com.cious.learnhub.model.Course
 import com.cious.learnhub.utils.toCurrencyFormat
 
-class CourseListViewHolder(
+class HomeCourseListViewHolder(
     private val binding: ItemCourseBinding, val onItemClick: (Course) -> Unit
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Course> {
     override fun bind(item: Course) {
