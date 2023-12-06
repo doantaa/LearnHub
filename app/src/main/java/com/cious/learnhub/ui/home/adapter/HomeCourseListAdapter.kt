@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cious.learnhub.core.ViewHolderBinder
 import com.cious.learnhub.databinding.ItemCourseBinding
 import com.cious.learnhub.model.Course
-import com.cious.learnhub.ui.home.adapter.viewholder.CourseListViewHolder
+import com.cious.learnhub.ui.home.adapter.viewholder.HomeCourseListViewHolder
 
-class CourseListAdapter(
+class HomeCourseListAdapter(
     private val onItemClick: (Course) -> Unit
-) : RecyclerView.Adapter<CourseListViewHolder>() {
+) : RecyclerView.Adapter<HomeCourseListViewHolder>() {
 
     private val differ = AsyncListDiffer(this, object: DiffUtil.ItemCallback<Course>() {
         override fun areItemsTheSame(oldItem: Course, newItem: Course): Boolean {
@@ -25,8 +25,8 @@ class CourseListAdapter(
 
     })
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseListViewHolder {
-        return CourseListViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeCourseListViewHolder {
+        return HomeCourseListViewHolder(
             binding = ItemCourseBinding.inflate(LayoutInflater.from(parent.context), parent, false),
             onItemClick
         )
@@ -36,7 +36,7 @@ class CourseListAdapter(
         return differ.currentList.size
     }
 
-    override fun onBindViewHolder(holder: CourseListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeCourseListViewHolder, position: Int) {
         (holder as ViewHolderBinder<Course>).bind(differ.currentList[position])
     }
 

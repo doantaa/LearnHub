@@ -14,7 +14,7 @@ import com.cious.learnhub.data.network.api.service.CourseService
 import com.cious.learnhub.data.repository.CourseRepositoryImpl
 import com.cious.learnhub.databinding.FragmentHomeBinding
 import com.cious.learnhub.ui.home.adapter.CategoryListAdapter
-import com.cious.learnhub.ui.home.adapter.CourseListAdapter
+import com.cious.learnhub.ui.home.adapter.HomeCourseListAdapter
 import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.proceedWhen
 
@@ -33,8 +33,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private val courseListAdapter: CourseListAdapter by lazy {
-        CourseListAdapter {
+    private val homeCourseListAdapter: HomeCourseListAdapter by lazy {
+        HomeCourseListAdapter{
 
         }
     }
@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
                 doOnSuccess = { data ->
                     binding.rvCourseList.isVisible = true
                     data.payload?.let {
-                        courseListAdapter.setData(it)
+                        homeCourseListAdapter.setData(it)
                     }
 
 
@@ -85,9 +85,9 @@ class HomeFragment : Fragment() {
 
     private fun observeCategoryData() {
         viewModel.categories.observe(viewLifecycleOwner) {
-            it.proceedWhen(doOnSuccess = { data ->
+            it.proceedWhen(doOnSuccess = {data ->
                 binding.rvCourseCategory.isVisible = true
-                data.payload?.let { categoryList ->
+                data.payload?.let {categoryList ->
                     categoryListAdapter.setData(categoryList)
                 }
                 Log.d("CATEGORY", data.payload.toString())
@@ -112,7 +112,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupCourseRecyclerView() {
-        binding.rvCourseList.adapter = courseListAdapter
+        binding.rvCourseList.adapter = homeCourseListAdapter
     }
 
     private fun setupCategoryRecyclerView() {
