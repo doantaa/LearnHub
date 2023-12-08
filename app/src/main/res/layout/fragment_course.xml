@@ -3,21 +3,83 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/text_home"
+    <androidx.core.widget.NestedScrollView
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="Course"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/field_search"
+                layout="@layout/section_search" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_course_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="28dp"
+                app:layout_constraintTop_toBottomOf="@id/field_search">
+
+                <TextView
+                    android:id="@+id/tv_course_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="@string/text_course_topic"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="@string/text_filter"
+                    android:textColor="@color/dark_blue"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_course_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:scrollbarSize="0dp"
+                android:paddingHorizontal="24dp"
+                android:scrollbars="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/cl_course_header"
+                tools:listitem="@layout/item_category" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_course"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/rv_course_type"
+                tools:itemCount="5"
+                android:clipToPadding="false"
+                android:paddingBottom="10dp"
+                tools:listitem="@layout/item_course_linear"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

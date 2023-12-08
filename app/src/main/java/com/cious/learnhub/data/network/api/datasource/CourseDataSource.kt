@@ -1,19 +1,18 @@
 package com.cious.learnhub.data.network.api.datasource
 
-import android.icu.text.CaseMap.Title
 import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
 import com.cious.learnhub.data.network.api.model.course.CoursesResponse
 import com.cious.learnhub.data.network.api.service.CourseService
-import com.cious.learnhub.model.Category
 
 interface CourseDataSource {
     suspend fun getCourses(
         category: String? = null,
         title: String? = null,
+        courseType: String? = null,
         level: String? = null
-    ) : CoursesResponse
+    ): CoursesResponse
 
-    suspend fun getCategory() : CategoriesResponse
+    suspend fun getCategory(): CategoriesResponse
 }
 
 class CourseApiDataSouce(
@@ -22,9 +21,10 @@ class CourseApiDataSouce(
     override suspend fun getCourses(
         category: String?,
         title: String?,
+        courseType: String?,
         level: String?
     ): CoursesResponse {
-        return service.getCourses(category, title, level)
+        return service.getCourses(category, title, courseType, level)
     }
 
     override suspend fun getCategory(): CategoriesResponse {

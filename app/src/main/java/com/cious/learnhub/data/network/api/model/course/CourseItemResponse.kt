@@ -7,50 +7,53 @@ import com.cious.learnhub.model.Course
 
 @Keep
 data class CourseItemResponse(
-    @SerializedName("about")
-    val about: String?,
-    @SerializedName("categoryId")
-    val categoryId: String?,
-    @SerializedName("courseType")
-    val courseType: String?,
-    @SerializedName("createdAt")
-    val createdAt: String?,
-    @SerializedName("duration")
-    val duration: String?,
     @SerializedName("id")
     val id: Int?,
-    @SerializedName("imageUrl")
-    val imageUrl: String?,
-    @SerializedName("instructor")
-    val instructor: String?,
-    @SerializedName("level")
-    val level: String?,
-    @SerializedName("moduleCount")
-    val moduleCount: Int?,
-    @SerializedName("Modules")
-    val modules: List<Module?>,
+    @SerializedName("title")
+    val title: String?,
+    @SerializedName("about")
+    val about: String?,
     @SerializedName("objective")
     val objective: String?,
     @SerializedName("onboaring")
     val onboaring: String?,
-    @SerializedName("price")
-    val price: Int?,
+    @SerializedName("categoryId")
+    val categoryId: String?,
+    @SerializedName("level")
+    val level: String?,
+    @SerializedName("courseType")
+    val courseType: String?,
+    @SerializedName("imageUrl")
+    val imageUrl: String?,
     @SerializedName("rating")
     val rating: Double?,
+    @SerializedName("instructor")
+    val instructor: String?,
+    @SerializedName("duration")
+    val duration: String?,
     @SerializedName("telegramLink")
     val telegramLink: String?,
-    @SerializedName("title")
-    val title: String?,
+    @SerializedName("moduleCount")
+    val moduleCount: Int?,
+    @SerializedName("price")
+    val price: Int?,
+    @SerializedName("createdAt")
+    val createdAt: String?,
+    @SerializedName("updatedAt")
+    val updatedAt: String?,
     @SerializedName("totalDuration")
     val totalDuration: String?,
-    @SerializedName("updatedAt")
-    val updatedAt: String?
+    @SerializedName("Modules")
+    val modules: List<Module?>,
+    @SerializedName("Category")
+    val category: CategoryNameResponse
 )
 
 fun CourseItemResponse.toCourse() = Course(
     id = this.id ?: 0,
     title = this.title.orEmpty(),
     categoryId = this.categoryId.orEmpty(),
+    categoryName = this.category.categoryName.orEmpty(),
     courseType = this.courseType.orEmpty(),
     price = this.price ?: 0,
     rating = this.rating ?: 0.0,
