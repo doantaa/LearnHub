@@ -1,13 +1,10 @@
 package com.cious.learnhub.model
 
-import com.cious.learnhub.data.network.api.model.course.Module
-import com.google.gson.annotations.SerializedName
-import java.util.UUID
-
 data class Course(
     val id: Int,
     val title: String,
     val categoryId: String,
+    val categoryName: String,
     val courseType: String,
     val price: Int,
     val rating: Double,

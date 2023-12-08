@@ -32,13 +32,15 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_search"
                 android:layout_width="0dp"
+                android:imeOptions="actionSearch"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/montserrat"
                 android:gravity="start"
-                android:hint="Cari kursus terbaik"
+                android:hint="@string/text_search_best_course"
                 android:paddingBottom="25dp"
                 android:singleLine="true"
+                android:inputType="text"
                 android:textColorHint="@color/black_alpha"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_search"
@@ -56,6 +58,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
     </com.google.android.material.textfield.TextInputLayout>
