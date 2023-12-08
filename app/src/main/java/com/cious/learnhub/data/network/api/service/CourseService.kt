@@ -1,10 +1,9 @@
 package com.cious.learnhub.data.network.api.service
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.cious.learnhub.data.network.api.model.course.CoursesResponse
 import com.cious.learnhub.BuildConfig
 import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
-import com.cious.learnhub.model.Category
+import com.cious.learnhub.data.network.api.model.course.CoursesResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -17,14 +16,14 @@ interface CourseService {
     suspend fun getCourses(
         @Query("categoryIds") category: String? = null,
         @Query("title") title: String? = null,
+        @Query("courseType") courseType: String? = null,
         @Query("level") level: String? = null
     )
-    : CoursesResponse
-
+            : CoursesResponse
 
 
     @GET("category")
-    suspend fun getCategories() : CategoriesResponse
+    suspend fun getCategories(): CategoriesResponse
 
     companion object {
         @JvmStatic
