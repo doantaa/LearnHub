@@ -12,18 +12,23 @@ class HomeCourseListViewHolder(
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Course> {
     override fun bind(item: Course) {
         with(item) {
-            binding.root.setOnClickListener{
+            binding.root.setOnClickListener {
                 onItemClick.invoke(item)
             }
-            binding.ivCourseImage.load(item.imageUrl)
+            binding.ivCourseImage.load(item.imageUrl){
+                crossfade(true)
+            }
             binding.tvCourseCategory.text = item.categoryId
             binding.tvCourseTitle.text = item.title
             binding.tvRating.text = item.rating.toString()
             binding.tvCourseInstructor.text = item.instructor
             binding.tvLevel.text = item.level
-            binding.tvModuleCount.text = "${item.moduleCount} Modul"
+            binding.tvModuleCount.text = buildString {
+                append(item.moduleCount)
+                append(" Modul")
+            }
             binding.tvLevel.text = item.level
-            binding.tvPrice.text = item.price.toCurrencyFormat()
+            binding.tvPrice.text = if (item.price == 0) "GRATIS" else item.price.toCurrencyFormat()
         }
     }
 

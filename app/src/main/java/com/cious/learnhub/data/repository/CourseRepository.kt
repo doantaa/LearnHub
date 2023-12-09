@@ -7,7 +7,9 @@ import com.cious.learnhub.model.Category
 import com.cious.learnhub.model.Course
 import com.cious.learnhub.utils.ResultWrapper
 import com.cious.learnhub.utils.proceedFlow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onStart
 
 
 interface CourseRepository {
@@ -33,6 +35,9 @@ class CourseRepositoryImpl(
         return proceedFlow {
             courseDataSource.getCourses(category, title, courseType, level).data?.toCourseList()
                 ?: emptyList()
+        }.onStart {
+            emit(ResultWrapper.Loading())
+            delay(2000)
         }
     }
 
