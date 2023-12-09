@@ -50,6 +50,11 @@
     <string name="text_greeting_description">Mau belajar apa hari ini?</string>
     <string name="text_hint_search_best_course">Cari kursus terbaik</string>
     <string name="text_last_course_title">Lanjutkan belajarmu!</string>
-    <string name="text_empty_last_course">Kosong nih! \n yuk mulai perjalananmu</string>
+    <string name="text_empty_last_course">Kosong nih!</string>
     <string name="text_popular_course_title">Kursus Populer</string>
+    <string name="hello">Hello %1$s</string>
+    <string name="text_state_empty_title">Maaf!</string>
+    <string name="text_error">Error</string>
+    <string name="text_empty_class">Kelas belum tersedia</string>
+    <string name="text_start_learning_desc">Mulai pelajaranmu sekarang</string>
 </resources>
