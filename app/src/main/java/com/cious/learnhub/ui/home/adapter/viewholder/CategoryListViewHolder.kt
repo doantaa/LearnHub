@@ -10,6 +10,9 @@ class CategoryListViewHolder(
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Category> {
     override fun bind(item: Category) {
         with(item) {
+            binding.root.setOnClickListener{
+                onItemClick.invoke(item)
+            }
             binding.tvCategoryName.text = item.name
         }
     }

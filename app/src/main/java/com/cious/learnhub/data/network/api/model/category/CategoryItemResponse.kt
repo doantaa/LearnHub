@@ -18,7 +18,8 @@ data class CategoryItemResponse(
 )
 
 fun CategoryItemResponse.toCategory() = Category (
-    name = this.name.orEmpty()
+    name = this.name.orEmpty(),
+    id = this.id.orEmpty()
 )
 
 fun Collection<CategoryItemResponse>.toCategoryList() = this.map { it.toCategory() }
