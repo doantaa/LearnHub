@@ -308,7 +308,7 @@
 
                 <include
                     android:id="@+id/layout_state"
-                    layout="@layout/layout_empty_state"
+                    layout="@layout/layout_empty_error_state"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="invisible"

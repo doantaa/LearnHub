@@ -26,7 +26,6 @@ class HomeViewModel(
         level: String? = null
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-
             repository.getCourses(category, title, level).collect() {
                 _courses.postValue(it)
             }

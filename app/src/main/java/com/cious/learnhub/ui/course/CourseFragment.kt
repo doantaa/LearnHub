@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.cious.learnhub.R
 import com.cious.learnhub.data.network.api.datasource.CourseApiDataSouce
 import com.cious.learnhub.data.network.api.service.CourseService
 import com.cious.learnhub.data.repository.CourseRepositoryImpl
@@ -73,7 +74,6 @@ class CourseFragment : Fragment() {
             return@setOnEditorActionListener true
         }
 
-
     }
 
     private fun setupCourseType() {
@@ -87,14 +87,26 @@ class CourseFragment : Fragment() {
 
                 doOnSuccess = {
                     binding.rvCourse.isVisible = true
+                    binding.layoutState.root.isVisible = false
+                    binding.shimmerCourse.isVisible = false
                     it.payload?.let {
                         courseListAdapter.setData(it)
                     }
                 },
-                doOnLoading = {},
+                doOnLoading = {
+                    binding.rvCourse.isVisible = false
+                    binding.layoutState.root.isVisible = false
+                    binding.shimmerCourse.isVisible = true
+                },
                 doOnEmpty = {
                     binding.rvCourse.isVisible = false
-                }, doOnError = {})
+                    binding.shimmerCourse.isVisible = false
+                    binding.layoutState.root.isVisible = true
+                }, doOnError = {
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.tvEmptyTitle.text = getText(R.string.text_error)
+                    binding.layoutState.tvEmptyDescription.text = it.exception?.message
+                })
         }
     }
 
