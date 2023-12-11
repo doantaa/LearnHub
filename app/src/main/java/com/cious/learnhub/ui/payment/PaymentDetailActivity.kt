@@ -22,7 +22,9 @@ class PaymentDetailActivity : AppCompatActivity() {
     }
 
     private fun setClickListeners() {
-
+        binding.ibBack.setOnClickListener {
+            navigateToLogin()
+        }
     }
 
     private fun navigateToLogin() {
