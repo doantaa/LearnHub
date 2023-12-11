@@ -13,11 +13,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.LearnHub"
         tools:targetApi="31">
         <activity
-            android:name=".ui.detail.CourseDetailActivity"
+            android:name=".ui.payment.PaymentMidtransActivity"
             android:exported="true" />
+        <activity
+            android:name=".ui.payment.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.authentication.login.LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.authentication.otp.OtpActivity"
             android:exported="false" />
@@ -30,12 +37,11 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.historypayment.HistoryPaymentActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.authentication.login.LoginActivity"
+            android:name=".ui.payment.PaymentDetailActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>

@@ -16,27 +16,22 @@ class PaymentDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        setupWebview()
         setClickListeners()
     }
 
     private fun setClickListeners() {
-        binding.ibBack.setOnClickListener {
-            navigateToLogin()
+        binding.btnBuyNow.setOnClickListener {
+            navigateToPaymentMidtrans()
         }
     }
 
-    private fun navigateToLogin() {
-
+    private fun navigateToPaymentMidtrans() {
+        val intent = Intent(this, PaymentMidtransActivity::class.java)
+        intent.putExtra("URL", getUrl())
+        startActivity(intent)
     }
 
-    private fun setupWebview() {
-        val webView = binding.wvMidtrans
-        val webSettings = webView.settings
-        webSettings.javaScriptEnabled = true
-
-        webView.webViewClient = WebViewClient()
-        webView.loadUrl("https://app.sandbox.midtrans.com/snap/v3/redirection/d3f0c6b7-6593-4983-9dbc-15e0e0427c4f#/payment-list")
+    private fun getUrl(): String {
+        return "https://sample-demo-dot-midtrans-support-tools.et.r.appspot.com/snap-redirect/"
     }
 }
