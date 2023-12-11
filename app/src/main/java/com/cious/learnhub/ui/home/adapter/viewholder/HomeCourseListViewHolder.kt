@@ -27,6 +27,10 @@ class HomeCourseListViewHolder(
                 append(item.moduleCount)
                 append(" Modul")
             }
+            binding.tvTotalDuration.text = buildString {
+                append(item.totalDuration)
+                append(" Menit")
+            }
             binding.tvLevel.text = item.level
             binding.tvPrice.text = if (item.price == 0) "GRATIS" else item.price.toCurrencyFormat()
         }
