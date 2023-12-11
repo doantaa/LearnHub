@@ -35,14 +35,6 @@
     <string name="text_ulangi_password_baru">Ulangi Password Baru</string>
     <string name="text_beranda">Beranda</string>
     <string name="text_registrasi_nberhasil">Registrasi\nBerhasil</string>
-    <string name="text_harga">Harga</string>
-    <string name="text_ppn">PPN 11%</string>
-    <string name="text_total_bayar">Total Bayar</string>
-    <string name="text_lanjutkan">Lanjutkan</string>
-    <string name="text_kelas_premium">Kelas Premium</string>
-    <string name="text_selangkah_lagi_menuju">Selangkah lagi menuju</string>
-    <string name="text_detail_pembayaran">Detail Pembayaran</string>
-    <string name="text_beli_sekarang">Beli Sekarang</string>
     <string name="text_course_topic">Topik Kelas</string>
     <string name="text_filter">Filter</string>
     <string name="text_search_best_course">Cari kursus terbaik</string>
