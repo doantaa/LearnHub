@@ -61,16 +61,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupSearchBar() {
-        binding.etSearch.clearFocus()
-        val keyword = binding.etSearch.text
-        binding.btnSearch.setOnClickListener {
+        binding.search.root.clearFocus()
+        val keyword = binding.search.etSearch.text
+        binding.search.btnSearch.setOnClickListener {
             viewModel.getCourses(title = keyword.toString())
-            binding.etSearch.clearFocus()
+            binding.search.root.clearFocus()
             hideKeyboard()
         }
-        binding.etSearch.setOnEditorActionListener { textView, i, keyEvent ->
+        binding.search.etSearch.setOnEditorActionListener { textView, i, keyEvent ->
             viewModel.getCourses(title = keyword.toString())
-            binding.etSearch.clearFocus()
+            binding.search.root.clearFocus()
             hideKeyboard()
             return@setOnEditorActionListener true
         }
