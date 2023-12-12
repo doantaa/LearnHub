@@ -21,12 +21,12 @@ class HomeViewModel(
     val categories = repository.getCategories().asLiveData(Dispatchers.IO)
 
     fun getCourses(
-        category: String? = null,
-        title: String? = null,
-        level: String? = null
+        category: String? = null, title: String? = null, level: String? = null
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getCourses(category, title, level).collect() {
+            repository.getCourses(
+                if (category == "C-0ALL") null else category, title, level
+            ).collect() {
                 _courses.postValue(it)
             }
         }

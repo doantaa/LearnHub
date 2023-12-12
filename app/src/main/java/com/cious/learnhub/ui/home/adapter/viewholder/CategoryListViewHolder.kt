@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cious.learnhub.core.ViewHolderBinder
 import com.cious.learnhub.databinding.ItemCategoryBinding
 import com.cious.learnhub.model.Category
+import java.util.Locale
 
 class CategoryListViewHolder(
     private val binding: ItemCategoryBinding, val onItemClick: (Category) -> Unit
