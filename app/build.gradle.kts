@@ -82,6 +82,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -124,7 +125,9 @@ dependencies {
     testImplementation("io.mockk:mockk-agent:1.13.8")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
     testImplementation("app.cash.turbine:turbine:1.0.0")
-
+    //GLide
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation("com.squareup.picasso:picasso:2.8")
     testImplementation("androidx.arch.core:core-testing:2.2.0")
 
     // view pager
@@ -134,4 +137,10 @@ dependencies {
     // groupie
     implementation ("com.github.lisawray.groupie:groupie:2.10.1")
     implementation ("com.github.lisawray.groupie:groupie-viewbinding:2.10.1")
+
+    //circle img
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    //shimmer
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 }

@@ -1,30 +1,23 @@
 package com.cious.learnhub.ui.myclass.detail.adapter
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.cious.learnhub.ui.myclass.detail.pagerfragment.AboutFragment
+import com.cious.learnhub.ui.myclass.detail.pagerfragment.ClassMaterialFragment
 
-/*
-class MyPagerAdapter(fragment: Fragment) : FragmentStatePagerAdapter(fragment) {
-    override fun getCount(): Int = 2
+class MyPagerAdapter(fragmentManager: FragmentManager,
+                     lifecycle: Lifecycle
+) : FragmentStateAdapter(fragmentManager, lifecycle) {
+    override fun getItemCount(): Int = 2
 
-    override fun getItem(position: Int): Fragment {
-
-        return when (position) {
-            0 -> CourseDescriptionFragment()
-            1 -> CourseReviewFragment()
-            else -> CourseProgressFragment()
-        }
-    }
-
-    override fun getPageTitle(position: Int): CharSequence? {
-        return when (position) {
-            0 -> "Deskripsi"
-            1 -> "Ulasan"
-            else -> "Kemajuan"
+    override fun createFragment(position: Int): Fragment {
+        return if (position == 0 ){
+            AboutFragment()
+        }else{
+            ClassMaterialFragment()
         }
     }
 
 }
-
- */
