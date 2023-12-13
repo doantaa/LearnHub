@@ -15,7 +15,7 @@ interface CourseDataSource {
     suspend fun getCategory(): CategoriesResponse
 }
 
-class CourseApiDataSouce(
+class CourseApiDataSource(
     private val service: CourseService
 ) : CourseDataSource {
     override suspend fun getCourses(

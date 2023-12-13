@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.R
-import com.cious.learnhub.data.network.api.datasource.CourseApiDataSouce
+import com.cious.learnhub.data.network.api.datasource.CourseApiDataSource
 import com.cious.learnhub.data.network.api.service.CourseService
 import com.cious.learnhub.data.repository.CourseRepositoryImpl
 import com.cious.learnhub.databinding.FragmentCourseBinding
@@ -73,6 +73,7 @@ class CourseFragment : Fragment() {
             hideKeyboard()
             return@setOnEditorActionListener true
         }
+
 
     }
 

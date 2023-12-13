@@ -170,46 +170,25 @@
 
     </androidx.cardview.widget.CardView>
 
-    <RadioGroup
-        android:id="@+id/rg_detail_class"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tl_detail"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/dark_blue_5"
-        android:checkedButton="@+id/rb_about"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/cv_header_class_info">
-
-        <RadioButton
-            android:id="@+id/rb_about"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/selector_toggle_background"
-            android:button="@null"
-            android:gravity="center"
-            android:text="Tentang"
-            android:textColor="@drawable/selector_toggle_text_color"
-            android:textSize="12sp" />
-
-        <RadioButton
-            android:id="@+id/rb_class_material"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/selector_toggle_background"
-            android:button="@null"
-            android:gravity="center"
-            android:text="Materi Kelas"
-            android:textColor="@drawable/selector_toggle_text_color"
-            android:textSize="12sp" />
-    </RadioGroup>
+        app:layout_constraintTop_toBottomOf="@id/cv_header_class_info"
+        app:tabIndicatorAnimationMode="elastic"
+        app:tabIndicatorColor="@color/dark_blue"
+        app:tabIndicatorGravity="bottom"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/dark_blue" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
+        android:id="@+id/view_pager_2"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rg_detail_class" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tl_detail" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
