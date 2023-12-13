@@ -17,6 +17,7 @@ import com.cious.learnhub.data.repository.EnrollmentRepositoryImpl
 import com.cious.learnhub.databinding.FragmentMyClassBinding
 import com.cious.learnhub.model.Course
 import com.cious.learnhub.ui.home.HomeViewModel
+import com.cious.learnhub.ui.myclass.adapter.ProgressiveCourseAdapter
 import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.proceedWhen
 

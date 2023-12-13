@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_blue_5"
+    android:background="@color/NEUTRAL01"
     tools:context=".ui.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -133,12 +133,11 @@
         android:id="@+id/rv_category_class"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:itemCount="6"
         android:orientation="horizontal"
         android:paddingHorizontal="28dp"
         app:layout_constraintTop_toBottomOf="@id/tv_title_category_class"
         app:spanCount="3"
-        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:listitem="@layout/item_class_categories" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
