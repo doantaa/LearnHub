@@ -18,6 +18,7 @@ import com.cious.learnhub.databinding.FragmentHomeBinding
 import com.cious.learnhub.ui.home.adapter.CategoryListAdapter
 import com.cious.learnhub.ui.home.adapter.HomeCourseListAdapter
 import com.cious.learnhub.utils.GenericViewModelFactory
+import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.proceedWhen
 
 class HomeFragment : Fragment() {
@@ -56,6 +57,23 @@ class HomeFragment : Fragment() {
         invokeData()
         observeData()
         setupProfileData()
+        setupSearchBar()
+    }
+
+    private fun setupSearchBar() {
+        binding.etSearch.clearFocus()
+        val keyword = binding.etSearch.text
+        binding.btnSearch.setOnClickListener {
+            viewModel.getCourses(title = keyword.toString())
+            binding.etSearch.clearFocus()
+            hideKeyboard()
+        }
+        binding.etSearch.setOnEditorActionListener { textView, i, keyEvent ->
+            viewModel.getCourses(title = keyword.toString())
+            binding.etSearch.clearFocus()
+            hideKeyboard()
+            return@setOnEditorActionListener true
+        }
     }
 
     private fun setupProfileData() {
