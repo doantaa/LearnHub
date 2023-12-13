@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_rounded_blue"
-            android:drawableEnd="@drawable/ic_next"
+            android:drawableEnd="@drawable/ic_next_white"
             android:drawablePadding="30dp"
             android:fontFamily="@font/montserrat_semibold"
             android:paddingStart="30dp"

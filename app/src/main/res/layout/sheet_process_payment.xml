@@ -60,7 +60,7 @@
         android:layout_marginHorizontal="46dp"
         android:layout_marginTop="67dp"
         android:layout_marginBottom="53dp"
-        android:drawableEnd="@drawable/ic_next"
+        android:drawableEnd="@drawable/ic_next_white"
         android:fontFamily="@font/montserrat"
         android:paddingHorizontal="86dp"
         android:paddingVertical="12dp"
