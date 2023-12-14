@@ -32,9 +32,9 @@
 
     <fragment
         android:id="@+id/navigation_my_class"
-        android:name="com.cious.learnhub.ui.myclass.MyClassFragment"
+        android:name="com.cious.learnhub.ui.myclass.detail.CourseDetailFragment"
         android:label="@string/title_my_class"
-        tools:layout="@layout/fragment_my_class" />
+        tools:layout="@layout/fragment_class_material" />
 
     <fragment
         android:id="@+id/navigation_course"

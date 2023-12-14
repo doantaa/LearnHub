@@ -2,29 +2,28 @@ package com.cious.learnhub.data.network.api.datasource
 
 import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
 import com.cious.learnhub.data.network.api.model.course.CoursesResponse
-import com.cious.learnhub.data.network.api.service.CourseService
+import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentsResponse
+import com.cious.learnhub.data.network.api.service.EnrollmentService
 
-interface CourseDataSource {
-    suspend fun getCourses(
+interface EnrollmentDataSource {
+    suspend fun getEnrollment(
         category: String? = null,
         title: String? = null,
         courseType: String? = null,
         level: String? = null
-    ): CoursesResponse
+    ): EnrollmentsResponse
 
     suspend fun getCategory(): CategoriesResponse
 }
 
-class CourseApiDataSource(
-    private val service: CourseService
-) : CourseDataSource {
-    override suspend fun getCourses(
+class EnrollmentApiDataSource(private val service: EnrollmentService) : EnrollmentDataSource {
+    override suspend fun getEnrollment(
         category: String?,
         title: String?,
         courseType: String?,
         level: String?
-    ): CoursesResponse {
-        return service.getCourses(category, title, courseType, level)
+    ): EnrollmentsResponse {
+        return service.getEnrollments(category, title, courseType, level)
     }
 
     override suspend fun getCategory(): CategoriesResponse {
