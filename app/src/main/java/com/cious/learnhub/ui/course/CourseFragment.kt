@@ -35,7 +35,7 @@ class CourseFragment : Fragment() {
 
     private val viewModel: CourseViewModel by viewModels {
         val service = CourseService.invoke(ChuckerInterceptor(requireContext()))
-        val dataSource = CourseApiDataSouce(service)
+        val dataSource = CourseApiDataSource(service)
         val repository = CourseRepositoryImpl(dataSource)
         GenericViewModelFactory.create(CourseViewModel(repository))
     }
