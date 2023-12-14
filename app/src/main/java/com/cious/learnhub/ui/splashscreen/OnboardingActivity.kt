@@ -4,17 +4,22 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.cious.learnhub.R
+import com.cious.learnhub.databinding.ActivityOnboardingBinding
 import com.cious.learnhub.ui.main.MainActivity
 
 class OnboardingActivity : AppCompatActivity(), OnboardingNavigation {
+
+    private lateinit var binding: ActivityOnboardingBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_onboarding)
+        binding = ActivityOnboardingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val firstFragment = OnBoardingFirstFragment()
         supportFragmentManager.beginTransaction().apply {
             setCustomAnimations(R.anim.slider_in, R.anim.slider_out)
-            replace(R.id.fragment_container, firstFragment)
+            replace(binding.fragmentContainer.id, firstFragment)
             addToBackStack(null)
             commit()
         }
@@ -25,8 +30,8 @@ class OnboardingActivity : AppCompatActivity(), OnboardingNavigation {
             1 -> {
                 val secondFragment = OnBoardingSecondFragment()
                 supportFragmentManager.beginTransaction().apply {
-                    setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                    replace(R.id.fragment_container, secondFragment)
+                    setCustomAnimations(R.anim.slider_in, R.anim.slider_out)
+                    replace(binding.fragmentContainer.id, secondFragment)
                     addToBackStack(null)
                     commit()
                 }
@@ -34,8 +39,8 @@ class OnboardingActivity : AppCompatActivity(), OnboardingNavigation {
             2 -> {
                 val thirdFragment = OnBoardingThirdFragment()
                 supportFragmentManager.beginTransaction().apply {
-                    setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                    replace(R.id.fragment_container, thirdFragment)
+                    setCustomAnimations(R.anim.slider_in, R.anim.slider_out)
+                    replace(binding.fragmentContainer.id, thirdFragment)
                     addToBackStack(null)
                     commit()
                 }
@@ -43,7 +48,7 @@ class OnboardingActivity : AppCompatActivity(), OnboardingNavigation {
             3 -> {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                overridePendingTransition(R.anim.slider_in, R.anim.slider_out)
                 finish()
             }
         }

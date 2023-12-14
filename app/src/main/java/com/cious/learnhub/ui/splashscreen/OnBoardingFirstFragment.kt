@@ -7,18 +7,20 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import com.cious.learnhub.R
+import com.cious.learnhub.databinding.FragmentOnBoarding1Binding
 
 class OnBoardingFirstFragment : Fragment() {
-    private lateinit var btNext: ImageButton
+
+    private lateinit var binding: FragmentOnBoarding1Binding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_on_boarding1, container, false)
-        btNext = view.findViewById(R.id.btNext)
+    ): View {
+        binding = FragmentOnBoarding1Binding.inflate(inflater, container, false)
+        val view = binding.root
 
-        btNext.setOnClickListener {
+        binding.btNext.setOnClickListener {
             if (activity is OnboardingNavigation) {
                 (activity as OnboardingNavigation).navigateToNextFragment(1)
             }

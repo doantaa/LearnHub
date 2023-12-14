@@ -7,18 +7,20 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import com.cious.learnhub.R
+import com.cious.learnhub.databinding.FragmentOnBoarding3Binding
 
 class OnBoardingThirdFragment : Fragment() {
-    private lateinit var btNext: AppCompatButton
+
+    private lateinit var binding: FragmentOnBoarding3Binding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_on_boarding3, container, false)
-        btNext = view.findViewById(R.id.btFinish)
+    ): View {
+        binding = FragmentOnBoarding3Binding.inflate(inflater, container, false)
+        val view = binding.root
 
-        btNext.setOnClickListener {
+        binding.btFinish.setOnClickListener {
             if (activity is OnboardingNavigation) {
                 (activity as OnboardingNavigation).navigateToNextFragment(3)
             }
@@ -26,5 +28,4 @@ class OnBoardingThirdFragment : Fragment() {
 
         return view
     }
-
 }
