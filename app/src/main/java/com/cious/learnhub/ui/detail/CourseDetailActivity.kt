@@ -1,19 +1,20 @@
 package com.cious.learnhub.ui.detail
 
+import android.content.Context
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.OrientationEventListener
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
-import com.cious.learnhub.R
 import com.cious.learnhub.databinding.ActivityCourseDetailBinding
 import com.cious.learnhub.ui.detail.adapter.MyPagerAdapter
 import com.google.android.material.tabs.TabLayout
@@ -57,6 +58,7 @@ class CourseDetailActivity : AppCompatActivity() {
         youtubePlayer()
     }
 
+
     private fun youtubePlayer() {
         windowInsetsController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
@@ -78,8 +80,7 @@ class CourseDetailActivity : AppCompatActivity() {
             }
         }
         val autoRotationOn = Settings.System.getInt(
-            contentResolver,
-            Settings.System.ACCELEROMETER_ROTATION, 0
+            contentResolver, Settings.System.ACCELEROMETER_ROTATION, 0
         ) == 1
         if (autoRotationOn) {
             orientationEventListener.enable()
@@ -89,10 +90,9 @@ class CourseDetailActivity : AppCompatActivity() {
     }
 
     private fun initYoutube() {
-        val iFramePlayerOptions = IFramePlayerOptions.Builder()
-            .controls(1)
-            .fullscreen(1) // enable full screen button
-            .build()
+        val iFramePlayerOptions =
+            IFramePlayerOptions.Builder().controls(1).fullscreen(1) // enable full screen button
+                .build()
         binding.youtubePlayerView.apply {
             enableAutomaticInitialization = false
             addFullscreenListener(object : FullscreenListener {
@@ -144,6 +144,7 @@ class CourseDetailActivity : AppCompatActivity() {
             }
         })
     }
+
     override fun onConfigurationChanged(newConfig: Configuration) {
         val oldOrientation = requestedOrientation
         val newOrientation = newConfig.orientation
@@ -181,6 +182,15 @@ class CourseDetailActivity : AppCompatActivity() {
         binding.flFullscreen.apply {
             isVisible = true
             addView(view)
+        }
+    }
+
+    companion object {
+        const val EXTRA_ID = "EXTRA_ID"
+        fun startActivity(context: Context, id: Int) {
+            val intent = Intent(context, CourseDetailActivity::class.java)
+            intent.putExtra(EXTRA_ID, id)
+            context.startActivity(intent)
         }
     }
 }
