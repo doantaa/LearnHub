@@ -1,4 +1,4 @@
-package com.cious.learnhub.ui.myclass.detail.pagerfragment
+package com.cious.learnhub.ui.detail.pagerfragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentClassMaterialBinding
-import com.cious.learnhub.databinding.FragmentCourseDetailBinding
 import com.cious.learnhub.ui.myclass.viewitems.DataItem
 import com.cious.learnhub.ui.myclass.viewitems.HeaderItem
 import com.cious.model.SectionedData

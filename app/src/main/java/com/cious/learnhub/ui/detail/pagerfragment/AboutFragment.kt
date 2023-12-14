@@ -1,4 +1,4 @@
-package com.cious.learnhub.ui.myclass.detail.pagerfragment
+package com.cious.learnhub.ui.detail.pagerfragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

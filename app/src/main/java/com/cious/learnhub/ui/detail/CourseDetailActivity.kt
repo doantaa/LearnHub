@@ -1,44 +1,47 @@
-package com.cious.learnhub.ui.myclass.detail
+package com.cious.learnhub.ui.detail
 
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.OrientationEventListener
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.cious.learnhub.databinding.FragmentCourseDetailBinding
-import com.cious.learnhub.ui.myclass.detail.adapter.MyPagerAdapter
+import com.cious.learnhub.R
+import com.cious.learnhub.databinding.ActivityCourseDetailBinding
+import com.cious.learnhub.ui.detail.adapter.MyPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.FullscreenListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
 
-class CourseDetailFragment : Fragment() {
+class CourseDetailActivity : AppCompatActivity() {
 
-    private lateinit var binding: FragmentCourseDetailBinding
+    private val binding: ActivityCourseDetailBinding by lazy {
+        ActivityCourseDetailBinding.inflate(layoutInflater)
+    }
+
     private val tabLayout: TabLayout by lazy {
         binding.tlDetail
     }
+
     private val viewPager2: ViewPager2 by lazy {
         binding.viewPager2
     }
 
     private val adapter: MyPagerAdapter by lazy {
-        MyPagerAdapter(childFragmentManager, lifecycle)
+        MyPagerAdapter(supportFragmentManager, lifecycle)
     }
 
     private val windowInsetsController: WindowInsetsControllerCompat by lazy {
-        WindowCompat.getInsetsController(requireActivity().window, requireActivity().window.decorView)
+        WindowCompat.getInsetsController(window, window.decorView)
     }
 
     private var youtubePlayer: YouTubePlayer? = null
@@ -46,16 +49,10 @@ class CourseDetailFragment : Fragment() {
     private var previousOrientation: Int = -1
 
     private var isFullScreen = false
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentCourseDetailBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
         showLayout()
         youtubePlayer()
     }
@@ -64,7 +61,7 @@ class CourseDetailFragment : Fragment() {
         windowInsetsController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         initYoutube()
-        val orientationEventListener = object : OrientationEventListener(requireContext()) {
+        val orientationEventListener = object : OrientationEventListener(this) {
             override fun onOrientationChanged(orientation: Int) {
                 val newOrientation = when (orientation) {
                     in 0..44 -> 0
@@ -75,13 +72,13 @@ class CourseDetailFragment : Fragment() {
                     else -> ORIENTATION_UNKNOWN
                 }
                 if (newOrientation != previousOrientation && !isFullScreen) {
-                    requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER
                 }
                 previousOrientation = newOrientation
             }
         }
         val autoRotationOn = Settings.System.getInt(
-            requireActivity().contentResolver,
+            contentResolver,
             Settings.System.ACCELEROMETER_ROTATION, 0
         ) == 1
         if (autoRotationOn) {
@@ -110,7 +107,7 @@ class CourseDetailFragment : Fragment() {
             })
             initialize(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
-                    this@CourseDetailFragment.youtubePlayer = youTubePlayer
+                    this@CourseDetailActivity.youtubePlayer = youTubePlayer
                     youTubePlayer.loadVideo("dQw4w9WgXcQ", 0f)
                 }
             }, iFramePlayerOptions)
@@ -148,7 +145,7 @@ class CourseDetailFragment : Fragment() {
         })
     }
     override fun onConfigurationChanged(newConfig: Configuration) {
-        val oldOrientation = requireActivity().requestedOrientation
+        val oldOrientation = requestedOrientation
         val newOrientation = newConfig.orientation
         Log.d("MainActivity", "onConfigurationChanged Old Orientation: $oldOrientation")
         Log.d("MainActivity", "onConfigurationChanged New Orientation: $newOrientation")
@@ -166,7 +163,7 @@ class CourseDetailFragment : Fragment() {
     }
 
     private fun exitFullscreen() {
-        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT
         isFullScreen = false
         windowInsetsController.show(WindowInsetsCompat.Type.systemBars())
         binding.youtubePlayerView.isVisible = true
@@ -177,7 +174,7 @@ class CourseDetailFragment : Fragment() {
     }
 
     private fun enterFullScreen(view: View) {
-        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE
         isFullScreen = true
         windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
         binding.youtubePlayerView.isVisible = false
