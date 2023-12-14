@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.myclass.detail.pagerfragment.AboutFragment">
+    tools:context=".ui.detail.pagerfragment.AboutFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_telegram_link"

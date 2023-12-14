@@ -1,11 +1,11 @@
-package com.cious.learnhub.ui.myclass.detail.adapter
+package com.cious.learnhub.ui.detail.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.cious.learnhub.ui.myclass.detail.pagerfragment.AboutFragment
-import com.cious.learnhub.ui.myclass.detail.pagerfragment.ClassMaterialFragment
+import com.cious.learnhub.ui.detail.pagerfragment.AboutFragment
+import com.cious.learnhub.ui.detail.pagerfragment.ClassMaterialFragment
 
 class MyPagerAdapter(fragmentManager: FragmentManager,
                      lifecycle: Lifecycle

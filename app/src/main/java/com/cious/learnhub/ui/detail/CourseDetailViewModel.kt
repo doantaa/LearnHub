@@ -1,4 +1,4 @@
-package com.cious.learnhub.ui.myclass.detail
+package com.cious.learnhub.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
