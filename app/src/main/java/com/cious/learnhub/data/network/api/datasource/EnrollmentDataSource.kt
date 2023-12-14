@@ -1,5 +1,6 @@
 package com.cious.learnhub.data.network.api.datasource
 
+import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
 import com.cious.learnhub.data.network.api.model.course.CoursesResponse
 import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentsResponse
 import com.cious.learnhub.data.network.api.service.EnrollmentService
@@ -11,6 +12,8 @@ interface EnrollmentDataSource {
         courseType: String? = null,
         level: String? = null
     ): EnrollmentsResponse
+
+    suspend fun getCategory(): CategoriesResponse
 }
 
 class EnrollmentApiDataSource(private val service: EnrollmentService) : EnrollmentDataSource {
@@ -21,6 +24,10 @@ class EnrollmentApiDataSource(private val service: EnrollmentService) : Enrollme
         level: String?
     ): EnrollmentsResponse {
         return service.getEnrollments(category, title, courseType, level)
+    }
+
+    override suspend fun getCategory(): CategoriesResponse {
+        return service.getCategories()
     }
 
 }
