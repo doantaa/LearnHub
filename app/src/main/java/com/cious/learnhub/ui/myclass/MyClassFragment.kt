@@ -17,6 +17,8 @@ import com.cious.learnhub.data.repository.EnrollmentRepositoryImpl
 import com.cious.learnhub.databinding.FragmentMyClassBinding
 import com.cious.learnhub.model.Course
 import com.cious.learnhub.ui.home.HomeViewModel
+import com.cious.learnhub.ui.home.adapter.CategoryListAdapter
+import com.cious.learnhub.ui.myclass.adapter.CategoryMyClassAdapter
 import com.cious.learnhub.ui.myclass.adapter.ProgressiveCourseAdapter
 import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.proceedWhen
@@ -24,7 +26,6 @@ import com.cious.learnhub.utils.proceedWhen
 class MyClassFragment : Fragment() {
 
     private lateinit var binding: FragmentMyClassBinding
-
 
 
     private val viewModel: MyClassViewModel by viewModels {
@@ -36,6 +37,12 @@ class MyClassFragment : Fragment() {
 
     private val progressiveCourseAdapter: ProgressiveCourseAdapter by lazy {
         ProgressiveCourseAdapter {
+        }
+    }
+
+    private val categoryListAdapter: CategoryMyClassAdapter by lazy {
+        CategoryMyClassAdapter {
+            viewModel.getCourses(category = it.id)
         }
     }
 
@@ -76,21 +83,30 @@ class MyClassFragment : Fragment() {
     }
 
     private fun observeCategoryData() {
-}
+        viewModel.categories.observe(viewLifecycleOwner) {
+            it.proceedWhen(doOnSuccess = { data ->
+                binding.rvCategoryClass.isVisible = true
+                data.payload?.let { categoryList ->
+                    categoryListAdapter.setData(categoryList)
+                }
+            })
+        }
+    }
 
-private fun getData() {
-    viewModel.getCourses()
-}
+    private fun getData() {
+        viewModel.getCourses()
+    }
 
-private fun setupRecyclerView() {
-    setupCategoryRecyclerView()
-    setupCourseRecyclerView()
-}
+    private fun setupRecyclerView() {
+        setupCategoryRecyclerView()
+        setupCourseRecyclerView()
+    }
 
-private fun setupCourseRecyclerView() {
-    binding.rvClass.adapter = progressiveCourseAdapter
-}
+    private fun setupCourseRecyclerView() {
+        binding.rvClass.adapter = progressiveCourseAdapter
+    }
 
-private fun setupCategoryRecyclerView() {
-}
+    private fun setupCategoryRecyclerView() {
+        binding.rvCategoryClass.adapter = categoryListAdapter
+    }
 }

@@ -18,6 +18,8 @@ class MyClassViewModel(private val repository: EnrollmentRepository) : ViewModel
     val courses: LiveData<ResultWrapper<List<Enrollment>>>
         get() = _enrollment
 
+    val categories = repository.getCategories().asLiveData(Dispatchers.IO)
+
     fun getCourses(
         category: String? = null,
         title: String? = null,
