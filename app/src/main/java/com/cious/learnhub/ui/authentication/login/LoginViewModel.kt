@@ -23,15 +23,10 @@ class LoginViewModel(
 
     fun doLoginRequest(loginRequest: LoginRequest) {
         viewModelScope.launch(Dispatchers.IO) {
-            proceedFlow {
-                authRepository.doLogin(loginRequest)
-                    .collect{ result ->
-                        if (result is ResultWrapper.Success) {
-                            userPreferenceDataStore.saveToken(result.payload)
-                        }
-                        _loginRequestResult.postValue(result)
-                    }
-            }
+            authRepository.doLogin(loginRequest)
+                .collect{
+                    _loginRequestResult.postValue(it)
+                }
         }
     }
 }

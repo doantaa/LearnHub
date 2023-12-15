@@ -11,6 +11,7 @@ import com.cious.learnhub.data.repository.CourseRepositoryImpl
 import com.cious.learnhub.ui.authentication.login.LoginViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
 object AppModules {
@@ -36,4 +37,12 @@ object AppModules {
         single<UserPreferenceDataStore> { UserPreferenceDataStoreImpl(androidContext()) }
         viewModel { LoginViewModel(get(), get()) }
     }
+
+    val modules: List<Module> = listOf (
+        localModule,
+        networkModule,
+        dataSourceModule,
+        repositoryModule,
+        appModule
+    )
 }

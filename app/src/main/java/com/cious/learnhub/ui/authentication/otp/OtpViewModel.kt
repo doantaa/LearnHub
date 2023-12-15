@@ -11,7 +11,10 @@ import com.cious.learnhub.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class OtpViewModel(private val authRepository: AuthRepository, private val extras: Bundle?): ViewModel() {
+class OtpViewModel(
+    private val authRepository: AuthRepository,
+    private val extras: Bundle?
+): ViewModel() {
 
     val dataParcel = extras?.getParcelable<AuthenticationData>(OtpActivity.USER_REGISTER_DATA)
     private val _registerResult = MutableLiveData<ResultWrapper<Boolean>>()

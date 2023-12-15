@@ -9,7 +9,9 @@ import com.cious.learnhub.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RegisterViewModel(private val authRepository: AuthRepository): ViewModel() {
+class RegisterViewModel(
+    private val authRepository: AuthRepository
+): ViewModel() {
 
     private val _otpRequestResult = MutableLiveData<ResultWrapper<String>>()
     val otpRequestResult : LiveData<ResultWrapper<String>>
