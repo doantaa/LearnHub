@@ -1,6 +1,7 @@
 package com.cious.learnhub.ui.course
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,8 @@ class CourseFragment : Fragment() {
 
     private val courseListAdapter: CourseListAdapter by lazy {
         CourseListAdapter {
-            CourseDetailActivity.startActivity(requireContext(), it)
+            Log.d("BEFORE",it.id.toString())
+            CourseDetailActivity.startActivity(requireContext(), it.id)
         }
     }
 

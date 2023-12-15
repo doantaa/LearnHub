@@ -6,10 +6,10 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
-import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.OrientationEventListener
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -17,11 +17,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
-import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.cious.learnhub.data.network.api.datasource.CourseApiDataSource
-import com.cious.learnhub.data.network.api.service.CourseService
-import com.cious.learnhub.data.repository.CourseRepository
-import com.cious.learnhub.data.repository.CourseRepositoryImpl
 import com.cious.learnhub.databinding.ActivityCourseDetailBinding
 import com.cious.learnhub.model.Course
 import com.cious.learnhub.ui.detail.adapter.MyPagerAdapter
@@ -61,18 +56,16 @@ class CourseDetailActivity : AppCompatActivity() {
 
     private var isFullScreen = false
 
-    private lateinit var course: Course
-
     private val viewModel: CourseDetailViewModel by viewModels {
-        GenericViewModelFactory.create(CourseDetailViewModel(intent?.extras))
+        GenericViewModelFactory.create(CourseDetailViewModel(intent.extras))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        bindCourse(viewModel.course)
         showLayout()
         youtubePlayer()
+        Toast.makeText(this, viewModel.courseId.toString(), Toast.LENGTH_SHORT).show()
     }
 
     private fun bindCourse(course: Course?) {
@@ -217,10 +210,10 @@ class CourseDetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_COURSE = "EXTRA_COURSE"
-        fun startActivity(context: Context, course: Course) {
+        const val EXTRA_ID = "EXTRA_ID"
+        fun startActivity(context: Context, courseId: Int) {
             val intent = Intent(context, CourseDetailActivity::class.java)
-            intent.putExtra(EXTRA_COURSE, course)
+            intent.putExtra(EXTRA_ID, courseId)
             context.startActivity(intent)
         }
     }
