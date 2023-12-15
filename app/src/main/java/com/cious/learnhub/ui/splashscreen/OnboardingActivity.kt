@@ -1,19 +1,19 @@
 package com.cious.learnhub.ui.splashscreen
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.ActivityOnboardingBinding
-import com.cious.learnhub.ui.main.MainActivity
 
 class OnboardingActivity : AppCompatActivity(), OnboardingNavigation {
 
-    private lateinit var binding: ActivityOnboardingBinding
+    private val binding: ActivityOnboardingBinding by lazy {
+        ActivityOnboardingBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val firstFragment = OnBoardingFirstFragment()
@@ -36,6 +36,7 @@ class OnboardingActivity : AppCompatActivity(), OnboardingNavigation {
                     commit()
                 }
             }
+
             2 -> {
                 val thirdFragment = OnBoardingThirdFragment()
                 supportFragmentManager.beginTransaction().apply {
@@ -45,11 +46,21 @@ class OnboardingActivity : AppCompatActivity(), OnboardingNavigation {
                     commit()
                 }
             }
+
             3 -> {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                overridePendingTransition(R.anim.slider_in, R.anim.slider_out)
-                finish()
+                val firstFragment = OnBoardingFirstFragment()
+
+                supportFragmentManager.popBackStack(
+                    null,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE
+                )
+
+                supportFragmentManager.beginTransaction().apply {
+                    setCustomAnimations(R.anim.slider_in, R.anim.slider_out)
+                    replace(binding.fragmentContainer.id, firstFragment)
+                    addToBackStack(null)
+                    commit()
+                }
             }
         }
     }
