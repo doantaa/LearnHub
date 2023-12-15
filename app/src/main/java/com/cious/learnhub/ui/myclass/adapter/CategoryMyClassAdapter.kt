@@ -1,4 +1,4 @@
-package com.cious.learnhub.ui.home.adapter
+package com.cious.learnhub.ui.myclass.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,15 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.cious.learnhub.core.ViewHolderBinder
-import com.cious.learnhub.databinding.ItemCategoryBinding
+import com.cious.learnhub.databinding.ItemClassCategoriesBinding
 import com.cious.learnhub.model.Category
-import com.cious.learnhub.ui.home.adapter.viewholder.CategoryListViewHolder
 
-class CategoryListAdapter(
+class CategoryMyClassAdapter(
     private val onItemClick: (Category) -> Unit
-) : RecyclerView.Adapter<CategoryListViewHolder>() {
+) : RecyclerView.Adapter<CategoryMyClassListViewHolder>() {
 
     private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<Category>() {
         override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
@@ -24,12 +22,13 @@ class CategoryListAdapter(
         override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
+
     })
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryListViewHolder {
-        return CategoryListViewHolder(
-            binding = ItemCategoryBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryMyClassListViewHolder {
+        return CategoryMyClassListViewHolder(
+            binding = ItemClassCategoriesBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -42,7 +41,7 @@ class CategoryListAdapter(
         return differ.currentList.size
     }
 
-    override fun onBindViewHolder(holder: CategoryListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoryMyClassListViewHolder, position: Int) {
         (holder as ViewHolderBinder<Category>).bind(differ.currentList[position])
     }
 
@@ -51,4 +50,17 @@ class CategoryListAdapter(
         Log.d("DIFFER SIZE", categoryList.toString())
     }
 
+}
+
+class CategoryMyClassListViewHolder(
+    private val binding: ItemClassCategoriesBinding, val onItemClick: (Category) -> Unit
+) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Category> {
+    override fun bind(item: Category) {
+        with(item) {
+            binding.root.setOnClickListener {
+                onItemClick.invoke(item)
+            }
+            binding.tvCategory.text = item.name
+        }
+    }
 }

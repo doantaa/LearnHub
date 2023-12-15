@@ -29,7 +29,6 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.historypayment.HistoryPaymentActivity"
             android:exported="false" />
