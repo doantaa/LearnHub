@@ -18,7 +18,7 @@
     <string name="text_instructor">by Angela Doe</string>
     <string name="text_level">Intermediate</string>
     <string name="text_total_module">10 Module</string>
-    <string name="text_duration">120 Menit</string>
+    <string name="text_duration">%s Menit</string>
     <string name="text_progress">0% Complete</string>
     <string name="text_masuk">Masuk</string>
     <string name="text_contoh_johndoe_gmail_com">Contoh: johndoe@gmail.com</string>

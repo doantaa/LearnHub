@@ -61,6 +61,8 @@ class CourseDetailActivity : AppCompatActivity() {
 
     private var isFullScreen = false
 
+    private lateinit var course: Course
+
     private val viewModel: CourseDetailViewModel by viewModels {
         GenericViewModelFactory.create(CourseDetailViewModel(intent?.extras))
     }
