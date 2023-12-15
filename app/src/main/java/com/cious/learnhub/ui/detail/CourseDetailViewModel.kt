@@ -1,5 +1,7 @@
 package com.cious.learnhub.ui.detail
 
+import android.os.Bundle
+import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +13,6 @@ import com.cious.learnhub.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CourseDetailViewModel(private val repository: CourseRepository): ViewModel() {
-
+class CourseDetailViewModel(private val extras: Bundle?): ViewModel() {
+    val course = extras?.getParcelable<Course>(CourseDetailActivity.EXTRA_COURSE)
 }

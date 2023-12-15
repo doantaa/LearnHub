@@ -6,22 +6,32 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.OrientationEventListener
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.cious.learnhub.data.network.api.datasource.CourseApiDataSource
+import com.cious.learnhub.data.network.api.service.CourseService
+import com.cious.learnhub.data.repository.CourseRepository
+import com.cious.learnhub.data.repository.CourseRepositoryImpl
 import com.cious.learnhub.databinding.ActivityCourseDetailBinding
+import com.cious.learnhub.model.Course
 import com.cious.learnhub.ui.detail.adapter.MyPagerAdapter
+import com.cious.learnhub.utils.GenericViewModelFactory
 import com.google.android.material.tabs.TabLayout
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.FullscreenListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.loadOrCueVideo
 
 class CourseDetailActivity : AppCompatActivity() {
 
@@ -51,11 +61,30 @@ class CourseDetailActivity : AppCompatActivity() {
 
     private var isFullScreen = false
 
+    private val viewModel: CourseDetailViewModel by viewModels {
+        GenericViewModelFactory.create(CourseDetailViewModel(intent?.extras))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        bindCourse(viewModel.course)
         showLayout()
         youtubePlayer()
+    }
+
+    private fun bindCourse(course: Course?) {
+        course?.let { item ->
+            binding.apply {
+                tvDuration.text = item.totalDuration
+                tvTitleClass.text = item.title
+                tvModule.text = item.moduleCount.toString()
+                tvInstructor.text = item.instructor
+                tvLevel.text = item.level
+                tvTitleCategoryClass.text = item.categoryName
+                tvRating.text = item.rating.toString()
+            }
+        }
     }
 
 
@@ -108,7 +137,7 @@ class CourseDetailActivity : AppCompatActivity() {
             initialize(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     this@CourseDetailActivity.youtubePlayer = youTubePlayer
-                    youTubePlayer.loadVideo("dQw4w9WgXcQ", 0f)
+                    youTubePlayer.loadOrCueVideo(lifecycle, "MvCN3pDHJ5E", 0f)
                 }
             }, iFramePlayerOptions)
         }
@@ -186,10 +215,10 @@ class CourseDetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_ID = "EXTRA_ID"
-        fun startActivity(context: Context, id: Int) {
+        const val EXTRA_COURSE = "EXTRA_COURSE"
+        fun startActivity(context: Context, course: Course) {
             val intent = Intent(context, CourseDetailActivity::class.java)
-            intent.putExtra(EXTRA_ID, id)
+            intent.putExtra(EXTRA_COURSE, course)
             context.startActivity(intent)
         }
     }
