@@ -2,6 +2,7 @@ package com.cious.learnhub.data.network.api.service
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
+import com.cious.learnhub.data.network.api.model.login.LoginRequest
 import com.cious.learnhub.data.network.api.model.login.LoginResponse
 import com.cious.learnhub.data.network.api.model.otp.OtpRequest
 import com.cious.learnhub.data.network.api.model.otp.OtpResponse
@@ -17,16 +18,13 @@ import java.util.concurrent.TimeUnit
 interface AuthenticationService {
 
     @POST("otp")
-    suspend fun getOtp(
-        @Body email: OtpRequest
-
-    ): OtpResponse
-
-//    @POST("auth/login")
-//    suspend fun login(@Body loginRequest: LoginRequest):
+    suspend fun getOtp(@Body email: OtpRequest): OtpResponse
 
     @POST("auth/register")
     suspend fun register(@Body registerRequest: RegisterRequest): RegisterResponse
+
+    @POST("auth/login")
+    suspend fun login(@Body loginRequest: LoginRequest): LoginResponse
 
     companion object {
         @JvmStatic

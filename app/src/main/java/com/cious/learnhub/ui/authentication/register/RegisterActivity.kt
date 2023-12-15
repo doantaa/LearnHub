@@ -49,7 +49,8 @@ class RegisterActivity : AppCompatActivity() {
                         name = binding.etName.text.toString(),
                         email = binding.etEmail.text.toString(),
                         phoneNumber = binding.etPhoneNumber.text.toString().toLong(),
-                        password = binding.etPassword.text.toString()
+                        password = binding.etPassword.text.toString(),
+                        hashOtp = it.payload.toString()
                     )
                     OtpActivity.startActivity(this, userRegisterData)
                 },

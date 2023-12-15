@@ -16,4 +16,6 @@ data class RegisterRequest(
     val password: String?,
     @SerializedName("otp")
     val otp: String?,
+    @SerializedName("hashedOtp")
+    val hashedOtp: String?,
 )

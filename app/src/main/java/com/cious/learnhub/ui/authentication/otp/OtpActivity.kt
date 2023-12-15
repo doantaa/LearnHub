@@ -52,9 +52,11 @@ class OtpActivity : AppCompatActivity() {
                 name = dataParcel?.name.orEmpty(),
                 email = dataParcel?.email.orEmpty(),
                 phoneNumber = dataParcel?.phoneNumber ?: 0,
-                password = dataParcel?.password.orEmpty()
+                password = dataParcel?.password.orEmpty(),
+                hashOtp = dataParcel?.hashOtp.orEmpty()
             )
             val otp = binding.otpView.text.toString()
+
             viewModel.doRegister(authenticationData, otp)
         }
     }

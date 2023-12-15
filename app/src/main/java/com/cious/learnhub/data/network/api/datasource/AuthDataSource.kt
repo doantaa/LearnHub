@@ -1,5 +1,7 @@
 package com.cious.learnhub.data.network.api.datasource
 
+import com.cious.learnhub.data.network.api.model.login.LoginRequest
+import com.cious.learnhub.data.network.api.model.login.LoginResponse
 import com.cious.learnhub.data.network.api.model.otp.OtpRequest
 import com.cious.learnhub.data.network.api.model.otp.OtpResponse
 import com.cious.learnhub.data.network.api.model.register.RegisterRequest
@@ -15,6 +17,10 @@ interface AuthDataSource {
     suspend fun doRegister(
         registerRequest: RegisterRequest
     ): RegisterResponse
+
+    suspend fun doLogin(
+        loginRequest: LoginRequest
+    ): LoginResponse
 }
 
 class AuthDataSourceImpl(
@@ -30,5 +36,9 @@ class AuthDataSourceImpl(
         registerRequest: RegisterRequest
     ): RegisterResponse {
         return service.register(registerRequest)
+    }
+
+    override suspend fun doLogin(loginRequest: LoginRequest): LoginResponse {
+        return service.login(loginRequest)
     }
 }

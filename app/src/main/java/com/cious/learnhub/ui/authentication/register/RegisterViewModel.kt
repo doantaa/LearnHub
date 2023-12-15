@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 
 class RegisterViewModel(private val authRepository: AuthRepository): ViewModel() {
 
-    private val _otpRequestResult = MutableLiveData<ResultWrapper<Boolean>>()
-    val otpRequestResult : LiveData<ResultWrapper<Boolean>>
+    private val _otpRequestResult = MutableLiveData<ResultWrapper<String>>()
+    val otpRequestResult : LiveData<ResultWrapper<String>>
         get() = _otpRequestResult
 
     fun sendOtpRequest(email: String) {
