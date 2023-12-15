@@ -25,7 +25,7 @@ class CourseFragment : Fragment() {
 
     private val courseListAdapter: CourseListAdapter by lazy {
         CourseListAdapter {
-            CourseDetailActivity.startActivity(requireContext(), it.id)
+            CourseDetailActivity.startActivity(requireContext(), it)
         }
     }
 

@@ -1,5 +1,9 @@
 package com.cious.learnhub.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Course(
     val id: Int,
     val title: String,
@@ -18,4 +22,4 @@ data class Course(
     val about: String,
     val telegramLink: String,
     val createdAt: String
-)
+):Parcelable
