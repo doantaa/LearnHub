@@ -7,7 +7,7 @@ import androidx.annotation.Keep
 @Keep
 data class CategoriesResponse(
     @SerializedName("data")
-    val data: Data?,
+    val data: List<CategoryItemResponse>?,
     @SerializedName("message")
     val message: String?,
     @SerializedName("success")

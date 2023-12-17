@@ -20,6 +20,10 @@ interface CourseRepository {
         level: String? = null
     ): Flow<ResultWrapper<List<Course>>>
 
+    fun getCoursesById(
+        id: String? = null
+    ): Flow<ResultWrapper<List<Course>>>
+
     fun getCategories(): Flow<ResultWrapper<List<Category>>>
 }
 
@@ -41,9 +45,21 @@ class CourseRepositoryImpl(
         }
     }
 
+    override fun getCoursesById(
+        id: String?
+    ): Flow<ResultWrapper<List<Course>>> {
+        return proceedFlow {
+            courseDataSource.getCoursesById(id).data?.toCourseList()
+                ?: emptyList()
+        }.onStart {
+            emit(ResultWrapper.Loading())
+            delay(2000)
+        }
+    }
+
     override fun getCategories(): Flow<ResultWrapper<List<Category>>> {
         return proceedFlow {
-            courseDataSource.getCategory().data?.categories?.toCategoryList() ?: emptyList()
+            courseDataSource.getCategory().data?.toCategoryList() ?: emptyList()
         }.onStart {
             emit(ResultWrapper.Loading())
             delay(2000)

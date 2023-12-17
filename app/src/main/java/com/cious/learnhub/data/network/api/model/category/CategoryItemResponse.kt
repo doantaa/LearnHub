@@ -18,7 +18,7 @@ data class CategoryItemResponse(
 )
 
 fun CategoryItemResponse.toCategory() = Category (
-    name = this.name.orEmpty(),
+    name = this.name?.replaceFirstChar(Char::titlecase).orEmpty(),
     id = this.id.orEmpty()
 )
 
