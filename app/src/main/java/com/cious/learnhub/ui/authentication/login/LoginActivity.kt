@@ -8,17 +8,14 @@ import androidx.core.view.isVisible
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.R
-import com.cious.learnhub.data.UserPreferenceDataStoreImpl
 import com.cious.learnhub.data.network.api.datasource.AuthDataSourceImpl
 import com.cious.learnhub.data.network.api.model.login.LoginRequest
-import com.cious.learnhub.data.network.api.model.login.LoginResponse
 import com.cious.learnhub.data.network.api.service.AuthenticationService
 import com.cious.learnhub.data.repository.AuthRepositoryImpl
 import com.cious.learnhub.databinding.ActivityLoginBinding
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
 import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordActivity
 import com.cious.learnhub.utils.GenericViewModelFactory
-import com.cious.learnhub.utils.ResultWrapper
 import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
@@ -30,11 +27,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private val viewModel: LoginViewModel by viewModels {
-        val service = AuthenticationService.invoke(ChuckerInterceptor(this))
+        val service = AuthenticationService.invoke(ChuckerInterceptor(this), applicationContext)
         val dataSource = AuthDataSourceImpl(service)
         val repository = AuthRepositoryImpl(dataSource)
-        val userPreferenceDataStore = UserPreferenceDataStoreImpl(this)
-        GenericViewModelFactory.create(LoginViewModel(repository, userPreferenceDataStore))
+        GenericViewModelFactory.create(LoginViewModel(repository))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

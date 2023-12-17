@@ -26,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private val viewModel: RegisterViewModel by viewModels{
-        val service = AuthenticationService.invoke(ChuckerInterceptor(this))
+        val service = AuthenticationService.invoke(ChuckerInterceptor(this), applicationContext)
         val dataSource = AuthDataSourceImpl(service)
         val otpRepository = AuthRepositoryImpl(dataSource)
         GenericViewModelFactory.create(RegisterViewModel(otpRepository))

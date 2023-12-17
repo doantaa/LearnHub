@@ -1,8 +1,6 @@
 package com.cious.learnhub.di
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.cious.learnhub.data.UserPreferenceDataStore
-import com.cious.learnhub.data.UserPreferenceDataStoreImpl
 import com.cious.learnhub.data.network.api.datasource.CourseApiDataSouce
 import com.cious.learnhub.data.network.api.datasource.CourseDataSource
 import com.cious.learnhub.data.network.api.service.CourseService
@@ -33,16 +31,10 @@ object AppModules {
         single<CourseRepository> { CourseRepositoryImpl(get()) }
     }
 
-    private val appModule = module {
-        single<UserPreferenceDataStore> { UserPreferenceDataStoreImpl(androidContext()) }
-        viewModel { LoginViewModel(get(), get()) }
-    }
-
     val modules: List<Module> = listOf (
         localModule,
         networkModule,
         dataSourceModule,
-        repositoryModule,
-        appModule
+        repositoryModule
     )
 }

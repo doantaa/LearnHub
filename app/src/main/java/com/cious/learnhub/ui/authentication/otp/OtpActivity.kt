@@ -27,7 +27,7 @@ class OtpActivity : AppCompatActivity() {
         ActivityOtpBinding.inflate(layoutInflater)
     }
     private val viewModel: OtpViewModel by viewModels{
-        val service = AuthenticationService.invoke(ChuckerInterceptor(this))
+        val service = AuthenticationService.invoke(ChuckerInterceptor(this), applicationContext)
         val dataSource = AuthDataSourceImpl(service)
         val repository = AuthRepositoryImpl(dataSource)
         GenericViewModelFactory.create(OtpViewModel(repository, intent.extras))

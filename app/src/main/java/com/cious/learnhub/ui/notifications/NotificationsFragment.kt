@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.data.network.api.datasource.NotificaitonDataSource
 import com.cious.learnhub.data.network.api.datasource.NotificationDataSourceImpl
+import com.cious.learnhub.data.network.api.service.AuthenticationService
 import com.cious.learnhub.data.network.api.service.NotificationService
 import com.cious.learnhub.data.repository.NotificationRepositoryImpl
 import com.cious.learnhub.databinding.FragmentNotificationsBinding
@@ -29,7 +30,7 @@ class NotificationsFragment : Fragment() {
         }
     }
     private val viewModel: NotificationsViewModel by viewModels {
-        val service = NotificationService.invoke(ChuckerInterceptor(requireContext()))
+        val service = NotificationService.invoke(ChuckerInterceptor(requireContext()), requireContext())
         val dataSource = NotificationDataSourceImpl(service)
         val repository = NotificationRepositoryImpl(dataSource)
         GenericViewModelFactory.create(NotificationsViewModel(repository))
