@@ -129,6 +129,8 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("com.squareup.picasso:picasso:2.8")
     testImplementation("androidx.arch.core:core-testing:2.2.0")
+    //circle img
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
     // view pager
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
@@ -138,12 +140,12 @@ dependencies {
     implementation ("com.github.lisawray.groupie:groupie:2.10.1")
     implementation ("com.github.lisawray.groupie:groupie-viewbinding:2.10.1")
 
-    //circle img
-    implementation("de.hdodenhof:circleimageview:3.1.0")
-
-    //shimmer
+    // shimmer effect
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 
     // youtube player
     implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
+    // otp view
+    implementation("com.github.mukeshsolanki.android-otpview-pinview:otpview:3.1.0")
 }

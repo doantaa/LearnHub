@@ -1,30 +1,63 @@
 package com.cious.learnhub.ui.authentication.otp
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.AttributeSet
+import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.cious.learnhub.data.network.api.datasource.AuthDataSourceImpl
+import com.cious.learnhub.data.network.api.service.AuthenticationService
+import com.cious.learnhub.data.repository.AuthRepositoryImpl
 import com.cious.learnhub.databinding.ActivityOtpBinding
+import com.cious.learnhub.model.AuthenticationData
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
+import com.cious.learnhub.ui.authentication.register.RegisterViewModel
+import com.cious.learnhub.utils.GenericViewModelFactory
 
 class OtpActivity : AppCompatActivity() {
 
     private val binding: ActivityOtpBinding by lazy {
         ActivityOtpBinding.inflate(layoutInflater)
     }
+    private val viewModel: OtpViewModel by viewModels{
+        val service = AuthenticationService.invoke(ChuckerInterceptor(this), applicationContext)
+        val dataSource = AuthDataSourceImpl(service)
+        val repository = AuthRepositoryImpl(dataSource)
+        GenericViewModelFactory.create(OtpViewModel(repository, intent.extras))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         setClickListeners()
-        setupOTPInputs()
+        val bundle = intent.extras
+        binding.tv.text = bundle?.getString("NAME")
     }
 
     private fun setClickListeners() {
         binding.ibBack.setOnClickListener {
             navigateToLogin()
+        }
+        binding.btnSubmit.setOnClickListener {
+            val dataParcel = viewModel.dataParcel
+            val authenticationData = AuthenticationData(
+                name = dataParcel?.name.orEmpty(),
+                email = dataParcel?.email.orEmpty(),
+                phoneNumber = dataParcel?.phoneNumber ?: 0,
+                password = dataParcel?.password.orEmpty(),
+                hashOtp = dataParcel?.hashOtp.orEmpty()
+            )
+            val otp = binding.otpView.text.toString()
+
+            viewModel.doRegister(authenticationData, otp)
         }
     }
 
@@ -35,61 +68,12 @@ class OtpActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun setupOTPInputs() {
-        binding.etOtp1.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
-                if (count == 1) {
-                    binding.etOtp2.requestFocus()
-                }
-            }
-
-            override fun afterTextChanged(editable: Editable?) {}
-        })
-        binding.etOtp2.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
-                if (count == 1) {
-                    binding.etOtp3.requestFocus()
-                }
-            }
-
-            override fun afterTextChanged(editable: Editable?) {}
-        })
-        binding.etOtp3.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
-                if (count == 1) {
-                    binding.etOtp4.requestFocus()
-                }
-            }
-
-            override fun afterTextChanged(editable: Editable?) {}
-        })
-        binding.etOtp4.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
-                if (count == 1) {
-                    binding.etOtp5.requestFocus()
-                }
-            }
-
-            override fun afterTextChanged(editable: Editable?) {}
-        })
-        binding.etOtp5.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
-                if (count == 1) {
-                    binding.etOtp6.requestFocus()
-                }
-            }
-
-            override fun afterTextChanged(editable: Editable?) {}
-        })
+    companion object {
+        val USER_REGISTER_DATA = "USER_REGISTER_DATA"
+        fun startActivity(context: Context, data: AuthenticationData) {
+            val intent = Intent(context, OtpActivity::class.java)
+            intent.putExtra(USER_REGISTER_DATA, data)
+            context.startActivity(intent)
+        }
     }
 }

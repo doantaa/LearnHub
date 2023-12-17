@@ -64,7 +64,7 @@
         android:paddingTop="20dp"
         android:paddingEnd="35sp"
         android:paddingBottom="15dp"
-        android:src="@drawable/ic_next"
+        android:src="@drawable/ic_next_white"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/white"

@@ -6,7 +6,10 @@ import com.cious.learnhub.data.network.api.datasource.CourseDataSource
 import com.cious.learnhub.data.network.api.service.CourseService
 import com.cious.learnhub.data.repository.CourseRepository
 import com.cious.learnhub.data.repository.CourseRepositoryImpl
+import com.cious.learnhub.ui.authentication.login.LoginViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
 object AppModules {
@@ -27,4 +30,11 @@ object AppModules {
     private val repositoryModule = module {
         single<CourseRepository> { CourseRepositoryImpl(get()) }
     }
+
+    val modules: List<Module> = listOf (
+        localModule,
+        networkModule,
+        dataSourceModule,
+        repositoryModule
+    )
 }

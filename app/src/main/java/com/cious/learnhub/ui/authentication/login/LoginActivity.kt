@@ -3,12 +3,22 @@ package com.cious.learnhub.ui.authentication.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.R
+import com.cious.learnhub.data.network.api.datasource.AuthDataSourceImpl
+import com.cious.learnhub.data.network.api.model.login.LoginRequest
+import com.cious.learnhub.data.network.api.service.AuthenticationService
+import com.cious.learnhub.data.repository.AuthRepositoryImpl
 import com.cious.learnhub.databinding.ActivityLoginBinding
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
 import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordActivity
+import com.cious.learnhub.utils.GenericViewModelFactory
+import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.highLightWord
+import com.cious.learnhub.utils.proceedWhen
 
 class LoginActivity : AppCompatActivity() {
 
@@ -16,11 +26,57 @@ class LoginActivity : AppCompatActivity() {
         ActivityLoginBinding.inflate(layoutInflater)
     }
 
+    private val viewModel: LoginViewModel by viewModels {
+        val service = AuthenticationService.invoke(ChuckerInterceptor(this), applicationContext)
+        val dataSource = AuthDataSourceImpl(service)
+        val repository = AuthRepositoryImpl(dataSource)
+        GenericViewModelFactory.create(LoginViewModel(repository))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        val token = SessionManager.getToken(this)
+        if (!token.isNullOrBlank()) {
+            navigateToHome()
+        }
+
         setClickListeners()
+        observeResult()
+    }
+
+    private fun observeResult() {
+        viewModel.loginRequestResult.observe(this) { resultWrapper ->
+            resultWrapper.proceedWhen (
+                doOnLoading = {
+                    binding.pbLoading.isVisible = true
+                    binding.btnLogin.isVisible = false
+                },
+                doOnSuccess = {
+                    binding.pbLoading.isVisible = false
+                    binding.btnLogin.isVisible = true
+                    processLogin(it.payload)
+                },
+                doOnError = {},
+                doOnEmpty = {}
+            )
+        }
+    }
+
+    private fun processLogin(token: String?) {
+        if (!token.isNullOrBlank()) {
+            token?.let { SessionManager.saveAuthToken(this, it) }
+            navigateToHome()
+        }
+    }
+
+    private fun navigateToHome() {
+        startActivity(
+            Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+        )
     }
 
     private fun setClickListeners() {
@@ -33,6 +89,16 @@ class LoginActivity : AppCompatActivity() {
         binding.tvIntentGuestMode.setOnClickListener() {
             navigateToHomeGuestMode()
         }
+        binding.btnLogin.setOnClickListener {
+            doLogin()
+        }
+    }
+
+    private fun doLogin() {
+        val email = binding.etEmail.text.toString()
+        val password = binding.etPassword.text.toString()
+        val loginRequest = LoginRequest(email, password)
+        viewModel.doLoginRequest(loginRequest)
     }
 
     private fun navigateToResetPassword() {
@@ -40,7 +106,6 @@ class LoginActivity : AppCompatActivity() {
             Intent(this, ResetPasswordActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             }
-
         )
     }
 
