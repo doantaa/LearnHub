@@ -132,10 +132,16 @@ class HomeFragment : Fragment() {
                 binding.shimmerHomeCategory.isVisible = true
 
             }, doOnEmpty = {
+                binding.shimmerHomeCategory.isVisible = false
                 binding.rvCourseCategory.isVisible = false
                 binding.shimmerHomeCategory.isVisible = false
 
+
             }, doOnError = {
+                binding.shimmerHomeCategory.isVisible = false
+                binding.rvCourseCategory.isVisible = false
+                binding.shimmerHomeCategory.isVisible = false
+                Log.d("CATEGORY", it.message.toString())
 
 
             })
