@@ -10,10 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.R
-import com.cious.learnhub.data.network.api.datasource.CourseApiDataSouce
+import com.cious.learnhub.data.network.api.datasource.CourseApiDataSource
 import com.cious.learnhub.data.network.api.service.CourseService
 import com.cious.learnhub.data.repository.CourseRepositoryImpl
 import com.cious.learnhub.databinding.FragmentCourseBinding
+import com.cious.learnhub.ui.detail.CourseDetailActivity
 import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.proceedWhen
@@ -24,6 +25,7 @@ class CourseFragment : Fragment() {
 
     private val courseListAdapter: CourseListAdapter by lazy {
         CourseListAdapter {
+            CourseDetailActivity.startActivity(requireContext(), it.id)
         }
     }
 
@@ -35,7 +37,7 @@ class CourseFragment : Fragment() {
 
     private val viewModel: CourseViewModel by viewModels {
         val service = CourseService.invoke(ChuckerInterceptor(requireContext()))
-        val dataSource = CourseApiDataSouce(service)
+        val dataSource = CourseApiDataSource(service)
         val repository = CourseRepositoryImpl(dataSource)
         GenericViewModelFactory.create(CourseViewModel(repository))
     }
@@ -73,6 +75,7 @@ class CourseFragment : Fragment() {
             hideKeyboard()
             return@setOnEditorActionListener true
         }
+
 
     }
 

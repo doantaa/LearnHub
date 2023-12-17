@@ -132,9 +132,20 @@ dependencies {
     //circle img
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
+    // view pager
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    implementation ("com.google.android.material:material:1.4.0")
+
+    // groupie
+    implementation ("com.github.lisawray.groupie:groupie:2.10.1")
+    implementation ("com.github.lisawray.groupie:groupie-viewbinding:2.10.1")
+
     // shimmer effect
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 
-    // otp
+    // youtube player
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
+    // otp view
     implementation("com.github.mukeshsolanki.android-otpview-pinview:otpview:3.1.0")
 }

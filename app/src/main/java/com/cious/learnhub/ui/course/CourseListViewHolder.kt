@@ -12,6 +12,9 @@ class CourseListViewHolder(
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Course> {
     override fun bind(item: Course) {
         with(item) {
+            binding.root.setOnClickListener{
+                onItemClick.invoke(item)
+            }
             binding.ivCourseImage.load(item.imageUrl)
             binding.tvCourseCategory.text = item.categoryName
             binding.tvCourseTitle.text = item.title
