@@ -10,6 +10,8 @@ data class Video(
     val duration: Int?,
     @SerializedName("id")
     val id: Int?,
+    @SerializedName("isLocked")
+    val isLocked: Boolean,
     @SerializedName("moduleId")
     val moduleId: Int?,
     @SerializedName("no")

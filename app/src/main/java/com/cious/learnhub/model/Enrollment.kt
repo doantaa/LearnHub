@@ -7,6 +7,7 @@ data class Enrollment(
     val objective: String,
     val onboarding: String,
     val categoryId: String,
+    val categoryName: String,
     val level: String,
     val courseType: String,
     val imageUrl: String,

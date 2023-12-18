@@ -10,7 +10,6 @@ import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.OrientationEventListener
 import android.view.View
-import androidx.activity.viewModels
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -26,8 +25,10 @@ import com.cious.learnhub.data.repository.CourseRepository
 import com.cious.learnhub.data.repository.CourseRepositoryImpl
 import com.cious.learnhub.databinding.ActivityCourseDetailBinding
 import com.cious.learnhub.model.Course
+import com.cious.learnhub.model.Enrollment
 import com.cious.learnhub.ui.detail.adapter.MyPagerAdapter
 import com.cious.learnhub.utils.GenericViewModelFactory
+import com.cious.learnhub.utils.proceedWhen
 import com.google.android.material.tabs.TabLayout
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -63,10 +64,11 @@ class CourseDetailActivity : AppCompatActivity() {
 
     private var isFullScreen = false
 
-    private lateinit var course: Course
-
     private val viewModel: CourseDetailViewModel by viewModels {
-        GenericViewModelFactory.create(CourseDetailViewModel(intent.extras))
+        val service = CourseService.invoke(ChuckerInterceptor(this))
+        val dataSource = CourseApiDataSource(service)
+        val repository = CourseRepositoryImpl(dataSource)
+        GenericViewModelFactory.create(CourseDetailViewModel(intent.extras, repository))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +76,32 @@ class CourseDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         showLayout()
         youtubePlayer()
-        Toast.makeText(this, viewModel.courseId.toString(), Toast.LENGTH_SHORT).show()
+        observeData()
+        invokeData()
+//        bindCourse()
+      Toast.makeText(this, viewModel.courseId.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun invokeData() {
+        val id = viewModel.courseId ?: 0
+        viewModel.getCourseById(id)
+    }
+
+    private fun observeData() {
+        viewModel.courses.observe(this){
+            it.proceedWhen(
+                doOnSuccess = {
+                    it.payload.let {
+                        binding.tvTitleClass.text = it?.title
+                    }
+                }
+            )
+        }
+    }
+
+    private fun bindCourse() {
+//        viewModel.getCourseById(id)
+//        Toast.makeText(this, id.toString(), Toast.LENGTH_SHORT).show()
     }
 
 

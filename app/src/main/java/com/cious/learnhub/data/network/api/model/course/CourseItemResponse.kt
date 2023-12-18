@@ -44,7 +44,7 @@ data class CourseItemResponse(
     @SerializedName("totalDuration")
     val totalDuration: String?,
     @SerializedName("Modules")
-    val modules: List<Module?>,
+    val modules: List<Module>?,
     @SerializedName("Category")
     val category: CategoryNameResponse
 )

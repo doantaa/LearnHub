@@ -22,6 +22,9 @@ data class Data(
     @SerializedName("categoryId")
     val categoryId: String,
 
+    @SerializedName("categoryId")
+    val categoryName: String,
+
     @SerializedName("level")
     val level: String,
 
@@ -66,6 +69,7 @@ fun Data.toEnrollment() = Enrollment(
     objective = this.objective.orEmpty(),
     onboarding = this.onboarding.orEmpty(),
     categoryId = this.categoryId.orEmpty(),
+    categoryName = this.categoryName.orEmpty(),
     level = this.level.orEmpty(),
     courseType = this.courseType.orEmpty(),
     imageUrl = this.imageUrl.orEmpty(),
