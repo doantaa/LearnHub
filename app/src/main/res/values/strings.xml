@@ -77,4 +77,6 @@
     <string name="text_premium">Premium</string>
     <string name="text_free">Free</string>
     <string name="text_submit">Submit</string>
+    <string name="About">Tentang</string>
+    <string name="txt_class_material">Materi Kelas</string>
 </resources>

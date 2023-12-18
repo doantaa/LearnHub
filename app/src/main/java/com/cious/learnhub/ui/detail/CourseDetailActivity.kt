@@ -19,6 +19,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.cious.learnhub.R
 import com.cious.learnhub.data.network.api.datasource.CourseApiDataSource
 import com.cious.learnhub.data.network.api.service.CourseService
 import com.cious.learnhub.data.repository.CourseRepository
@@ -78,8 +79,6 @@ class CourseDetailActivity : AppCompatActivity() {
         youtubePlayer()
         observeData()
         invokeData()
-//        bindCourse()
-      Toast.makeText(this, viewModel.courseId.toString(), Toast.LENGTH_SHORT).show()
     }
 
     private fun invokeData() {
@@ -93,15 +92,16 @@ class CourseDetailActivity : AppCompatActivity() {
                 doOnSuccess = {
                     it.payload.let {
                         binding.tvTitleClass.text = it?.title
+                        binding.tvModule.text = it?.moduleCount.toString()
+                        binding.tvLevel.text = it?.level
+                        binding.tvInstructor.text = it?.instructor
+                        binding.tvRating.text = it?.rating.toString()
+                        binding.tvDuration.text = it?.totalDuration
+                        binding.tvTitleCategoryClass.text = it?.categoryName
                     }
                 }
             )
         }
-    }
-
-    private fun bindCourse() {
-//        viewModel.getCourseById(id)
-//        Toast.makeText(this, id.toString(), Toast.LENGTH_SHORT).show()
     }
 
 
@@ -162,8 +162,8 @@ class CourseDetailActivity : AppCompatActivity() {
     }
 
     private fun showLayout() {
-        tabLayout.addTab(tabLayout.newTab().setText("Tentang"))
-        tabLayout.addTab(tabLayout.newTab().setText("Materi Kelas"))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.About)))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.txt_class_material)))
 
         viewPager2.adapter = adapter
 
