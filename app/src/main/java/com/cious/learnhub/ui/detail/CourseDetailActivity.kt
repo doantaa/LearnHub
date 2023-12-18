@@ -58,8 +58,6 @@ class CourseDetailActivity : AppCompatActivity() {
 
     private var isFullScreen = false
 
-    private lateinit var course: Course
-
     private val viewModel: CourseDetailViewModel by viewModels {
         val service = CourseService.invoke(ChuckerInterceptor(this))
         val dataSource = CourseApiDataSource(service)
