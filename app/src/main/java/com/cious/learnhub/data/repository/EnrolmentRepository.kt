@@ -33,12 +33,7 @@ class EnrollmentRepositoryImpl(
         level: String?
     ): Flow<ResultWrapper<List<Enrollment>>> {
         return proceedFlow {
-            enrollmentDataSource.getEnrollment(
-                category,
-                title,
-                courseType,
-                level
-            ).data?.toEnrollmentList()
+            enrollmentDataSource.getEnrollment(category, title, courseType, level).data?.toEnrollmentList()
                 ?: emptyList()
         }.onStart {
             emit(ResultWrapper.Loading())

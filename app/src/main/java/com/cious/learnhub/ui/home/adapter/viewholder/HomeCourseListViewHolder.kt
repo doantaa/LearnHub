@@ -18,7 +18,7 @@ class HomeCourseListViewHolder(
             binding.ivCourseImage.load(item.imageUrl){
                 crossfade(true)
             }
-            binding.tvCourseCategory.text = item.categoryId
+            binding.tvCourseCategory.text = item.categoryName
             binding.tvCourseTitle.text = item.title
             binding.tvRating.text = item.rating.toString()
             binding.tvCourseInstructor.text = item.instructor
