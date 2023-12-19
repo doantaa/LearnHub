@@ -4,22 +4,17 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.AttributeSet
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.data.network.api.datasource.AuthDataSourceImpl
 import com.cious.learnhub.data.network.api.service.AuthenticationService
 import com.cious.learnhub.data.repository.AuthRepositoryImpl
 import com.cious.learnhub.databinding.ActivityOtpBinding
 import com.cious.learnhub.model.AuthenticationData
-import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
-import com.cious.learnhub.ui.authentication.register.RegisterViewModel
 import com.cious.learnhub.utils.GenericViewModelFactory
+import com.cious.learnhub.utils.proceedWhen
 
 class OtpActivity : AppCompatActivity() {
 
@@ -38,8 +33,25 @@ class OtpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setClickListeners()
-        val bundle = intent.extras
-        binding.tv.text = bundle?.getString("NAME")
+        observeResult()
+    }
+
+    private fun observeResult() {
+        viewModel.registerResult.observe(this) { resultWrapper ->
+            resultWrapper.proceedWhen (
+                doOnLoading = {
+                    binding.pbLoading.isVisible = true
+                    binding.btnSubmit.isVisible = false
+                },
+                doOnSuccess = {
+                    binding.pbLoading.isVisible = false
+                    binding.btnSubmit.isVisible = true
+
+                },
+                doOnEmpty = {},
+                doOnError = {}
+            )
+        }
     }
 
     private fun setClickListeners() {

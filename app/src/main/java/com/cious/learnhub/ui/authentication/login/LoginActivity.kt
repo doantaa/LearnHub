@@ -3,6 +3,7 @@ package com.cious.learnhub.ui.authentication.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import com.chuckerteam.chucker.api.ChuckerInterceptor
@@ -10,9 +11,12 @@ import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.R
 import com.cious.learnhub.data.network.api.datasource.AuthDataSourceImpl
 import com.cious.learnhub.data.network.api.model.login.LoginRequest
+import com.cious.learnhub.data.network.api.model.login.LoginResponse
 import com.cious.learnhub.data.network.api.service.AuthenticationService
 import com.cious.learnhub.data.repository.AuthRepositoryImpl
 import com.cious.learnhub.databinding.ActivityLoginBinding
+import com.cious.learnhub.model.AuthenticationData
+import com.cious.learnhub.model.LoginData
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
 import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordActivity
 import com.cious.learnhub.utils.GenericViewModelFactory
@@ -58,15 +62,25 @@ class LoginActivity : AppCompatActivity() {
                     binding.btnLogin.isVisible = true
                     processLogin(it.payload)
                 },
-                doOnError = {},
+                doOnError = {
+                    binding.pbLoading.isVisible = false
+                    binding.btnLogin.isVisible = true
+                    binding.llMessage.isVisible = true
+
+                    // MASIH Error, handling error:
+                    val errorMessage = it.payload?.token.toString()
+                    binding.tvMessage.text = errorMessage
+                },
                 doOnEmpty = {}
             )
         }
     }
 
-    private fun processLogin(token: String?) {
+    private fun processLogin(loginData: LoginData?) {
+        val token = loginData?.token
+        Log.d("token", token.toString())
         if (!token.isNullOrBlank()) {
-            token?.let { SessionManager.saveAuthToken(this, it) }
+            token.let { SessionManager.saveAuthToken(this, it) }
             navigateToHome()
         }
     }
@@ -86,7 +100,7 @@ class LoginActivity : AppCompatActivity() {
         binding.tvIntentRegister.highLightWord(getString(R.string.text_highlight_register)) {
             navigateToRegister()
         }
-        binding.tvIntentGuestMode.setOnClickListener() {
+        binding.tvIntentGuestMode.setOnClickListener {
             navigateToHomeGuestMode()
         }
         binding.btnLogin.setOnClickListener {

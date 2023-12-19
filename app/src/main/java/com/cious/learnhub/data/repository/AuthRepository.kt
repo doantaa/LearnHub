@@ -2,9 +2,12 @@ package com.cious.learnhub.data.repository
 
 import com.cious.learnhub.data.network.api.datasource.AuthDataSource
 import com.cious.learnhub.data.network.api.model.login.LoginRequest
+import com.cious.learnhub.data.network.api.model.login.LoginResponse
+import com.cious.learnhub.data.network.api.model.login.toLoginData
 import com.cious.learnhub.data.network.api.model.otp.OtpRequest
 import com.cious.learnhub.data.network.api.model.register.RegisterRequest
 import com.cious.learnhub.model.AuthenticationData
+import com.cious.learnhub.model.LoginData
 import com.cious.learnhub.utils.ResultWrapper
 import com.cious.learnhub.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 interface AuthRepository {
     suspend fun sendOtpRequest(email: String): Flow<ResultWrapper<String>>
     suspend fun doRegister(authenticationData: AuthenticationData, otp: String): Flow<ResultWrapper<Boolean>>
-    suspend fun doLogin(loginRequest: LoginRequest): Flow<ResultWrapper<String>>
+    suspend fun doLogin(loginRequest: LoginRequest): Flow<ResultWrapper<LoginData>>
 }
 
 class AuthRepositoryImpl(
@@ -40,10 +43,9 @@ class AuthRepositoryImpl(
         }
     }
 
-    override suspend fun doLogin(loginRequest: LoginRequest): Flow<ResultWrapper<String>> {
+    override suspend fun doLogin(loginRequest: LoginRequest): Flow<ResultWrapper<LoginData>> {
         return proceedFlow {
-            val loginResult = dataSource.doLogin(loginRequest)
-            loginResult.token
+            return@proceedFlow dataSource.doLogin(loginRequest).toLoginData()
         }
     }
 }
