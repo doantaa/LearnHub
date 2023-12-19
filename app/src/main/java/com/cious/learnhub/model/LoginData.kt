@@ -7,4 +7,4 @@ import kotlinx.parcelize.Parcelize
 data class LoginData(
     val message: String,
     val token: String
-): Parcelable
+) : Parcelable

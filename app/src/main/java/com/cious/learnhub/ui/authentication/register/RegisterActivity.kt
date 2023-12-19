@@ -3,6 +3,7 @@ package com.cious.learnhub.ui.authentication.register
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -14,9 +15,12 @@ import com.cious.learnhub.data.network.api.service.AuthenticationService
 import com.cious.learnhub.data.repository.AuthRepositoryImpl
 import com.cious.learnhub.databinding.ActivityRegisterBinding
 import com.cious.learnhub.model.AuthenticationData
+import com.cious.learnhub.model.RegisterData
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.otp.OtpActivity
+import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.utils.GenericViewModelFactory
+import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
 
