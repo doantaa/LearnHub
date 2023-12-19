@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cious.learnhub.data.network.api.model.login.LoginRequest
-import com.cious.learnhub.data.network.api.model.login.LoginResponse
 import com.cious.learnhub.data.repository.AuthRepository
 import com.cious.learnhub.model.LoginData
 import com.cious.learnhub.utils.ResultWrapper

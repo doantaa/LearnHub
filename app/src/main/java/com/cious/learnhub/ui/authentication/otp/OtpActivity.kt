@@ -5,18 +5,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.cious.learnhub.data.network.api.datasource.AuthDataSourceImpl
-import com.cious.learnhub.data.network.api.service.AuthenticationService
-import com.cious.learnhub.data.repository.AuthRepositoryImpl
 import com.cious.learnhub.databinding.ActivityOtpBinding
 import com.cious.learnhub.model.AuthenticationData
 import com.cious.learnhub.model.RegisterData
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.cious.learnhub.ui.main.MainActivity
-import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.proceedWhen
 
@@ -25,12 +20,7 @@ class OtpActivity : AppCompatActivity() {
     private val binding: ActivityOtpBinding by lazy {
         ActivityOtpBinding.inflate(layoutInflater)
     }
-    private val viewModel: OtpViewModel by viewModels{
-        val service = AuthenticationService.invoke(ChuckerInterceptor(this), applicationContext)
-        val dataSource = AuthDataSourceImpl(service)
-        val repository = AuthRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(OtpViewModel(repository, intent.extras))
-    }
+    private val viewModel: OtpViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,7 +92,7 @@ class OtpActivity : AppCompatActivity() {
     }
 
     companion object {
-        val USER_REGISTER_DATA = "USER_REGISTER_DATA"
+        const val USER_REGISTER_DATA = "USER_REGISTER_DATA"
         fun startActivity(context: Context, data: AuthenticationData) {
             val intent = Intent(context, OtpActivity::class.java)
             intent.putExtra(USER_REGISTER_DATA, data)

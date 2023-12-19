@@ -59,7 +59,7 @@ class CourseRepositoryImpl(
 
     override fun getCategories(): Flow<ResultWrapper<List<Category>>> {
         return proceedFlow {
-            courseDataSource.getCategory().data?.categories?.toCategoryList() ?: emptyList()
+            courseDataSource.getCategory().data?.toCategoryList() ?: emptyList()
         }.onStart {
             emit(ResultWrapper.Loading())
             delay(2000)
