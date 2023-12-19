@@ -1,23 +1,18 @@
 package com.cious.learnhub.ui.authentication.register
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.activity.viewModels
-import com.chuckerteam.chucker.api.ChuckerInterceptor
+import androidx.appcompat.app.AppCompatActivity
 import com.cious.learnhub.R
-import com.cious.learnhub.data.network.api.datasource.AuthDataSourceImpl
-import com.cious.learnhub.data.network.api.service.AuthenticationService
-import com.cious.learnhub.data.repository.AuthRepositoryImpl
 import com.cious.learnhub.databinding.ActivityRegisterBinding
 import com.cious.learnhub.model.AuthenticationData
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.otp.OtpActivity
-import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -25,12 +20,7 @@ class RegisterActivity : AppCompatActivity() {
         ActivityRegisterBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: RegisterViewModel by viewModels{
-        val service = AuthenticationService.invoke(ChuckerInterceptor(this), applicationContext)
-        val dataSource = AuthDataSourceImpl(service)
-        val otpRepository = AuthRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(RegisterViewModel(otpRepository))
-    }
+    private val viewModel: RegisterViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +33,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun observeOtpRequestResult() {
         viewModel.otpRequestResult.observe(this) {
-            it.proceedWhen (
+            it.proceedWhen(
                 doOnSuccess = {
                     val userRegisterData = AuthenticationData(
                         name = binding.etName.text.toString(),
