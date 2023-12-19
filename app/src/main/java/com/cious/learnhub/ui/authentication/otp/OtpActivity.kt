@@ -2,36 +2,19 @@ package com.cious.learnhub.ui.authentication.otp
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.AttributeSet
-import android.view.View
-import android.widget.Toast
-import androidx.activity.viewModels
-import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.cious.learnhub.data.network.api.datasource.AuthDataSourceImpl
-import com.cious.learnhub.data.network.api.service.AuthenticationService
-import com.cious.learnhub.data.repository.AuthRepositoryImpl
+import androidx.appcompat.app.AppCompatActivity
 import com.cious.learnhub.databinding.ActivityOtpBinding
 import com.cious.learnhub.model.AuthenticationData
-import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
-import com.cious.learnhub.ui.authentication.register.RegisterViewModel
-import com.cious.learnhub.utils.GenericViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OtpActivity : AppCompatActivity() {
 
     private val binding: ActivityOtpBinding by lazy {
         ActivityOtpBinding.inflate(layoutInflater)
     }
-    private val viewModel: OtpViewModel by viewModels{
-        val service = AuthenticationService.invoke(ChuckerInterceptor(this), applicationContext)
-        val dataSource = AuthDataSourceImpl(service)
-        val repository = AuthRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(OtpViewModel(repository, intent.extras))
-    }
+    private val viewModel: OtpViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

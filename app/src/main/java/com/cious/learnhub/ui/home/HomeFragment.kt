@@ -7,30 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import coil.load
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.R
-import com.cious.learnhub.data.network.api.datasource.CourseApiDataSource
-import com.cious.learnhub.data.network.api.service.CourseService
-import com.cious.learnhub.data.repository.CourseRepositoryImpl
 import com.cious.learnhub.databinding.FragmentHomeBinding
 import com.cious.learnhub.ui.home.adapter.CategoryListAdapter
 import com.cious.learnhub.ui.home.adapter.HomeCourseListAdapter
-import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
+    private val viewModel: HomeViewModel by viewModel()
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels {
-        val service = CourseService.invoke(ChuckerInterceptor(requireContext()))
-        val dataSource = CourseApiDataSource(service)
-        val repository = CourseRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(HomeViewModel(repository))
-    }
-
     private val categoryListAdapter: CategoryListAdapter by lazy {
         CategoryListAdapter {
             viewModel.getCourses(category = it.id)
