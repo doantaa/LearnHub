@@ -1,5 +1,6 @@
 package com.cious.learnhub.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,21 +11,17 @@ import androidx.fragment.app.Fragment
 import coil.load
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentHomeBinding
-import com.cious.learnhub.ui.home.adapter.CategoryListAdapter
+import com.cious.learnhub.model.Category
 import com.cious.learnhub.ui.home.adapter.HomeCourseListAdapter
 import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.proceedWhen
+import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModel()
     private lateinit var binding: FragmentHomeBinding
-    private val categoryListAdapter: CategoryListAdapter by lazy {
-        CategoryListAdapter {
-            viewModel.getCourses(category = it.id)
-        }
-    }
 
     private val homeCourseListAdapter: HomeCourseListAdapter by lazy {
         HomeCourseListAdapter {
@@ -48,6 +45,7 @@ class HomeFragment : Fragment() {
         setupProfileData()
         setupSearchBar()
     }
+
 
     private fun setupSearchBar() {
         binding.search.root.clearFocus()
@@ -109,26 +107,35 @@ class HomeFragment : Fragment() {
     private fun observeCategoryData() {
         viewModel.categories.observe(viewLifecycleOwner) {
             it.proceedWhen(doOnSuccess = { data ->
-                binding.rvCourseCategory.isVisible = true
+                binding.chipGroupCategory.isVisible = true
                 binding.shimmerHomeCategory.isVisible = false
-                data.payload?.let { categoryList ->
-                    categoryListAdapter.setData(categoryList)
+                data.payload?.map { category ->
+                    binding.chipGroupCategory.addView(
+                        createCategoryChip(
+                            requireContext(),
+                            category
+                        )
+                    )
+
                 }
-                Log.d("CATEGORY", data.payload.toString())
+                data.payload?.let { categories ->
+                    setCategoryListener(categories)
+                }
+
 
             }, doOnLoading = {
-                binding.rvCourseCategory.isVisible = false
+                binding.chipGroupCategory.isVisible = false
                 binding.shimmerHomeCategory.isVisible = true
 
             }, doOnEmpty = {
+                binding.chipGroupCategory.isVisible = false
                 binding.shimmerHomeCategory.isVisible = false
-                binding.rvCourseCategory.isVisible = false
                 binding.shimmerHomeCategory.isVisible = false
 
 
             }, doOnError = {
+                binding.chipGroupCategory.isVisible = false
                 binding.shimmerHomeCategory.isVisible = false
-                binding.rvCourseCategory.isVisible = false
                 binding.shimmerHomeCategory.isVisible = false
                 Log.d("CATEGORY", it.message.toString())
 
@@ -137,21 +144,38 @@ class HomeFragment : Fragment() {
         }
     }
 
+
+
+    private fun createCategoryChip(context: Context, category: Category): Chip {
+        return Chip(context).apply {
+            text = category.name
+            isCheckedIconVisible = false
+            setChipBackgroundColorResource(R.color.chip_background_color)
+            setTextAppearance(R.style.ChipTextStyle)
+            isCheckable = true
+        }
+
+    }
+
+    private fun setCategoryListener(category: List<Category>) {
+        binding.chipGroupCategory.setOnCheckedStateChangeListener { group, checkedId ->
+            Log.d("CLICKED", checkedId.toString())
+            if(checkedId != emptyList<Int>()){
+                val id = category[checkedId[0] - 1].id
+                viewModel.getCourses(category = id)
+            } else {
+                binding.chipGroupCategory.check(0 + 1)
+            }
+        }
+
+    }
     private fun invokeData() {
         viewModel.getCourses()
     }
 
     private fun setupRecyclerView() {
-        setupCategoryRecyclerView()
-        setupCourseRecyclerView()
-    }
-
-    private fun setupCourseRecyclerView() {
         binding.rvCourseList.adapter = homeCourseListAdapter
-    }
 
-    private fun setupCategoryRecyclerView() {
-        binding.rvCourseCategory.adapter = categoryListAdapter
     }
 
 

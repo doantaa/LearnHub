@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rectangle_rounded_5"
+    android:clipToPadding="false"
     android:elevation="5dp"
     android:outlineSpotShadowColor="@color/NEUTRAL03"
-    android:clipToPadding="false"
-    android:padding="8dp"
-    android:layout_margin="12dp">
+    android:padding="8dp">
 
     <EditText
         android:id="@+id/et_search"
@@ -21,13 +20,13 @@
         android:hint="@string/text_search_best_course"
         android:imeOptions="actionSearch"
         android:inputType="text"
-        android:textSize="14dp"
         android:singleLine="true"
         android:textColorHint="@color/black_alpha"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_search"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/btn_search"
