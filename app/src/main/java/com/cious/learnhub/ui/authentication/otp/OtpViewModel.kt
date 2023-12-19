@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class OtpViewModel(
     private val authRepository: AuthRepository,
-    extras: Bundle?
+    private val extras: Bundle?
 ): ViewModel() {
 
     val dataParcel = extras?.getParcelable<AuthenticationData>(OtpActivity.USER_REGISTER_DATA)

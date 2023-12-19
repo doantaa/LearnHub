@@ -76,4 +76,5 @@
     <string name="link_video">http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</string>
     <string name="text_premium">Premium</string>
     <string name="text_free">Free</string>
+    <string name="text_submit">Submit</string>
 </resources>
