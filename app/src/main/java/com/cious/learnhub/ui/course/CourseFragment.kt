@@ -13,6 +13,7 @@ import com.cious.learnhub.databinding.FragmentCourseBinding
 import com.cious.learnhub.ui.detail.CourseDetailActivity
 import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.proceedWhen
+import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CourseFragment : Fragment() {
@@ -26,14 +27,8 @@ class CourseFragment : Fragment() {
         }
     }
 
-    private val courseTypeListAdapter: CourseTypeListAdapter by lazy {
-        CourseTypeListAdapter {
-            viewModel.getCourses(courseType = it)
-        }
-    }
 
     private val viewModel: CourseViewModel by viewModel()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -72,8 +67,19 @@ class CourseFragment : Fragment() {
     }
 
     private fun setupCourseType() {
-        binding.rvCourseType.adapter = courseTypeListAdapter
-        courseTypeListAdapter.setData(listOf("All", "Premium", "Free"))
+        binding.chipGroupMain.setOnCheckedStateChangeListener { group, checkedId ->
+
+            if(checkedId != emptyList<Int>()){
+                val chip: Chip? = group.findViewById(checkedId[0])
+                chip?.let {
+                    viewModel.getCourses(courseType = it.text.toString())
+                }
+            } else {
+                binding.chipAll.isChecked = true
+            }
+        }
+
+
     }
 
     private fun observeCourseData() {

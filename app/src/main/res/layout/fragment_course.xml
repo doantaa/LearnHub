@@ -19,7 +19,10 @@
 
             <include
                 android:id="@+id/field_search"
-                layout="@layout/section_search" />
+                layout="@layout/section_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_course_header"
@@ -54,38 +57,77 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_course_type"
-                android:layout_width="match_parent"
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:clipToPadding="true"
-                android:orientation="horizontal"
-                android:paddingStart="12dp"
-                android:scrollbarSize="0dp"
-                android:scrollbars="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_category" />
+                android:scrollbars="none"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/chips_select"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintVertical_bias="0.51">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    app:chipSpacingHorizontal="6dp"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_all"
+                        style="@style/ChipTextAppearance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="@string/text_all"
+                        app:chipIconEnabled="false" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_premium"
+                        style="@style/ChipTextAppearance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/chip_font"
+                        android:text="@string/text_premium"
+                        app:chipIconEnabled="false" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_free"
+                        style="@style/ChipTextAppearance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_free"
+                        app:chipIconEnabled="false" />
+
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_course"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                tools:visibility="visible"
                 android:paddingHorizontal="12dp"
                 android:paddingBottom="10dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="5"
-                tools:listitem="@layout/item_course_linear" />
+                tools:listitem="@layout/item_course_linear"
+                tools:visibility="visible" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/shimmer_course"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:paddingHorizontal="12dp"
                 android:layout_marginTop="10dp"
+                android:paddingHorizontal="12dp"
+                android:visibility="gone"
                 app:shimmer_base_color="@color/NEUTRAL05"
                 app:shimmer_direction="left_to_right"
                 app:shimmer_repeat_mode="restart"
@@ -96,8 +138,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <include layout="@layout/item_course_linear_shimmer"/>
-                    <include layout="@layout/item_course_linear_shimmer"/>
+                    <include layout="@layout/item_course_linear_shimmer" />
+
+                    <include layout="@layout/item_course_linear_shimmer" />
                 </LinearLayout>
 
             </com.facebook.shimmer.ShimmerFrameLayout>
@@ -106,8 +149,8 @@
                 android:id="@+id/layout_state"
                 layout="@layout/layout_empty_error_state"
                 android:layout_width="match_parent"
-                android:visibility="invisible"
-                android:layout_height="400dp" />
+                android:layout_height="400dp"
+                android:visibility="invisible" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

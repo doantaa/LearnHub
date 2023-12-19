@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.LearnHub" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
     </style>
-    
+
     <style name="roundedImageViewRouded">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
@@ -24,13 +24,33 @@
         <item name="cornerSizeTopLeft">15dp</item>
         <item name="cornerSizeTopRight">15dp</item>
     </style>
+
     <style name="customImageView50Percent" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
     <style name="customImageView20Percent" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">20%</item>
         <item name="cornerSizeTopRight">20%</item>
     </style>
+
+
+    <style name="ChipTextAppearance" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="fontFamily">@font/chip_font</item>
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAppearance">@style/ChipTextStyle</item>
+        <item name="checkedIconVisible">false</item>
+    </style>
+
+    <style name="ChipTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="android:textColor">@color/chip_text_color</item>
+    </style>
+
+
 </resources>
