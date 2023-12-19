@@ -154,7 +154,7 @@ class CourseDetailActivity : AppCompatActivity() {
             initialize(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     this@CourseDetailActivity.youtubePlayer = youTubePlayer
-                    youTubePlayer.loadVideo("dQw4w9WgXcQ", 0f)
+                    youtubePlayer!!.loadVideo("1fhhNadbCGM", 0f)
                 }
             }, iFramePlayerOptions)
         }
