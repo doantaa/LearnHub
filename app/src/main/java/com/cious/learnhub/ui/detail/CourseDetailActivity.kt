@@ -132,7 +132,6 @@ class CourseDetailActivity : AppCompatActivity() {
         } else {
             orientationEventListener.disable()
         }
-
     }
 
     private fun initYoutube() {
@@ -154,7 +153,7 @@ class CourseDetailActivity : AppCompatActivity() {
             initialize(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     this@CourseDetailActivity.youtubePlayer = youTubePlayer
-                    youtubePlayer!!.loadVideo("_ih8DpOE6L0", 0f)
+                    youTubePlayer.loadVideo("dQw4w9WgXcQ", 0f)
                 }
             }, iFramePlayerOptions)
         }
@@ -183,6 +182,7 @@ class CourseDetailActivity : AppCompatActivity() {
                 youtubePlayer?.toggleFullscreen()
             }
         }
+
         super.onConfigurationChanged(newConfig)
     }
 
