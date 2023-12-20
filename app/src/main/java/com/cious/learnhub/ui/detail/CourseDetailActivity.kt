@@ -92,11 +92,17 @@ class CourseDetailActivity : AppCompatActivity() {
                 doOnSuccess = {
                     it.payload.let {
                         binding.tvTitleClass.text = it?.title
-                        binding.tvModule.text = it?.moduleCount.toString()
+                        binding.tvModule.text = buildString {
+                            append(it?.moduleCount)
+                            append(" Modul")
+                        }
                         binding.tvLevel.text = it?.level
                         binding.tvInstructor.text = it?.instructor
                         binding.tvRating.text = it?.rating.toString()
-                        binding.tvDuration.text = it?.totalDuration
+                        binding.tvDuration.text = buildString {
+                            append(it?.totalDuration)
+                            append(" Menit")
+                        }
                         binding.tvTitleCategoryClass.text = it?.categoryName
                     }
                 }
