@@ -6,9 +6,9 @@ import com.cious.learnhub.BuildConfig
 import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
 import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentDetailResponse
 import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentsResponse
-import com.cious.learnhub.data.network.api.model.enrollments.ProgressResponse
 import com.cious.learnhub.utils.SessionManager
 import okhttp3.Interceptor
+import com.cious.learnhub.data.network.api.model.enrollments.ProgressResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
