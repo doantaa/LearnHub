@@ -16,18 +16,14 @@ import com.cious.learnhub.ui.myclass.adapter.CategoryMyClassAdapter
 import com.cious.learnhub.ui.myclass.adapter.ProgressiveCourseAdapter
 import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyClassFragment : Fragment() {
 
     private lateinit var binding: FragmentMyClassBinding
 
 
-    private val viewModel: MyClassViewModel by viewModels {
-        val service = EnrollmentService.invoke(ChuckerInterceptor(requireContext()))
-        val dataSource = EnrollmentApiDataSource(service)
-        val repository = EnrollmentRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(MyClassViewModel(repository))
-    }
+    private val viewModel: MyClassViewModel by viewModel()
 
     private val progressiveCourseAdapter: ProgressiveCourseAdapter by lazy {
         ProgressiveCourseAdapter {
@@ -64,12 +60,14 @@ class MyClassFragment : Fragment() {
 
     private fun observeCourseData() {
         viewModel.courses.observe(viewLifecycleOwner) {
-            it.proceedWhen(doOnSuccess = { _ ->
+            it.proceedWhen(doOnSuccess = { data ->
+
                 binding.rvClass.apply {
                     isVisible = true
                     adapter = progressiveCourseAdapter
                 }
-                it.payload?.let { data ->
+                data.payload?.let { data ->
+                    Log.d("Data Enroll", data.toString())
                     progressiveCourseAdapter.setData(data)
                 }
             })
