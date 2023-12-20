@@ -29,7 +29,6 @@ interface CourseRepository {
         level: String? = null
     ): Flow<ResultWrapper<List<Course>>>
 
-
     fun getCoursesById(
         id: Int
     ): Flow<ResultWrapper<Data>>
@@ -70,7 +69,6 @@ class CourseRepositoryImpl(
             delay(2000)
         }
     }
-
 
     override fun getCoursesById(
         id: Int
