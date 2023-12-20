@@ -52,5 +52,14 @@
         <item name="android:textColor">@color/chip_text_color</item>
     </style>
 
-
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">
+            @android:color/transparent
+        </item>
+    </style>
+    <style name="BottomSheetTheme" parent="Theme.Material3.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">
+            @style/BottomSheetStyle
+        </item>
+    </style>
 </resources>
