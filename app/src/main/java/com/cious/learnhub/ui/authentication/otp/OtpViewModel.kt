@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cious.learnhub.data.repository.AuthRepository
 import com.cious.learnhub.model.AuthenticationData
+import com.cious.learnhub.model.RegisterData
 import com.cious.learnhub.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,9 +18,9 @@ class OtpViewModel(
 ): ViewModel() {
 
     val dataParcel = extras?.getParcelable<AuthenticationData>(OtpActivity.USER_REGISTER_DATA)
-    private val _registerResult = MutableLiveData<ResultWrapper<Boolean>>()
 
-    val registerResult : LiveData<ResultWrapper<Boolean>>
+    private val _registerResult = MutableLiveData<ResultWrapper<RegisterData>>()
+    val registerResult : LiveData<ResultWrapper<RegisterData>>
         get() = _registerResult
 
     fun doRegister(authenticationData: AuthenticationData, otp: String) {

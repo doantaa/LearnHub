@@ -2,22 +2,31 @@ package com.cious.learnhub.data.repository
 
 import com.cious.learnhub.data.network.api.datasource.AuthDataSource
 import com.cious.learnhub.data.network.api.model.login.LoginRequest
+import com.cious.learnhub.data.network.api.model.login.LoginResponse
+import com.cious.learnhub.data.network.api.model.login.toLoginData
 import com.cious.learnhub.data.network.api.model.otp.OtpRequest
 import com.cious.learnhub.data.network.api.model.register.RegisterRequest
+import com.cious.learnhub.data.network.api.model.register.toRegisterData
 import com.cious.learnhub.model.AuthenticationData
+import com.cious.learnhub.model.LoginData
+import com.cious.learnhub.model.RegisterData
 import com.cious.learnhub.utils.ResultWrapper
 import com.cious.learnhub.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
     suspend fun sendOtpRequest(email: String): Flow<ResultWrapper<String>>
-    suspend fun doRegister(authenticationData: AuthenticationData, otp: String): Flow<ResultWrapper<Boolean>>
-    suspend fun doLogin(loginRequest: LoginRequest): Flow<ResultWrapper<String>>
+    suspend fun doRegister(
+        authenticationData: AuthenticationData,
+        otp: String
+    ): Flow<ResultWrapper<RegisterData>>
+
+    suspend fun doLogin(loginRequest: LoginRequest): Flow<ResultWrapper<LoginData>>
 }
 
 class AuthRepositoryImpl(
     private val dataSource: AuthDataSource
-): AuthRepository {
+) : AuthRepository {
     override suspend fun sendOtpRequest(email: String): Flow<ResultWrapper<String>> {
         return proceedFlow {
             val otpRequest = OtpRequest(email)
@@ -26,7 +35,10 @@ class AuthRepositoryImpl(
         }
     }
 
-    override suspend fun doRegister(authenticationData: AuthenticationData, otp: String): Flow<ResultWrapper<Boolean>> {
+    override suspend fun doRegister(
+        authenticationData: AuthenticationData,
+        otp: String
+    ): Flow<ResultWrapper<RegisterData>> {
         return proceedFlow {
             val registerRequest = RegisterRequest(
                 name = authenticationData.name,
@@ -36,14 +48,13 @@ class AuthRepositoryImpl(
                 otp = otp,
                 hashedOtp = authenticationData.hashOtp
             )
-            dataSource.doRegister(registerRequest).isSuccess == true
+            dataSource.doRegister(registerRequest).toRegisterData()
         }
     }
 
-    override suspend fun doLogin(loginRequest: LoginRequest): Flow<ResultWrapper<String>> {
+    override suspend fun doLogin(loginRequest: LoginRequest): Flow<ResultWrapper<LoginData>> {
         return proceedFlow {
-            val loginResult = dataSource.doLogin(loginRequest)
-            loginResult.token
+            return@proceedFlow dataSource.doLogin(loginRequest).toLoginData()
         }
     }
 }

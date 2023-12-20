@@ -1,15 +1,17 @@
 package com.cious.learnhub.ui.authentication.login
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
 import androidx.core.view.isVisible
+import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.R
 import com.cious.learnhub.data.network.api.model.login.LoginRequest
 import com.cious.learnhub.databinding.ActivityLoginBinding
+import com.cious.learnhub.model.LoginData
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
 import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordActivity
-import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
@@ -38,18 +40,33 @@ class LoginActivity : AppCompatActivity() {
 
     private fun observeResult() {
         viewModel.loginRequestResult.observe(this) { resultWrapper ->
-            resultWrapper.proceedWhen(doOnLoading = {
-                binding.pbLoading.isVisible = true
-                binding.btnLogin.isVisible = false
-            }, doOnSuccess = {
-                binding.pbLoading.isVisible = false
-                binding.btnLogin.isVisible = true
-                processLogin(it.payload)
-            }, doOnError = {}, doOnEmpty = {})
+            resultWrapper.proceedWhen (
+                doOnLoading = {
+                    binding.pbLoading.isVisible = true
+                    binding.btnLogin.isVisible = false
+                },
+                doOnSuccess = {
+                    binding.pbLoading.isVisible = false
+                    binding.btnLogin.isVisible = true
+                    processLogin(it.payload)
+                },
+                doOnError = {
+                    binding.pbLoading.isVisible = false
+                    binding.btnLogin.isVisible = true
+                    binding.llMessage.isVisible = true
+
+                    // MASIH Error, handling error:
+                    val errorMessage = it.payload?.token.toString()
+                    binding.tvMessage.text = errorMessage
+                },
+                doOnEmpty = {}
+            )
         }
     }
 
-    private fun processLogin(token: String?) {
+    private fun processLogin(loginData: LoginData?) {
+        val token = loginData?.token
+        Log.d("token", token.toString())
         if (!token.isNullOrBlank()) {
             token.let { SessionManager.saveAuthToken(this, it) }
             navigateToHome()
@@ -69,7 +86,7 @@ class LoginActivity : AppCompatActivity() {
         binding.tvIntentRegister.highLightWord(getString(R.string.text_highlight_register)) {
             navigateToRegister()
         }
-        binding.tvIntentGuestMode.setOnClickListener() {
+        binding.tvIntentGuestMode.setOnClickListener {
             navigateToHomeGuestMode()
         }
         binding.btnLogin.setOnClickListener {

@@ -38,7 +38,9 @@ class AuthDataSourceImpl(
         return service.register(registerRequest)
     }
 
-    override suspend fun doLogin(loginRequest: LoginRequest): LoginResponse {
+    override suspend fun doLogin(
+        loginRequest: LoginRequest
+    ): LoginResponse {
         return service.login(loginRequest)
     }
 }

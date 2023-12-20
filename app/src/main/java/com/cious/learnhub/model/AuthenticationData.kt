@@ -9,5 +9,6 @@ data class AuthenticationData(
     val phoneNumber: Long,
     val email: String,
     val password: String,
-    val hashOtp: String
+    val hashOtp: String,
+
 ) : Parcelable

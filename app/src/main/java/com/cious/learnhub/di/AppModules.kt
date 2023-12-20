@@ -1,5 +1,6 @@
 package com.cious.learnhub.di
 
+import android.os.Bundle
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.data.network.api.datasource.AuthDataSource
 import com.cious.learnhub.data.network.api.datasource.AuthDataSourceImpl
@@ -23,6 +24,7 @@ import com.cious.learnhub.ui.course.CourseViewModel
 import com.cious.learnhub.ui.home.HomeViewModel
 import com.cious.learnhub.ui.notifications.NotificationsViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -57,7 +59,7 @@ object AppModules {
         viewModelOf(::HomeViewModel)
         viewModelOf(::CourseViewModel)
         viewModelOf(::LoginViewModel)
-        viewModelOf(::OtpViewModel)
+        viewModel { params -> OtpViewModel(get(), extras = params.get()) }
         viewModelOf(::RegisterViewModel)
         viewModelOf(::NotificationsViewModel)
 
