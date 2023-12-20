@@ -69,7 +69,6 @@ class MyClassFragment : Fragment() {
                     adapter = progressiveCourseAdapter
                 }
                 it.payload?.let { data ->
-                    Log.d("Data Enroll", data.toString())
                     progressiveCourseAdapter.setData(data)
                 }
                 binding.rvClass.clearAnimation()
