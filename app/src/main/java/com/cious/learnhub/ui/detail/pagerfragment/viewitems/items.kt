@@ -25,6 +25,7 @@ class DataItem(private val data: Video?, private val onItemClick: (Video) -> Uni
 
     override fun bind(viewBinding: ItemCourseChapterBinding, position: Int) {
         viewBinding.tvTitleCourse.text = data?.title
+        viewBinding.tvNumberCourse.text = data?.no.toString()
         viewBinding.root.setOnClickListener { onItemClick.invoke(data!!) }
     }
 

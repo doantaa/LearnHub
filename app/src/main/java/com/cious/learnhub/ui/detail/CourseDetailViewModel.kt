@@ -32,7 +32,8 @@ class CourseDetailViewModel(extras: Bundle?, private val repository: CourseRepos
     }
 
     private val _videoUrl = MutableLiveData<String>()
-    val videoUrl: LiveData<String> get() = _videoUrl
+    val videoUrl: LiveData<String>
+        get() = _videoUrl
     fun getVideoUrl(videoUrl:String?) {
         _videoUrl.postValue(videoUrl!!)
     }

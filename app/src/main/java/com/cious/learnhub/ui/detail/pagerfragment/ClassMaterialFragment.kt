@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cious.learnhub.databinding.FragmentClassMaterialBinding
+import com.cious.learnhub.ui.detail.CourseDetailActivity
 import com.cious.learnhub.ui.detail.CourseDetailViewModel
 import com.cious.learnhub.ui.detail.pagerfragment.viewitems.DataItem
 import com.cious.learnhub.ui.detail.pagerfragment.viewitems.HeaderItem
@@ -58,21 +59,19 @@ class ClassMaterialFragment : Fragment() {
             it.proceedWhen(
                 doOnSuccess = { success ->
                     groupieAdapter.clear()
-                    val sectionName = success.payload?.dataDetailResponse?.modules
-                    val section = Section()
-                    sectionName?.forEach { module ->
-                        section.setHeader(HeaderItem(module.title))
-                        val contentList = module.videos.map { video ->
-                            DataItem(video) { videoUrl ->
-                                viewModel.getVideoUrl(videoUrl.videoUrl)
+                    val modules = success.payload?.dataDetailResponse?.modules
+                    modules?.forEach { module ->
+                        val section = Section().apply {
+                            setHeader(HeaderItem(module.title))
+                            val contentList = module.videos.map { video ->
+                                DataItem(video) { videoUrl ->
+                                    viewModel.getVideoUrl(videoUrl.videoUrl)
+                                }
                             }
+                            addAll(contentList)
                         }
-                        section.addAll(contentList)
-                        Log.d("video", contentList.toString())
-                        Log.d("section", section.toString())
+                        groupieAdapter.add(section)
                     }
-                    groupieAdapter.add(section)
-                    Log.d("section1", groupieAdapter.itemCount.toString())
                 }
             )
         }

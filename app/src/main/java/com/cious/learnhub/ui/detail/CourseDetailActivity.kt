@@ -54,8 +54,6 @@ class CourseDetailActivity : AppCompatActivity() {
 
     private var youtubePlayer: YouTubePlayer? = null
 
-    private var isFullscreen = false
-
     private var previousOrientation: Int = -1
 
     private var isFullScreen = false
@@ -97,6 +95,8 @@ class CourseDetailActivity : AppCompatActivity() {
                         }
                         binding.tvTitleCategoryClass.text = data?.categoryName
                     }
+                    val firstVideoUrl = item.payload?.dataDetailResponse!!.modules?.get(0)!!.videos[0]?.videoUrl
+                    youtubePlayer?.loadVideo(firstVideoUrl.orEmpty(), 0f)
                 }
             )
         }
@@ -152,11 +152,23 @@ class CourseDetailActivity : AppCompatActivity() {
             initialize(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     this@CourseDetailActivity.youtubePlayer = youTubePlayer
-                    youTubePlayer.loadVideo("dQw4w9WgXcQ", 0f)
+                    observeDataVideo()
                 }
             }, iFramePlayerOptions)
         }
         lifecycle.addObserver(binding.youtubePlayerView)
+    }
+
+    private fun observeDataVideo() {
+        viewModel.videoUrl.observe(this){result ->
+            playVideo(result)
+        }
+    }
+
+    private fun playVideo(videoUrl: String?) {
+        if (!videoUrl.isNullOrBlank()) {
+            youtubePlayer?.loadVideo(videoUrl, 0f)
+        }
     }
 
     private fun showLayout() {
@@ -186,7 +198,7 @@ class CourseDetailActivity : AppCompatActivity() {
 
     private fun exitFullscreen() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-        isFullscreen = false
+        isFullScreen = false
         windowInsetsController.show(WindowInsetsCompat.Type.systemBars())
         binding.tvDuration.isVisible = true
         binding.tvLevel.isVisible = true
@@ -203,7 +215,7 @@ class CourseDetailActivity : AppCompatActivity() {
 
     private fun enterFullScreen(view: View) {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE
-        isFullscreen = true
+        isFullScreen = true
         windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
         binding.tvDuration.isVisible = false
         binding.tvLevel.isVisible = false
