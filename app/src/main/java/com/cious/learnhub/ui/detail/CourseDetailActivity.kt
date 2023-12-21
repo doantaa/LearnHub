@@ -182,7 +182,6 @@ class CourseDetailActivity : AppCompatActivity() {
                 youtubePlayer?.toggleFullscreen()
             }
         }
-
         super.onConfigurationChanged(newConfig)
     }
 
