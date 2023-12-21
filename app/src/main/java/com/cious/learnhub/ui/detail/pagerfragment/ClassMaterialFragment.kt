@@ -57,7 +57,7 @@ class ClassMaterialFragment : Fragment() {
         viewModel.detailCourse.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = { success ->
-
+                    groupieAdapter.clear()
                     val sectionName = success.payload?.dataDetailResponse?.modules
                     val section = Section()
                     sectionName?.forEach { module ->
