@@ -39,6 +39,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.FullscreenListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.loadOrCueVideo
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class CourseDetailActivity : AppCompatActivity() {
 
@@ -58,11 +60,8 @@ class CourseDetailActivity : AppCompatActivity() {
 
     private var isFullScreen = false
 
-    private val viewModel: CourseDetailViewModel by viewModels {
-        val service = CourseService.invoke(ChuckerInterceptor(this))
-        val dataSource = CourseApiDataSource(service)
-        val repository = CourseRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(CourseDetailViewModel(intent.extras, repository))
+    private val viewModel: CourseDetailViewModel by viewModel {
+        parametersOf(intent?.extras)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

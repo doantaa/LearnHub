@@ -57,16 +57,6 @@ class EnrollmentRepositoryImpl(
         }
     }
 
-    override fun getCoursesById(id: Int): Flow<ResultWrapper<List<Enrollment>>> {
-        return proceedFlow {
-            enrollmentDataSource.getCoursesById(id).data?.toEnrollmentList()
-                ?: emptyList()
-        }.onStart {
-            emit(ResultWrapper.Loading())
-            delay(2000)
-        }
-    }
-
     override fun getCategories(): Flow<ResultWrapper<List<Category>>> {
         return proceedFlow {
             enrollmentDataSource.getCategory().data?.toCategoryList() ?: emptyList()
