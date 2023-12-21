@@ -5,20 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentClassMaterialBinding
-import com.cious.learnhub.ui.myclass.viewitems.DataItem
-import com.cious.learnhub.ui.myclass.viewitems.HeaderItem
-import com.cious.model.SectionedData
+import com.cious.learnhub.ui.detail.CourseDetailViewModel
+import com.cious.learnhub.ui.detail.pagerfragment.viewitems.DataItem
+import com.cious.learnhub.ui.detail.pagerfragment.viewitems.HeaderItem
+import com.cious.learnhub.utils.proceedWhen
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Section
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ClassMaterialFragment : Fragment() {
-    private val adapter: GroupieAdapter by lazy {
+    private val groupieAdapter: GroupieAdapter by lazy {
         GroupieAdapter()
     }
+
+    private val viewModel: CourseDetailViewModel by viewModel()
 
     private lateinit var binding: FragmentClassMaterialBinding
 
@@ -32,34 +34,38 @@ class ClassMaterialFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        invokeData()
         setData()
+    }
+
+    private fun invokeData() {
+        val id = viewModel.courseId ?: 0
+        viewModel.getCourseById(id)
     }
 
     private fun setData() {
         binding.rvData.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@ClassMaterialFragment.adapter
+            adapter = groupieAdapter
         }
 
-        val section = getListData().map {
-            val section = Section()
-            section.setHeader(HeaderItem(requireContext(), it.name) { data ->
-                Toast.makeText(requireContext(), "Header Clicked : $data", Toast.LENGTH_SHORT).show()
-            })
-            val dataSection = it.data.map { data ->
-                DataItem(requireContext(), data) { data ->
-                    Toast.makeText(requireContext(), "Item Clicked : $data", Toast.LENGTH_SHORT).show()
+        viewModel.detailCourse.observe(viewLifecycleOwner) {
+            it.proceedWhen(
+                doOnSuccess = { success ->
+                    val sectionName = success.payload?.dataDetailResponse?.modules
+                    val section = Section()
+                    sectionName?.forEach { module ->
+                        section.setHeader(HeaderItem(module.title))
+                        val contentList = module.videos.map { video ->
+                            DataItem(video) { videoUrl ->
+                                viewModel.getVideoUrl(videoUrl.videoUrl)
+                            }
+                        }
+                        section.addAll(contentList)
+                    }
+                    groupieAdapter.add(section)
                 }
-            }
-            section.addAll(dataSection)
-            section
+            )
         }
-        adapter.addAll(section)
     }
-
-    private fun getListData(): List<SectionedData> = listOf(
-        SectionedData("Chapter 1", listOf("Pendahuluan 1", "Pendahuluan 2", "Pendahuluan 3")),
-        SectionedData("Chapter 2", listOf("Isian 1", "Isian 2", "Isian 3")),
-        SectionedData("Chapter 3", listOf("Final Chap 1", "Final Chap 1", "Final Chap 1")),
-    )
 }

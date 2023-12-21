@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.cious.learnhub.R
+import com.cious.learnhub.data.network.api.model.course.toCourse
 import com.cious.learnhub.databinding.FragmentAboutBinding
 import com.cious.learnhub.ui.detail.CourseDetailActivity
 import com.cious.learnhub.ui.detail.CourseDetailViewModel
@@ -24,13 +25,14 @@ class AboutFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_about, container, false)
+        binding = FragmentAboutBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        invokeData()
-//        observeData()
+        invokeData()
+        observeData()
     }
 
     private fun invokeData() {
@@ -39,12 +41,12 @@ class AboutFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.courses.observe(viewLifecycleOwner){
+        viewModel.detailCourse.observe(viewLifecycleOwner){
             it.proceedWhen (
                 doOnSuccess = {
-                    it.payload.let {
-                        binding.tvAbout.text = it?.about
-                        binding.tvObjective.text = it?.objective
+                    it.payload?.dataDetailResponse?.toCourse().let {data ->
+                        binding.tvAbout.text = data?.about
+                        binding.tvObjective.text = data?.objective
                     }
                 }
             )
