@@ -7,7 +7,7 @@ import androidx.annotation.Keep
 @Keep
 data class NotificationResponse(
     @SerializedName("data")
-    val data: List<NotificationItemResponse>,
+    val data: List<NotificationItemResponse>?,
     @SerializedName("message")
     val message: String?,
     @SerializedName("success")
