@@ -13,6 +13,10 @@ interface EnrollmentDataSource {
         level: String? = null
     ): EnrollmentsResponse
 
+    suspend fun getCoursesById(
+        id: Int
+    ): EnrollmentsResponse
+
     suspend fun getCategory(): CategoriesResponse
 }
 
@@ -24,6 +28,10 @@ class EnrollmentApiDataSource(private val service: EnrollmentService) : Enrollme
         level: String?
     ): EnrollmentsResponse {
         return service.getEnrollments(category, title, courseType, level)
+    }
+
+    override suspend fun getCoursesById(id: Int): EnrollmentsResponse {
+        return service.getCourseById(id)
     }
 
     override suspend fun getCategory(): CategoriesResponse {

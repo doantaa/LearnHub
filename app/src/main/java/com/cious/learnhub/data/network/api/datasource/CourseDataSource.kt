@@ -2,6 +2,7 @@ package com.cious.learnhub.data.network.api.datasource
 
 import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
 import com.cious.learnhub.data.network.api.model.course.CoursesResponse
+import com.cious.learnhub.data.network.api.model.course.CourseDetailResponse
 import com.cious.learnhub.data.network.api.service.CourseService
 
 interface CourseDataSource {
@@ -13,8 +14,9 @@ interface CourseDataSource {
     ): CoursesResponse
 
     suspend fun getCoursesById(
-        id: String? = null
-    ): CoursesResponse
+        id: Int
+    ): CourseDetailResponse
+
 
     suspend fun getCategory(): CategoriesResponse
 }
@@ -32,8 +34,8 @@ class CourseApiDataSource(
     }
 
     override suspend fun getCoursesById(
-        id: String?
-    ): CoursesResponse {
+        id: Int
+    ): CourseDetailResponse {
         return service.getCourseById(id)
     }
 

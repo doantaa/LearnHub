@@ -10,40 +10,30 @@ import android.util.Log
 import android.view.OrientationEventListener
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
-import androidx.viewpager2.widget.ViewPager2
+import com.cious.learnhub.R
+import com.cious.learnhub.data.network.api.model.course.toCourse
 import com.cious.learnhub.databinding.ActivityCourseDetailBinding
-import com.cious.learnhub.model.Course
+import com.cious.learnhub.databinding.SheetProcessPaymentBinding
 import com.cious.learnhub.ui.detail.adapter.MyPagerAdapter
-import com.cious.learnhub.utils.GenericViewModelFactory
-import com.google.android.material.tabs.TabLayout
+import com.cious.learnhub.utils.proceedWhen
+import com.google.android.material.tabs.TabLayoutMediator
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.FullscreenListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.loadOrCueVideo
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class CourseDetailActivity : AppCompatActivity() {
 
     private val binding: ActivityCourseDetailBinding by lazy {
         ActivityCourseDetailBinding.inflate(layoutInflater)
-    }
-
-    private val tabLayout: TabLayout by lazy {
-        binding.tlDetail
-    }
-
-    private val viewPager2: ViewPager2 by lazy {
-        binding.viewPager2
-    }
-
-    private val adapter: MyPagerAdapter by lazy {
-        MyPagerAdapter(supportFragmentManager, lifecycle)
     }
 
     private val windowInsetsController: WindowInsetsControllerCompat by lazy {
@@ -56,8 +46,8 @@ class CourseDetailActivity : AppCompatActivity() {
 
     private var isFullScreen = false
 
-    private val viewModel: CourseDetailViewModel by viewModels {
-        GenericViewModelFactory.create(CourseDetailViewModel(intent.extras))
+    private val viewModel: CourseDetailViewModel by viewModel {
+        parametersOf(intent?.extras)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,20 +55,36 @@ class CourseDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         showLayout()
         youtubePlayer()
-        Toast.makeText(this, viewModel.courseId.toString(), Toast.LENGTH_SHORT).show()
+        observeData()
+        invokeData()
     }
 
-    private fun bindCourse(course: Course?) {
-        course?.let { item ->
-            binding.apply {
-                tvDuration.text = item.totalDuration
-                tvTitleClass.text = item.title
-                tvModule.text = item.moduleCount.toString()
-                tvInstructor.text = item.instructor
-                tvLevel.text = item.level
-                tvTitleCategoryClass.text = item.categoryName
-                tvRating.text = item.rating.toString()
-            }
+    private fun invokeData() {
+        val id = viewModel.courseId ?: 0
+        viewModel.getCourseById(id)
+    }
+
+    private fun observeData() {
+        viewModel.detailCourse.observe(this){
+            it.proceedWhen(
+                doOnSuccess = {item ->
+                    item.payload?.dataDetailResponse?.toCourse().let {data ->
+                        binding.tvTitleClass.text = data?.title
+                        binding.tvModule.text = buildString {
+                            append(data?.moduleCount)
+                            append(getString(R.string.txt_sps_module))
+                        }
+                        binding.tvLevel.text = data?.level
+                        binding.tvInstructor.text = data?.instructor
+                        binding.tvRating.text = data?.rating.toString()
+                        binding.tvDuration.text = buildString {
+                            append(data?.totalDuration)
+                            append(getString(R.string.txt_sps_minutes))
+                        }
+                        binding.tvTitleCategoryClass.text = data?.categoryName
+                    }
+                }
+            )
         }
     }
 
@@ -132,41 +138,36 @@ class CourseDetailActivity : AppCompatActivity() {
             initialize(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     this@CourseDetailActivity.youtubePlayer = youTubePlayer
-                    youTubePlayer.loadOrCueVideo(lifecycle, "MvCN3pDHJ5E", 0f)
+                    observeDataVideo()
                 }
             }, iFramePlayerOptions)
         }
         lifecycle.addObserver(binding.youtubePlayerView)
     }
 
+    private fun observeDataVideo() {
+        viewModel.videoUrl.observe(this){result ->
+            playVideo(result)
+        }
+    }
+
+    private fun playVideo(videoUrl: String?) {
+        if (!videoUrl.isNullOrBlank()) {
+            youtubePlayer?.loadVideo(videoUrl, 0f)
+        } else {
+            val firstVideoUrl = viewModel.detailCourse.observe(this){
+                it.payload?.dataDetailResponse!!.modules?.get(0)!!.videos[0]?.videoUrl
+            }
+            youtubePlayer?.loadVideo(firstVideoUrl.toString(), 0f)
+        }
+    }
+
     private fun showLayout() {
-        tabLayout.addTab(tabLayout.newTab().setText("Tentang"))
-        tabLayout.addTab(tabLayout.newTab().setText("Materi Kelas"))
-
-        viewPager2.adapter = adapter
-
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab != null) {
-                    viewPager2.currentItem = tab.position
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-        })
-
-        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                tabLayout.selectTab(tabLayout.getTabAt(position))
-            }
-        })
+        val sectionsPagerAdapter = MyPagerAdapter(this)
+        binding.viewPager2.adapter = sectionsPagerAdapter
+        TabLayoutMediator(binding.tlDetail, binding.viewPager2) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -183,15 +184,20 @@ class CourseDetailActivity : AppCompatActivity() {
                 youtubePlayer?.toggleFullscreen()
             }
         }
-
         super.onConfigurationChanged(newConfig)
     }
 
     private fun exitFullscreen() {
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         isFullScreen = false
         windowInsetsController.show(WindowInsetsCompat.Type.systemBars())
-        binding.youtubePlayerView.isVisible = true
+        binding.tvDuration.isVisible = true
+        binding.tvLevel.isVisible = true
+        binding.tvRating.isVisible = true
+        binding.tvInstructor.isVisible = true
+        binding.tvModule.isVisible = true
+        binding.tvTitleCategoryClass.isVisible = true
+        binding.tvTitleClass.isVisible = true
         binding.flFullscreen.apply {
             isVisible = false
             removeAllViews()
@@ -202,7 +208,13 @@ class CourseDetailActivity : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE
         isFullScreen = true
         windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
-        binding.youtubePlayerView.isVisible = false
+        binding.tvDuration.isVisible = false
+        binding.tvLevel.isVisible = false
+        binding.tvRating.isVisible = false
+        binding.tvInstructor.isVisible = false
+        binding.tvModule.isVisible = false
+        binding.tvTitleCategoryClass.isVisible = false
+        binding.tvTitleClass.isVisible = false
         binding.flFullscreen.apply {
             isVisible = true
             addView(view)
@@ -211,10 +223,16 @@ class CourseDetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_ID = "EXTRA_ID"
-        fun startActivity(context: Context, courseId: Int) {
+        fun startActivity(context: Context, id: Int) {
             val intent = Intent(context, CourseDetailActivity::class.java)
-            intent.putExtra(EXTRA_ID, courseId)
+            intent.putExtra(EXTRA_ID, id)
             context.startActivity(intent)
         }
+
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.tab_text_1,
+            R.string.tab_text_2
+        )
     }
 }

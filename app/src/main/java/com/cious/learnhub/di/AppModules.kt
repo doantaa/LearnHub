@@ -21,6 +21,7 @@ import com.cious.learnhub.ui.authentication.login.LoginViewModel
 import com.cious.learnhub.ui.authentication.otp.OtpViewModel
 import com.cious.learnhub.ui.authentication.register.RegisterViewModel
 import com.cious.learnhub.ui.course.CourseViewModel
+import com.cious.learnhub.ui.detail.CourseDetailViewModel
 import com.cious.learnhub.ui.home.HomeViewModel
 import com.cious.learnhub.ui.notifications.NotificationsViewModel
 import org.koin.android.ext.koin.androidContext
@@ -62,7 +63,7 @@ object AppModules {
         viewModel { params -> OtpViewModel(get(), extras = params.get()) }
         viewModelOf(::RegisterViewModel)
         viewModelOf(::NotificationsViewModel)
-
+        viewModelOf(::CourseDetailViewModel)
     }
 
     val modules: List<Module> = listOf(

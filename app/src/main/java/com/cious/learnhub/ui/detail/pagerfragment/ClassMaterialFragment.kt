@@ -1,24 +1,33 @@
 package com.cious.learnhub.ui.detail.pagerfragment
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentClassMaterialBinding
-import com.cious.learnhub.ui.myclass.viewitems.DataItem
-import com.cious.learnhub.ui.myclass.viewitems.HeaderItem
-import com.cious.model.SectionedData
+import com.cious.learnhub.databinding.SheetProcessPaymentBinding
+import com.cious.learnhub.ui.detail.CourseDetailActivity
+import com.cious.learnhub.ui.detail.CourseDetailViewModel
+import com.cious.learnhub.ui.detail.pagerfragment.viewitems.DataItem
+import com.cious.learnhub.ui.detail.pagerfragment.viewitems.HeaderItem
+import com.cious.learnhub.utils.proceedWhen
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Section
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class ClassMaterialFragment : Fragment() {
-    private val adapter: GroupieAdapter by lazy {
+    private val groupieAdapter: GroupieAdapter by lazy {
         GroupieAdapter()
     }
+
+    private val viewModel: CourseDetailViewModel by activityViewModel()
 
     private lateinit var binding: FragmentClassMaterialBinding
 
@@ -32,34 +41,41 @@ class ClassMaterialFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setData()
+        invokeData()
+        setData(requireContext())
     }
 
-    private fun setData() {
+    private fun invokeData() {
+        val id = viewModel.courseId ?: 0
+        viewModel.getCourseById(id)
+    }
+
+    private fun setData(context: Context) {
         binding.rvData.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@ClassMaterialFragment.adapter
+            layoutManager = LinearLayoutManager(context)
+            adapter = groupieAdapter
         }
 
-        val section = getListData().map {
-            val section = Section()
-            section.setHeader(HeaderItem(requireContext(), it.name) { data ->
-                Toast.makeText(requireContext(), "Header Clicked : $data", Toast.LENGTH_SHORT).show()
-            })
-            val dataSection = it.data.map { data ->
-                DataItem(requireContext(), data) { data ->
-                    Toast.makeText(requireContext(), "Item Clicked : $data", Toast.LENGTH_SHORT).show()
+        viewModel.detailCourse.observe(viewLifecycleOwner) {
+            it.proceedWhen(
+                doOnSuccess = { success ->
+                    groupieAdapter.clear()
+                    val modules = success.payload?.dataDetailResponse?.modules
+                    val id = success.payload?.dataDetailResponse?.id ?: 0
+                    modules?.forEach { module ->
+                        val section = Section().apply {
+                            setHeader(HeaderItem(module.title))
+                            val contentList = module.videos.map { video ->
+                                DataItem(video, context, id) { videoUrl ->
+                                    viewModel.getVideoUrl(videoUrl.videoUrl)
+                                }
+                            }
+                            addAll(contentList)
+                        }
+                        groupieAdapter.add(section)
+                    }
                 }
-            }
-            section.addAll(dataSection)
-            section
+            )
         }
-        adapter.addAll(section)
     }
-
-    private fun getListData(): List<SectionedData> = listOf(
-        SectionedData("Chapter 1", listOf("Pendahuluan 1", "Pendahuluan 2", "Pendahuluan 3")),
-        SectionedData("Chapter 2", listOf("Isian 1", "Isian 2", "Isian 3")),
-        SectionedData("Chapter 3", listOf("Final Chap 1", "Final Chap 1", "Final Chap 1")),
-    )
 }

@@ -12,8 +12,10 @@ data class Module(
     val duration: Int?,
     @SerializedName("id")
     val id: Int?,
-    @SerializedName("title:")
+    @SerializedName("title")
     val title: String?,
+    @SerializedName("isLocked")
+    val isLocked: Boolean,
     @SerializedName("Videos")
     val videos: List<Video?>
 )

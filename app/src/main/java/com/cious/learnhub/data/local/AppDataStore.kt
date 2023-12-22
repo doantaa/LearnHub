@@ -5,5 +5,5 @@ import androidx.datastore.preferences.preferencesDataStore
 
 
 val Context.appDataStore by preferencesDataStore(
-    name = "Food App"
+    name = "Learn Hub"
 )
