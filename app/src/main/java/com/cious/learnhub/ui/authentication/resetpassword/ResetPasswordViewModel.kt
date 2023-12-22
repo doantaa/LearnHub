@@ -1,4 +1,4 @@
-package com.cious.learnhub.ui.authentication.register
+package com.cious.learnhub.ui.authentication.resetpassword
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +11,7 @@ import com.cious.learnhub.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RegisterViewModel(
+class ResetPasswordViewModel(
     private val authRepository: AuthRepository
 ): ViewModel() {
 
@@ -19,9 +19,9 @@ class RegisterViewModel(
     val otpRequestResult : LiveData<ResultWrapper<OtpData>>
         get() = _otpRequestResult
 
-    fun sendOtpRegister(otpRequest: OtpRequest) {
+    fun sendOtpPassword(otpRequest: OtpRequest) {
         viewModelScope.launch(Dispatchers.IO) {
-            authRepository.sendOtpRegister(otpRequest)
+            authRepository.sendOtpPassword(otpRequest)
                 .collect{
                     _otpRequestResult.postValue(it)
                 }

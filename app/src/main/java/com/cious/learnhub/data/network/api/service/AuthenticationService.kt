@@ -9,6 +9,8 @@ import com.cious.learnhub.data.network.api.model.otp.OtpRequest
 import com.cious.learnhub.data.network.api.model.otp.OtpResponse
 import com.cious.learnhub.data.network.api.model.register.RegisterRequest
 import com.cious.learnhub.data.network.api.model.register.RegisterResponse
+import com.cious.learnhub.data.network.api.model.resetpassword.ResetPasswordRequest
+import com.cious.learnhub.data.network.api.model.resetpassword.ResetPasswordResponse
 import com.cious.learnhub.utils.SessionManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -22,13 +24,19 @@ import java.util.concurrent.TimeUnit
 interface AuthenticationService {
 
     @POST("otp")
-    suspend fun getOtp(@Body email: OtpRequest): OtpResponse
+    suspend fun otpRegister(@Body email: OtpRequest): OtpResponse
 
     @POST("auth/register")
     suspend fun register(@Body registerRequest: RegisterRequest): RegisterResponse
 
     @POST("auth/login")
     suspend fun login(@Body loginRequest: LoginRequest): LoginResponse
+
+    @POST("reset-password/otp")
+    suspend fun otpResetPassword(@Body email: OtpRequest): OtpResponse
+
+    @POST("reset-password/verify")
+    suspend fun resetPassword(@Body resetPasswordRequest: ResetPasswordRequest): ResetPasswordResponse
 
     companion object {
         @JvmStatic

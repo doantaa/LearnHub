@@ -46,9 +46,14 @@ class NotificationsFragment : Fragment() {
         setupRecyclerView()
         observeNotificationData()
         observeViewModel()
+        checkTokenUser()
+    }
 
+    private fun checkTokenUser() {
         val token = SessionManager.getToken(requireContext())
-        Log.d("ini token", token.orEmpty())
+        if (token.isNullOrBlank()) {
+
+        }
     }
 
     private fun observeViewModel() {
