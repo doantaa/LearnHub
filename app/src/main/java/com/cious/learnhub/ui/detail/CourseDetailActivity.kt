@@ -6,39 +6,27 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
 import android.provider.Settings
-import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.OrientationEventListener
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
-import androidx.viewpager2.widget.ViewPager2
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.R
-import com.cious.learnhub.data.network.api.datasource.CourseApiDataSource
 import com.cious.learnhub.data.network.api.model.course.toCourse
-import com.cious.learnhub.data.network.api.service.CourseService
-import com.cious.learnhub.data.repository.CourseRepository
-import com.cious.learnhub.data.repository.CourseRepositoryImpl
 import com.cious.learnhub.databinding.ActivityCourseDetailBinding
-import com.cious.learnhub.model.Course
-import com.cious.learnhub.model.Enrollment
+import com.cious.learnhub.databinding.SheetProcessPaymentBinding
 import com.cious.learnhub.ui.detail.adapter.MyPagerAdapter
-import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.proceedWhen
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.FullscreenListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.loadOrCueVideo
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -84,19 +72,17 @@ class CourseDetailActivity : AppCompatActivity() {
                         binding.tvTitleClass.text = data?.title
                         binding.tvModule.text = buildString {
                             append(data?.moduleCount)
-                            append(" Modul")
+                            append(getString(R.string.txt_sps_module))
                         }
                         binding.tvLevel.text = data?.level
                         binding.tvInstructor.text = data?.instructor
                         binding.tvRating.text = data?.rating.toString()
                         binding.tvDuration.text = buildString {
                             append(data?.totalDuration)
-                            append(" Menit")
+                            append(getString(R.string.txt_sps_minutes))
                         }
                         binding.tvTitleCategoryClass.text = data?.categoryName
                     }
-                    val firstVideoUrl = item.payload?.dataDetailResponse!!.modules?.get(0)!!.videos[0]?.videoUrl
-                    youtubePlayer?.loadVideo(firstVideoUrl.orEmpty(), 0f)
                 }
             )
         }
@@ -168,6 +154,11 @@ class CourseDetailActivity : AppCompatActivity() {
     private fun playVideo(videoUrl: String?) {
         if (!videoUrl.isNullOrBlank()) {
             youtubePlayer?.loadVideo(videoUrl, 0f)
+        } else {
+            val firstVideoUrl = viewModel.detailCourse.observe(this){
+                it.payload?.dataDetailResponse!!.modules?.get(0)!!.videos[0]?.videoUrl
+            }
+            youtubePlayer?.loadVideo(firstVideoUrl.toString(), 0f)
         }
     }
 

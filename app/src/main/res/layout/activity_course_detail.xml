@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     tools:text="@string/text_level" />
             </LinearLayout>
 
@@ -137,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     tools:text="@string/text_total_module" />
             </LinearLayout>
 
@@ -162,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     tools:text="@string/text_duration" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

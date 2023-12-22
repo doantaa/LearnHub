@@ -1,5 +1,6 @@
 package com.cious.learnhub.ui.detail.pagerfragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cious.learnhub.databinding.FragmentClassMaterialBinding
+import com.cious.learnhub.databinding.SheetProcessPaymentBinding
 import com.cious.learnhub.ui.detail.CourseDetailActivity
 import com.cious.learnhub.ui.detail.CourseDetailViewModel
 import com.cious.learnhub.ui.detail.pagerfragment.viewitems.DataItem
@@ -40,8 +42,7 @@ class ClassMaterialFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         invokeData()
-        Toast.makeText(requireContext(), viewModel.courseId.toString(), Toast.LENGTH_SHORT).show()
-        setData()
+        setData(requireContext())
     }
 
     private fun invokeData() {
@@ -49,9 +50,9 @@ class ClassMaterialFragment : Fragment() {
         viewModel.getCourseById(id)
     }
 
-    private fun setData() {
+    private fun setData(context: Context) {
         binding.rvData.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(context)
             adapter = groupieAdapter
         }
 
@@ -60,11 +61,12 @@ class ClassMaterialFragment : Fragment() {
                 doOnSuccess = { success ->
                     groupieAdapter.clear()
                     val modules = success.payload?.dataDetailResponse?.modules
+                    val id = success.payload?.dataDetailResponse?.id ?: 0
                     modules?.forEach { module ->
                         val section = Section().apply {
                             setHeader(HeaderItem(module.title))
                             val contentList = module.videos.map { video ->
-                                DataItem(video) { videoUrl ->
+                                DataItem(video, context, id) { videoUrl ->
                                     viewModel.getVideoUrl(videoUrl.videoUrl)
                                 }
                             }

@@ -81,4 +81,6 @@
     <string name="txt_class_material">Materi Kelas</string>
     <string name="tab_text_1">Tentang</string>
     <string name="tab_text_2">Materi Kelas</string>
+    <string name="txt_sps_module">" Modul"</string>
+    <string name="txt_sps_minutes">" Menit"</string>
 </resources>
