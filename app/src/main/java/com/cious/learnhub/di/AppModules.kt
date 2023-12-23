@@ -71,8 +71,7 @@ object AppModules {
         viewModel { params -> OtpViewModel(get(), extras = params.get()) }
         viewModelOf(::RegisterViewModel)
         viewModelOf(::NotificationsViewModel)
-        viewModelOf(::PaymentViewModel)
-
+        viewModel{ params -> PaymentViewModel( get(), extras = params.get())}
         viewModelOf(::CourseDetailViewModel)
     }
 

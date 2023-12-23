@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.cious.learnhub.R
-import com.cious.learnhub.databinding.ActivityHistoryPaymentBinding
-import com.cious.learnhub.databinding.FragmentMyClassBinding
 import com.cious.learnhub.databinding.FragmentProfileBinding
 import com.cious.learnhub.ui.historypayment.HistoryPaymentActivity
 

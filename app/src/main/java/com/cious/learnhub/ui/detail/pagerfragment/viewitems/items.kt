@@ -1,15 +1,17 @@
 package com.cious.learnhub.ui.detail.pagerfragment.viewitems
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.Toast
+import coil.load
 import com.cious.learnhub.R
-import com.cious.learnhub.data.network.api.model.course.Video
+import com.cious.learnhub.databinding.BottomSheetPaymentBinding
 import com.cious.learnhub.databinding.ItemChapterHeaderBinding
 import com.cious.learnhub.databinding.ItemCourseChapterBinding
-import com.cious.learnhub.databinding.SheetProcessPaymentBinding
-import com.cious.learnhub.ui.detail.CourseDetailActivity
+import com.cious.learnhub.model.Course
+import com.cious.learnhub.model.Video
+import com.cious.learnhub.ui.payment.PaymentDetailActivity
+import com.cious.learnhub.utils.toCurrencyFormat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.xwray.groupie.viewbinding.BindableItem
 
@@ -26,11 +28,14 @@ class HeaderItem(private val title: String?) : BindableItem<ItemChapterHeaderBin
 }
 
 class DataItem(
-    private val data: Video?,
+    private val data: Video,
     private val context: Context,
-    private val courseId: Int,
+    private val detailData: Course?,
     private val onItemClick: (Video) -> Unit
 ) : BindableItem<ItemCourseChapterBinding>() {
+
+    val bottomSheetDialog = BottomSheetDialog(context)
+    val binding = BottomSheetPaymentBinding.inflate(LayoutInflater.from(context))
 
     override fun bind(viewBinding: ItemCourseChapterBinding, position: Int) {
         viewBinding.tvTitleCourse.text = data?.title
@@ -43,22 +48,37 @@ class DataItem(
             }
         }
         viewBinding.root.setOnClickListener {
-            if (data?.isLocked == false) {
+            if (data.isLocked == false) {
                 onItemClick.invoke(data)
             } else {
-                showBottomSheet(context)
+                showBottomSheet()
             }
         }
     }
 
-    private fun showBottomSheet(context:Context) {
-        val bottomSheetDialog = BottomSheetDialog(context)
-        val view = View.inflate(context, R.layout.sheet_process_payment, null)
-        bottomSheetDialog.setContentView(view)
-        val processButton: Button = view.findViewById(R.id.btn_buy_now)
-        processButton.setOnClickListener {
-            Toast.makeText(context, courseId.toString(), Toast.LENGTH_SHORT).show()
+
+    private fun showBottomSheet() {
+        bindData()
+        setupBottomSheet()
+    }
+
+    private fun setupBottomSheet() {
+        binding.btnContinueToDetail.setOnClickListener {
+            PaymentDetailActivity.startActivity(context, detailData)
         }
+    }
+
+    private fun bindData() {
+        bottomSheetDialog.setContentView(binding.root)
+        binding.itemCourse.ivCourseImage.load(detailData?.imageUrl)
+        binding.itemCourse.tvCourseCategory.text = detailData?.categoryName
+        binding.itemCourse.tvCourseTitle.text = detailData?.title
+        binding.itemCourse.tvCourseInstructor.text = detailData?.instructor
+        binding.itemCourse.tvRating.text = detailData?.rating.toString()
+        binding.itemCourse.tvLevel.text = detailData?.level
+        binding.itemCourse.tvModuleCount.text = detailData?.moduleCount.toString()
+        binding.itemCourse.tvTotalDuration.text = detailData?.totalDuration.toString()
+        binding.itemCourse.tvPrice.text = detailData?.price?.toCurrencyFormat()
         bottomSheetDialog.show()
     }
 

@@ -2,7 +2,6 @@ package com.cious.learnhub.ui.payment
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cious.learnhub.databinding.ActivityPaymentBinding
 import com.cious.learnhub.databinding.BottomSheetPaymentBinding
@@ -30,11 +29,11 @@ class PaymentActivity : AppCompatActivity() {
 
 
     private fun setOnClickListener() {
-        binding.btnBuyNow.setOnClickListener {
+        binding.btnContinue.setOnClickListener {
             showDialogPayment()
         }
 
-        bottomSheet.btnBuyNow.setOnClickListener {
+        bottomSheet.btnContinueToDetail.setOnClickListener {
             val intent = Intent(this, PaymentDetailActivity::class.java)
             startActivity(intent)
         }

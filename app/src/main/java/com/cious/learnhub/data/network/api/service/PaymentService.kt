@@ -22,7 +22,7 @@ interface PaymentService {
 
     companion object {
         @JvmStatic
-        operator fun invoke(chucker: ChuckerInterceptor, context: Context): NotificationService {
+        operator fun invoke(chucker: ChuckerInterceptor, context: Context): PaymentService {
             val token = SessionManager.getToken(context) ?: ""
             val client = OkHttpClient.Builder()
                 .addInterceptor(chucker)
@@ -43,7 +43,7 @@ interface PaymentService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
-            return retrofit.create(NotificationService::class.java)
+            return retrofit.create(PaymentService::class.java)
         }
     }
 }

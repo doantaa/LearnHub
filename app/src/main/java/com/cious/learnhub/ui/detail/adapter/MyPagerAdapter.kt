@@ -2,8 +2,6 @@ package com.cious.learnhub.ui.detail.adapter
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.cious.learnhub.ui.detail.pagerfragment.AboutFragment
 import com.cious.learnhub.ui.detail.pagerfragment.ClassMaterialFragment

@@ -1,8 +1,8 @@
 package com.cious.learnhub.data.network.api.model.notification
 
 
-import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
 
 @Keep
 data class NotificationResponse(

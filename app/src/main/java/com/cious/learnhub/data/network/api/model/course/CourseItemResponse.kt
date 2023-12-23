@@ -1,9 +1,9 @@
 package com.cious.learnhub.data.network.api.model.course
 
 
-import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import com.cious.learnhub.model.Course
+import com.google.gson.annotations.SerializedName
 
 @Keep
 data class CourseItemResponse(
@@ -44,16 +44,16 @@ data class CourseItemResponse(
     @SerializedName("totalDuration")
     val totalDuration: String?,
     @SerializedName("Modules")
-    val modules: List<Module>?,
+    val moduleResponses: List<ModuleResponse>?,
     @SerializedName("Category")
-    val category: CategoryNameResponse
+    val category: CategoryNameResponse?
 )
 
 fun CourseItemResponse.toCourse() = Course(
     id = this.id ?: 0,
     title = this.title.orEmpty(),
     categoryId = this.categoryId.orEmpty(),
-    categoryName = this.category.categoryName.orEmpty(),
+    categoryName = this.category?.categoryName.orEmpty(),
     courseType = this.courseType.orEmpty(),
     price = this.price ?: 0,
     rating = this.rating ?: 0.0,
@@ -62,10 +62,11 @@ fun CourseItemResponse.toCourse() = Course(
     moduleCount = this.moduleCount ?: 0,
     totalDuration = this.totalDuration.orEmpty(),
     imageUrl = this.imageUrl.orEmpty(),
-    onboaring = this.onboaring.orEmpty(),
+    onboarding = this.onboaring.orEmpty(),
     objective = this.objective.orEmpty(),
     about = this.about.orEmpty(),
     telegramLink = this.telegramLink.orEmpty(),
+    module = this.moduleResponses?.toModuleList() ?: emptyList(),
     createdAt = this.createdAt.orEmpty()
 )
 

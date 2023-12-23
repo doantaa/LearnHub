@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.cious.learnhub.data.repository.CourseRepository
 import com.cious.learnhub.data.repository.EnrollmentRepository
-import com.cious.learnhub.model.Course
 import com.cious.learnhub.model.Enrollment
 import com.cious.learnhub.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers

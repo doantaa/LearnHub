@@ -1,8 +1,8 @@
 package com.cious.learnhub.data.network.api.datasource
 
 import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
-import com.cious.learnhub.data.network.api.model.course.CoursesResponse
 import com.cious.learnhub.data.network.api.model.course.CourseDetailResponse
+import com.cious.learnhub.data.network.api.model.course.CoursesResponse
 import com.cious.learnhub.data.network.api.service.CourseService
 
 interface CourseDataSource {

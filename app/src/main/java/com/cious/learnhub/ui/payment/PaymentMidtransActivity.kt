@@ -3,13 +3,12 @@ package com.cious.learnhub.ui.payment
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.cious.learnhub.R
+import androidx.appcompat.app.AppCompatActivity
 import com.cious.learnhub.databinding.ActivityPaymentMidtransBinding
 
 class PaymentMidtransActivity : AppCompatActivity() {

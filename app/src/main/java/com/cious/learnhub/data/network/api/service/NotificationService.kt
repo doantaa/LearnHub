@@ -10,8 +10,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Query
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 

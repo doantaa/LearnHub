@@ -2,7 +2,6 @@ package com.cious.learnhub.data.repository
 
 import com.cious.learnhub.data.network.api.datasource.AuthDataSource
 import com.cious.learnhub.data.network.api.model.login.LoginRequest
-import com.cious.learnhub.data.network.api.model.login.LoginResponse
 import com.cious.learnhub.data.network.api.model.login.toLoginData
 import com.cious.learnhub.data.network.api.model.otp.OtpRequest
 import com.cious.learnhub.data.network.api.model.register.RegisterRequest
