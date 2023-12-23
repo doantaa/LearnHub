@@ -13,13 +13,16 @@ data class CategoryItemResponse(
     val id: String?,
     @SerializedName("name")
     val name: String?,
+    @SerializedName("imageUrl")
+    val imageUrl: String?,
     @SerializedName("updatedAt")
     val updatedAt: String?
 )
 
 fun CategoryItemResponse.toCategory() = Category (
     name = this.name?.replaceFirstChar(Char::titlecase).orEmpty(),
-    id = this.id.orEmpty()
+    id = this.id.orEmpty(),
+    imageUrl = this.imageUrl.orEmpty()
 )
 
 fun Collection<CategoryItemResponse>.toCategoryList() = this.map { it.toCategory() }

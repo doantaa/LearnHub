@@ -138,6 +138,6 @@
         app:layout_constraintTop_toBottomOf="@id/tv_title_category_class"
         app:spanCount="3"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_class_categories" />
+        tools:listitem="@layout/item_my_class_categories" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
