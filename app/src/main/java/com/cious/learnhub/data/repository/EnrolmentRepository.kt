@@ -2,10 +2,8 @@ package com.cious.learnhub.data.repository
 
 import com.cious.learnhub.data.network.api.datasource.EnrollmentDataSource
 import com.cious.learnhub.data.network.api.model.category.toCategoryList
-import com.cious.learnhub.data.network.api.model.course.toCourseList
 import com.cious.learnhub.data.network.api.model.enrollments.toEnrollmentList
 import com.cious.learnhub.model.Category
-import com.cious.learnhub.model.Course
 import com.cious.learnhub.model.Enrollment
 import com.cious.learnhub.utils.ResultWrapper
 import com.cious.learnhub.utils.proceedFlow

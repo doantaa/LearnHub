@@ -6,11 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import com.cious.learnhub.R
-import com.cious.learnhub.data.network.api.model.course.toCourse
 import com.cious.learnhub.databinding.FragmentAboutBinding
-import com.cious.learnhub.ui.detail.CourseDetailActivity
 import com.cious.learnhub.ui.detail.CourseDetailViewModel
 import com.cious.learnhub.utils.proceedWhen
 
@@ -42,9 +38,9 @@ class AboutFragment : Fragment() {
         viewModel.detailCourse.observe(viewLifecycleOwner){
             it.proceedWhen (
                 doOnSuccess = {
-                    it.payload?.dataDetailResponse?.toCourse().let {data ->
-                        binding.tvAbout.text = data?.about
-                        binding.tvObjective.text = data?.objective
+                    it.payload?.let {data ->
+                        binding.tvAbout.text = data.about
+                        binding.tvObjective.text = data.objective
                     }
                 }
             )

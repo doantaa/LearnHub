@@ -3,26 +3,26 @@ package com.cious.learnhub.data.network.api.service
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
-import com.cious.learnhub.data.network.api.model.notification.NotificationResponse
+import com.cious.learnhub.data.network.api.model.payment.PaymentResponse
 import com.cious.learnhub.utils.SessionManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-interface NotificationService {
+interface PaymentService {
 
+    @POST("payment/{id}")
+    suspend fun createPayment(@Path("id") id: Int): PaymentResponse
 
-    @GET("notification/my")
-    suspend fun getNotification(
-    ) : NotificationResponse
 
     companion object {
         @JvmStatic
-        operator fun invoke(chucker: ChuckerInterceptor, context: Context): NotificationService {
+        operator fun invoke(chucker: ChuckerInterceptor, context: Context): PaymentService {
             val token = SessionManager.getToken(context) ?: ""
             val client = OkHttpClient.Builder()
                 .addInterceptor(chucker)
@@ -43,7 +43,9 @@ interface NotificationService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
-            return retrofit.create(NotificationService::class.java)
+            return retrofit.create(PaymentService::class.java)
         }
     }
 }
+
+

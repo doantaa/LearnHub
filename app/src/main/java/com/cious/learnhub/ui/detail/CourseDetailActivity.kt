@@ -9,7 +9,6 @@ import android.provider.Settings
 import android.util.Log
 import android.view.OrientationEventListener
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -17,9 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import com.cious.learnhub.R
-import com.cious.learnhub.data.network.api.model.course.toCourse
 import com.cious.learnhub.databinding.ActivityCourseDetailBinding
-import com.cious.learnhub.databinding.SheetProcessPaymentBinding
 import com.cious.learnhub.ui.detail.adapter.MyPagerAdapter
 import com.cious.learnhub.utils.proceedWhen
 import com.google.android.material.tabs.TabLayoutMediator
@@ -68,21 +65,25 @@ class CourseDetailActivity : AppCompatActivity() {
         viewModel.detailCourse.observe(this){
             it.proceedWhen(
                 doOnSuccess = {item ->
-                    item.payload?.dataDetailResponse?.toCourse().let {data ->
-                        binding.tvTitleClass.text = data?.title
+                    item.payload?.let {data ->
+                        binding.tvTitleClass.text = data.title
                         binding.tvModule.text = buildString {
-                            append(data?.moduleCount)
+                            append(data.moduleCount)
                             append(getString(R.string.txt_sps_module))
                         }
-                        binding.tvLevel.text = data?.level
-                        binding.tvInstructor.text = data?.instructor
-                        binding.tvRating.text = data?.rating.toString()
+                        binding.tvLevel.text = data.level
+                        binding.tvInstructor.text = data.instructor
+                        binding.tvRating.text = data.rating.toString()
                         binding.tvDuration.text = buildString {
-                            append(data?.totalDuration)
+                            append(data.totalDuration)
                             append(getString(R.string.txt_sps_minutes))
                         }
-                        binding.tvTitleCategoryClass.text = data?.categoryName
+                        binding.tvTitleCategoryClass.text = data.categoryName
+                        Log.d("DATA COURSE ADALAH", data.toString())
                     }
+                },
+                doOnError = {
+                    Log.d("DATA COURSE", it.exception?.message.toString())
                 }
             )
         }
@@ -156,7 +157,9 @@ class CourseDetailActivity : AppCompatActivity() {
             youtubePlayer?.loadVideo(videoUrl, 0f)
         } else {
             val firstVideoUrl = viewModel.detailCourse.observe(this){
-                it.payload?.dataDetailResponse!!.modules?.get(0)!!.videos[0]?.videoUrl
+                it.payload?.module?.let {
+                    it.get(0).videos[0].videoUrl
+                }
             }
             youtubePlayer?.loadVideo(firstVideoUrl.toString(), 0f)
         }

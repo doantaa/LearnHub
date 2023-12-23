@@ -5,10 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
 import com.cious.learnhub.databinding.ItemListProgressiveCourseBinding
-import com.cious.learnhub.model.Course
 import com.cious.learnhub.model.Enrollment
 
 class ProgressiveCourseAdapter(private val itemClick: (Enrollment) -> Unit) :

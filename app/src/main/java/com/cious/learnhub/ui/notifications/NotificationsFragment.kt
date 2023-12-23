@@ -5,14 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.cious.learnhub.data.network.api.datasource.NotificaitonDataSource
 import com.cious.learnhub.data.network.api.datasource.NotificationDataSourceImpl
-import com.cious.learnhub.data.network.api.service.AuthenticationService
 import com.cious.learnhub.data.network.api.service.NotificationService
 import com.cious.learnhub.data.repository.NotificationRepositoryImpl
 import com.cious.learnhub.databinding.FragmentNotificationsBinding

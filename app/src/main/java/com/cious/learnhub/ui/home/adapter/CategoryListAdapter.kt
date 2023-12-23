@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.cious.learnhub.core.ViewHolderBinder
 import com.cious.learnhub.databinding.ItemCategoryBinding
 import com.cious.learnhub.model.Category

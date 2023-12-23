@@ -2,6 +2,7 @@ package com.cious.learnhub.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
 @Parcelize
 data class Course(
@@ -17,9 +18,10 @@ data class Course(
     val moduleCount: Int,
     val totalDuration: String,
     val imageUrl: String,
-    val onboaring: String,
+    val onboarding: String,
     val objective: String,
     val about: String,
     val telegramLink: String,
-    val createdAt: String
+    val createdAt: String,
+    val module: List<@RawValue Module>
 ):Parcelable

@@ -1,10 +1,7 @@
 package com.cious.learnhub.ui.historypayment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import com.cious.learnhub.R
 import com.cious.learnhub.data.dummy.DummyHistoryPaymentDataSourceImpl
 import com.cious.learnhub.databinding.ActivityHistoryPaymentBinding
 import com.cious.learnhub.model.HistoryPayment
