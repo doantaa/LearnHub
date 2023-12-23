@@ -66,6 +66,9 @@ class CategoryMyClassListViewHolder(
             }
             Log.d("Image url", item.imageUrl)
             binding.tvCategory.text = item.name
+            binding.ivCategory.load(
+                item.imageUrl
+            )
         }
     }
 }
