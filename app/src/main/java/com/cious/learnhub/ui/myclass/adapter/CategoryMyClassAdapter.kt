@@ -65,6 +65,9 @@ class CategoryMyClassListViewHolder(
                 crossfade(true)
             }
             binding.tvCategory.text = item.name
+            binding.ivCategory.load(
+                item.imageUrl
+            )
         }
     }
 }
