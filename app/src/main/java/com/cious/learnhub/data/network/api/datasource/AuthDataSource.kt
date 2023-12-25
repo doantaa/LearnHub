@@ -6,6 +6,8 @@ import com.cious.learnhub.data.network.api.model.otp.OtpRequest
 import com.cious.learnhub.data.network.api.model.otp.OtpResponse
 import com.cious.learnhub.data.network.api.model.register.RegisterRequest
 import com.cious.learnhub.data.network.api.model.register.RegisterResponse
+import com.cious.learnhub.data.network.api.model.resetpassword.VerifyResetPasswordRequest
+import com.cious.learnhub.data.network.api.model.resetpassword.VerifyResetPasswordResponse
 import com.cious.learnhub.data.network.api.service.AuthenticationService
 
 
@@ -25,6 +27,10 @@ interface AuthDataSource {
     suspend fun sendOtpResetPassword(
         email: OtpRequest
     ): OtpResponse
+
+    suspend fun doResetPassword(
+        verifyResetPasswordRequest: VerifyResetPasswordRequest
+    ) : VerifyResetPasswordResponse
 }
 
 class AuthDataSourceImpl(
@@ -52,5 +58,11 @@ class AuthDataSourceImpl(
         email: OtpRequest
     ): OtpResponse {
         return service.otpResetPassword(email)
+    }
+
+    override suspend fun doResetPassword(
+        verifyResetPasswordRequest: VerifyResetPasswordRequest
+    ): VerifyResetPasswordResponse {
+        return service.resetPassword(verifyResetPasswordRequest)
     }
 }

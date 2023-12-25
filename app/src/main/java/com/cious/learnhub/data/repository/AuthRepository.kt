@@ -7,28 +7,46 @@ import com.cious.learnhub.data.network.api.model.otp.OtpRequest
 import com.cious.learnhub.data.network.api.model.otp.toOtpData
 import com.cious.learnhub.data.network.api.model.register.RegisterRequest
 import com.cious.learnhub.data.network.api.model.register.toRegisterData
+import com.cious.learnhub.data.network.api.model.resetpassword.VerifyResetPasswordRequest
+import com.cious.learnhub.data.network.api.model.resetpassword.toVerifyResetPasswordData
 import com.cious.learnhub.model.AuthenticationData
 import com.cious.learnhub.model.LoginData
 import com.cious.learnhub.model.OtpData
 import com.cious.learnhub.model.RegisterData
+import com.cious.learnhub.model.VerifyResetPasswordData
 import com.cious.learnhub.utils.ResultWrapper
 import com.cious.learnhub.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
-    suspend fun sendOtpRegister(otpRequest: OtpRequest): Flow<ResultWrapper<OtpData>>
+    suspend fun sendOtpRegister(
+        otpRequest: OtpRequest
+    ): Flow<ResultWrapper<OtpData>>
+
     suspend fun doRegister(
         authenticationData: AuthenticationData,
         otp: String
     ): Flow<ResultWrapper<RegisterData>>
-    suspend fun doLogin(loginRequest: LoginRequest): Flow<ResultWrapper<LoginData>>
-    suspend fun sendOtpPassword(otpRequest: OtpRequest): Flow<ResultWrapper<OtpData>>
+
+    suspend fun doLogin(
+        loginRequest: LoginRequest
+    ): Flow<ResultWrapper<LoginData>>
+
+    suspend fun sendOtpPassword(
+        otpRequest: OtpRequest
+    ): Flow<ResultWrapper<OtpData>>
+
+    suspend fun doResetPassword(
+        verifyResetPasswordRequest: VerifyResetPasswordRequest
+    ): Flow<ResultWrapper<VerifyResetPasswordData>>
 }
 
 class AuthRepositoryImpl(
     private val dataSource: AuthDataSource
 ) : AuthRepository {
-    override suspend fun sendOtpRegister(otpRequest: OtpRequest): Flow<ResultWrapper<OtpData>> {
+    override suspend fun sendOtpRegister(
+        otpRequest: OtpRequest
+    ): Flow<ResultWrapper<OtpData>> {
         return proceedFlow {
             dataSource.sendOtpRegister(otpRequest).toOtpData()
         }
@@ -51,15 +69,27 @@ class AuthRepositoryImpl(
         }
     }
 
-    override suspend fun doLogin(loginRequest: LoginRequest): Flow<ResultWrapper<LoginData>> {
+    override suspend fun doLogin(
+        loginRequest: LoginRequest
+    ): Flow<ResultWrapper<LoginData>> {
         return proceedFlow {
             dataSource.doLogin(loginRequest).toLoginData()
         }
     }
 
-    override suspend fun sendOtpPassword(otpRequest: OtpRequest): Flow<ResultWrapper<OtpData>> {
+    override suspend fun sendOtpPassword(
+        otpRequest: OtpRequest
+    ): Flow<ResultWrapper<OtpData>> {
         return proceedFlow {
             dataSource.sendOtpResetPassword(otpRequest).toOtpData()
+        }
+    }
+
+    override suspend fun doResetPassword(
+        verifyResetPasswordRequest: VerifyResetPasswordRequest
+    ): Flow<ResultWrapper<VerifyResetPasswordData>> {
+        return proceedFlow {
+            dataSource.doResetPassword(verifyResetPasswordRequest).toVerifyResetPasswordData()
         }
     }
 }

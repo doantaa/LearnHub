@@ -9,8 +9,8 @@ import com.cious.learnhub.data.network.api.model.otp.OtpRequest
 import com.cious.learnhub.data.network.api.model.otp.OtpResponse
 import com.cious.learnhub.data.network.api.model.register.RegisterRequest
 import com.cious.learnhub.data.network.api.model.register.RegisterResponse
-import com.cious.learnhub.data.network.api.model.resetpassword.ResetPasswordRequest
-import com.cious.learnhub.data.network.api.model.resetpassword.ResetPasswordResponse
+import com.cious.learnhub.data.network.api.model.resetpassword.VerifyResetPasswordRequest
+import com.cious.learnhub.data.network.api.model.resetpassword.VerifyResetPasswordResponse
 import com.cious.learnhub.utils.SessionManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -36,7 +36,7 @@ interface AuthenticationService {
     suspend fun otpResetPassword(@Body email: OtpRequest): OtpResponse
 
     @POST("reset-password/verify")
-    suspend fun resetPassword(@Body resetPasswordRequest: ResetPasswordRequest): ResetPasswordResponse
+    suspend fun resetPassword(@Body verifyResetPasswordRequest: VerifyResetPasswordRequest): VerifyResetPasswordResponse
 
     companion object {
         @JvmStatic

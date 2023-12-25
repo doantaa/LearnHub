@@ -1,5 +1,6 @@
 package com.cious.learnhub.di
 
+import android.os.Bundle
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.data.network.api.datasource.AuthDataSource
 import com.cious.learnhub.data.network.api.datasource.AuthDataSourceImpl
@@ -7,8 +8,6 @@ import com.cious.learnhub.data.network.api.datasource.CourseApiDataSource
 import com.cious.learnhub.data.network.api.datasource.CourseDataSource
 import com.cious.learnhub.data.network.api.datasource.NotificaitonDataSource
 import com.cious.learnhub.data.network.api.datasource.NotificationDataSourceImpl
-import com.cious.learnhub.data.network.api.datasource.PaymentApiDataSource
-import com.cious.learnhub.data.network.api.datasource.PaymentDataSource
 import com.cious.learnhub.data.network.api.service.AuthenticationService
 import com.cious.learnhub.data.network.api.service.CourseService
 import com.cious.learnhub.data.network.api.service.NotificationService
@@ -19,11 +18,12 @@ import com.cious.learnhub.data.repository.CourseRepository
 import com.cious.learnhub.data.repository.CourseRepositoryImpl
 import com.cious.learnhub.data.repository.NotifiacationRepository
 import com.cious.learnhub.data.repository.NotificationRepositoryImpl
-import com.cious.learnhub.data.repository.PaymentRepository
-import com.cious.learnhub.data.repository.PaymentRepositoryImpl
 import com.cious.learnhub.ui.authentication.login.LoginViewModel
 import com.cious.learnhub.ui.authentication.otp.OtpViewModel
 import com.cious.learnhub.ui.authentication.register.RegisterViewModel
+import com.cious.learnhub.ui.authentication.resetpassword.OtpPasswordViewModel
+import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordViewModel
+import com.cious.learnhub.ui.authentication.resetpassword.VerifyResetPasswordViewModel
 import com.cious.learnhub.ui.course.CourseViewModel
 import com.cious.learnhub.ui.detail.CourseDetailViewModel
 import com.cious.learnhub.ui.home.HomeViewModel
@@ -54,25 +54,26 @@ object AppModules {
         single<CourseDataSource> { CourseApiDataSource(get()) }
         single<AuthDataSource> { AuthDataSourceImpl(get()) }
         single<NotificaitonDataSource> { NotificationDataSourceImpl(get()) }
-        single<PaymentDataSource> { PaymentApiDataSource(get()) }
     }
 
     private val repositoryModule = module {
         single<CourseRepository> { CourseRepositoryImpl(get()) }
         single<AuthRepository> { AuthRepositoryImpl(get()) }
         single<NotifiacationRepository> { NotificationRepositoryImpl(get()) }
-        single<PaymentRepository> { PaymentRepositoryImpl(get()) }
     }
 
     private val viewModelModule = module {
         viewModelOf(::HomeViewModel)
         viewModelOf(::CourseViewModel)
         viewModelOf(::LoginViewModel)
-        viewModel { params -> OtpViewModel(get(), extras = params.get()) }
+        viewModel { params -> OtpViewModel(extras = params.get(), get()) }
         viewModelOf(::RegisterViewModel)
         viewModelOf(::NotificationsViewModel)
         viewModel{ params -> PaymentViewModel( get(), extras = params.get())}
         viewModelOf(::CourseDetailViewModel)
+        viewModelOf(::ResetPasswordViewModel)
+        viewModel { params -> OtpPasswordViewModel(extras = params.get()) }
+        viewModel { params -> VerifyResetPasswordViewModel(extras = params.get(), get()) }
     }
 
     val modules: List<Module> = listOf(

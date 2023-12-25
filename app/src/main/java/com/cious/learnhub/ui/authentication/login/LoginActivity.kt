@@ -3,7 +3,6 @@ package com.cious.learnhub.ui.authentication.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.core.view.isVisible
 import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.R
@@ -44,7 +43,8 @@ class LoginActivity : AppCompatActivity() {
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
                     binding.btnLogin.isVisible = true
-                    processLogin(it.payload)
+                    saveToken(it.payload)
+                    navigateToHome()
                 },
                 doOnError = {
                     binding.pbLoading.isVisible = false
@@ -61,10 +61,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun processLogin(loginData: LoginData?) {
+    private fun saveToken(loginData: LoginData?) {
         val token = loginData?.token
-        SessionManager.saveAuthToken(this, token.toString())
-        navigateToHome()
+        if (!token.isNullOrBlank()) {
+            token.let { SessionManager.saveAuthToken(this, it) }
+        }
     }
 
     private fun navigateToHome() {

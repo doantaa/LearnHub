@@ -46,7 +46,7 @@ class OtpActivity : AppCompatActivity() {
 
     private fun observeResult() {
         viewModel.registerResult.observe(this) { resultWrapper ->
-            resultWrapper.proceedWhen (
+            resultWrapper.proceedWhen(
                 doOnLoading = {
                     binding.pbLoading.isVisible = true
                     binding.btnSubmit.isVisible = false
@@ -60,6 +60,7 @@ class OtpActivity : AppCompatActivity() {
                     binding.llMessage.isVisible = true
                     binding.tvMessage.text = it.payload?.message.toString()
                     saveToken(it.payload)
+                    navigateToHome()
                 },
                 doOnError = {
                     binding.pbLoading.isVisible = false
@@ -76,19 +77,17 @@ class OtpActivity : AppCompatActivity() {
 
     private fun saveToken(registerData: RegisterData?) {
         val token = registerData?.token
-        Log.d("token register", token.toString())
         if (!token.isNullOrBlank()) {
             token.let { SessionManager.saveAuthToken(this, it) }
-            Handler(Looper.getMainLooper()).postDelayed({
-                navigateToHome()
-            }, 1500)
         }
     }
 
     private fun navigateToHome() {
-        startActivity(Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        })
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            })
+        }, 3000)
     }
 
     private fun setClickListeners() {

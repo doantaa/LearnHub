@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 
 @Keep
-data class ResetPasswordRequest(
+data class VerifyResetPasswordRequest(
     @SerializedName("email")
     val email: String?,
-    @SerializedName("password")
-    val password: String?,
-    @SerializedName("otp")
-    val otp: String?,
     @SerializedName("hashedOtp")
-    val hashedOtp: String?
+    val hashedOtp: String?,
+    @SerializedName("otp")
+    val otp: Int?,
+    @SerializedName("password")
+    val password: String?
 )

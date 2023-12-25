@@ -33,10 +33,10 @@ class RegisterActivity : AppCompatActivity() {
 
         setClickListeners()
         onFocusForm()
-        observeOtpRequestResult()
+        observeResult()
     }
 
-    private fun observeOtpRequestResult() {
+    private fun observeResult() {
         viewModel.otpRequestResult.observe(this) { resultWrapper ->
             resultWrapper.proceedWhen(
                 doOnLoading = {
@@ -188,23 +188,8 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun removeLeadingZeroPhoneNumber(phoneNumber: String) {
-        if (phoneNumber.startsWith("0")) {
-            phoneNumber.substring(1)
-        }
-    }
-
     private fun checkEmailValidation(email: String): Boolean {
-        return if (email.isEmpty()) {
-            binding.tilEmail.setBackgroundResource(R.drawable.bg_form_error)
-            binding.tilEmail.setEndIconDrawable(R.drawable.ic_false)
-            val endIconTint = ContextCompat.getColorStateList(this, R.color.ALLERTRED)
-            binding.tilEmail.setEndIconTintList(endIconTint)
-            binding.tvIntentRegister.isVisible = false
-            binding.llMessage.isVisible = true
-            binding.tvMessage.text = getString(R.string.text_email_cannot_be_empty)
-            false
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        return if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.tilEmail.setBackgroundResource(R.drawable.bg_form_error)
             binding.tilEmail.setEndIconDrawable(R.drawable.ic_false)
             val endIconTint = ContextCompat.getColorStateList(this, R.color.ALLERTRED)
@@ -248,6 +233,12 @@ class RegisterActivity : AppCompatActivity() {
             val endIconTint = ContextCompat.getColorStateList(this, R.color.ALLERTGREEN)
             binding.tilName.setEndIconTintList(endIconTint)
             true
+        }
+    }
+
+    private fun removeLeadingZeroPhoneNumber(phoneNumber: String) {
+        if (phoneNumber.startsWith("0")) {
+            phoneNumber.substring(1)
         }
     }
 
