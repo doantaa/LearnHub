@@ -1,9 +1,9 @@
 package com.cious.learnhub.data.network.api.model.notification
 
 
-import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import com.cious.learnhub.model.NotificationModel
+import com.google.gson.annotations.SerializedName
 
 @Keep
 data class NotificationItemResponse(
@@ -27,6 +27,7 @@ fun NotificationItemResponse.toNotificaiton() = NotificationModel(
     datetime = this.updatedAt.orEmpty(),
     title = this.title.orEmpty(),
     description = this.description.orEmpty(),
+    isRead = this.isRead ?: false,
 )
 
 fun Collection<NotificationItemResponse>.toNotificationList() = this.map { it.toNotificaiton() }

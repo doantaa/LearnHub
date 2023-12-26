@@ -10,8 +10,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Query
+import retrofit2.http.Path
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
@@ -20,6 +19,11 @@ interface NotificationService {
 
     @GET("notification/my")
     suspend fun getNotification(
+    ) : NotificationResponse
+
+    @GET("notification/my/markasread/{id}")
+    suspend fun markReadNotification(
+        @Path("id") id: Int
     ) : NotificationResponse
 
     companion object {

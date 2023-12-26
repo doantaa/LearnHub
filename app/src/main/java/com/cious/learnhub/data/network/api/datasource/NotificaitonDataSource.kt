@@ -5,6 +5,8 @@ import com.cious.learnhub.data.network.api.service.NotificationService
 
 interface NotificaitonDataSource {
     suspend fun getNotification(): NotificationResponse
+
+    suspend fun markNotification(id: Int): NotificationResponse
 }
 
 class NotificationDataSourceImpl(
@@ -14,4 +16,7 @@ class NotificationDataSourceImpl(
         return service.getNotification()
     }
 
+    override suspend fun markNotification(id: Int): NotificationResponse {
+        return service.markReadNotification(id)
+    }
 }
