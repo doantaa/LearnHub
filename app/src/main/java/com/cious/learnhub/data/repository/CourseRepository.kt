@@ -2,6 +2,7 @@ package com.cious.learnhub.data.repository
 
 import com.cious.learnhub.data.network.api.datasource.CourseDataSource
 import com.cious.learnhub.data.network.api.model.category.toCategoryList
+import com.cious.learnhub.data.network.api.model.course.toCourse
 import com.cious.learnhub.data.network.api.model.course.toCourseList
 import com.cious.learnhub.model.Category
 import com.cious.learnhub.model.Course
@@ -21,8 +22,8 @@ interface CourseRepository {
     ): Flow<ResultWrapper<List<Course>>>
 
     fun getCoursesById(
-        id: String? = null
-    ): Flow<ResultWrapper<List<Course>>>
+        id: Int
+    ): Flow<ResultWrapper<Course>>
 
     fun getCategories(): Flow<ResultWrapper<List<Category>>>
 }
@@ -46,11 +47,10 @@ class CourseRepositoryImpl(
     }
 
     override fun getCoursesById(
-        id: String?
-    ): Flow<ResultWrapper<List<Course>>> {
+        id: Int
+    ): Flow<ResultWrapper<Course>> {
         return proceedFlow {
-            courseDataSource.getCoursesById(id).data?.toCourseList()
-                ?: emptyList()
+            courseDataSource.getCoursesById(id).dataDetailResponse.toCourse()
         }.onStart {
             emit(ResultWrapper.Loading())
             delay(2000)

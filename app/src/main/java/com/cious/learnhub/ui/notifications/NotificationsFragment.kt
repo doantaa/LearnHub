@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.data.network.api.datasource.NotificationDataSourceImpl
 import com.cious.learnhub.data.network.api.service.NotificationService

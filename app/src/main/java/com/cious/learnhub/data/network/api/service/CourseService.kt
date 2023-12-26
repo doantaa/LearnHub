@@ -3,12 +3,13 @@ package com.cious.learnhub.data.network.api.service
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
 import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
+import com.cious.learnhub.data.network.api.model.course.CourseDetailResponse
 import com.cious.learnhub.data.network.api.model.course.CoursesResponse
-import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentsResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
@@ -24,8 +25,8 @@ interface CourseService {
 
     @GET("course/{id}")
     suspend fun getCourseById(
-        @Query("id") id: String? = null
-    ): CoursesResponse
+        @Path("id") id: Int
+    ): CourseDetailResponse
 
     @GET("category")
     suspend fun getCategories(): CategoriesResponse

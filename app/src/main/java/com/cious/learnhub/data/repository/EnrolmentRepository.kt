@@ -20,6 +20,10 @@ interface EnrollmentRepository {
         level: String? = null
     ): Flow<ResultWrapper<List<Enrollment>>>
 
+    fun getCoursesById(
+        id: Int
+    ): Flow<ResultWrapper<List<Enrollment>>>
+
     fun getCategories(): Flow<ResultWrapper<List<Category>>>
 }
 
@@ -34,6 +38,16 @@ class EnrollmentRepositoryImpl(
     ): Flow<ResultWrapper<List<Enrollment>>> {
         return proceedFlow {
             enrollmentDataSource.getEnrollment(category, title, courseType, level).data?.toEnrollmentList()
+                ?: emptyList()
+        }.onStart {
+            emit(ResultWrapper.Loading())
+            delay(2000)
+        }
+    }
+
+    override fun getCoursesById(id: Int): Flow<ResultWrapper<List<Enrollment>>> {
+        return proceedFlow {
+            enrollmentDataSource.getCoursesById(id).data?.toEnrollmentList()
                 ?: emptyList()
         }.onStart {
             emit(ResultWrapper.Loading())

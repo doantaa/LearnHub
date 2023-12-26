@@ -20,6 +20,11 @@ interface EnrollmentService {
         @Query("level") level: String? = null
     ): EnrollmentsResponse
 
+    @GET("enrollment/{id}")
+    suspend fun getCourseById(
+        @Query("id") id: Int
+    ): EnrollmentsResponse
+
     @GET("category")
     suspend fun getCategories(): CategoriesResponse
 
