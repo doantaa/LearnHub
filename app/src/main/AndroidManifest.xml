@@ -16,8 +16,8 @@
         android:theme="@style/Theme.LearnHub"
         tools:targetApi="31">
         <activity
-            android:name=".ui.detail.CourseDetailActivity"
-            android:exported="true" />
+            android:name=".ui.authentication.login.LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.authentication.otp.OtpActivity"
             android:exported="false" />
@@ -35,7 +35,7 @@
             android:name=".ui.historypayment.HistoryPaymentActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.authentication.login.LoginActivity"
+            android:name=".ui.splashscreen.OnboardingActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
