@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentEditProfileBinding
+import com.cious.learnhub.utils.proceedWhen
 
 class EditProfileFragment : Fragment() {
 
@@ -30,6 +31,7 @@ class EditProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
 
         binding.btnBack.setOnClickListener {
             findNavController().navigate(R.id.action_editProfileFragment_to_navigation_profile)
@@ -51,6 +53,23 @@ class EditProfileFragment : Fragment() {
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK){
             binding.imgAbout.setImageURI(data?.data)
         }
+    }
+    private fun observeViewModel() {
+        viewModel.profile.observe(viewLifecycleOwner) {
+            it.proceedWhen (
+                doOnSuccess = {
+                   it.payload?.let {
+                       binding.inputNameLay.setText(it.name)
+                       binding.inputEmailLay.setText(it.email)
+                       binding.inputNoPhoneLay.setText(it.phoneNumber)
+                       binding.inputCountryLay.setText(it.country)
+                       binding.inputCityLay.setText(it.city)
+                   }
+
+                }
+            )
+        }
+
     }
 
 
