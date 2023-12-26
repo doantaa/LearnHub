@@ -3,7 +3,9 @@ package com.cious.learnhub.ui.payment
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -25,6 +27,15 @@ class PaymentMidtransActivity : AppCompatActivity() {
 
         extractIntentData()
         openUrlFromWebView(url)
+        setButtonListener()
+    }
+
+    private fun setButtonListener() {
+        binding.btnBack.setOnClickListener {
+            val deeplink = "learnhubapp://cious.learnhub.com"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(deeplink))
+            startActivity(intent)
+        }
     }
 
     private fun extractIntentData() {
@@ -53,6 +64,13 @@ class PaymentMidtransActivity : AppCompatActivity() {
                         val intent = Intent(Intent.ACTION_VIEW, request?.url)
                         startActivity(intent)
                         return true
+                    } else if (requestUrl.contains("cious.learnhub.com/")) {
+                        Log.d("URLADAKAG", request?.url.toString())
+                        val deeplink = "learnhubapp://cious.learnhub.com"
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(deeplink))
+                        startActivity(intent)
+                        return true
+
                     } else {
                         return false
                     }

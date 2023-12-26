@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.cious.learnhub.databinding.ActivityPaymentDetailBinding
 import com.cious.learnhub.model.Course
+import com.cious.learnhub.utils.proceedWhen
 import com.cious.learnhub.utils.toCurrencyFormat
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -27,6 +28,17 @@ class PaymentDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         setClickListeners()
         bindCourseData()
+        observePaymentSendStatus()
+    }
+
+    private fun observePaymentSendStatus() {
+        viewModel.paymentData.observe(this){
+            it.proceedWhen(
+                doOnSuccess = {
+                    navigateToPaymentMidtrans(it.payload?.redirectUrl.orEmpty())
+                }
+            )
+        }
     }
 
     private fun bindCourseData() {
@@ -43,18 +55,15 @@ class PaymentDetailActivity : AppCompatActivity() {
 
     private fun setClickListeners() {
         binding.btnBuyNow.setOnClickListener {
-            navigateToPaymentMidtrans()
+            val courseId = viewModel.extraCourse?.id ?: 0
+            viewModel.createPayment(courseId)
         }
     }
 
-    private fun navigateToPaymentMidtrans() {
+    private fun navigateToPaymentMidtrans(url: String) {
         val intent = Intent(this, PaymentMidtransActivity::class.java)
-        intent.putExtra("URL", getUrl())
+        intent.putExtra("URL", url)
         startActivity(intent)
-    }
-
-    private fun getUrl(): String {
-        return "https://sample-demo-dot-midtrans-support-tools.et.r.appspot.com/snap-redirect/"
     }
 
     companion object {
