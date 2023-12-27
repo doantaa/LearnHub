@@ -7,15 +7,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.R
+import com.cious.learnhub.data.network.api.datasource.NotificationDataSourceImpl
+import com.cious.learnhub.data.network.api.datasource.ProfileDataSource
+import com.cious.learnhub.data.network.api.datasource.ProfileDataSourceImpl
+import com.cious.learnhub.data.network.api.service.NotificationService
+import com.cious.learnhub.data.network.api.service.ProfileService
+import com.cious.learnhub.data.repository.NotificationRepositoryImpl
+import com.cious.learnhub.data.repository.ProfileRepositoryImpl
 import com.cious.learnhub.databinding.FragmentEditProfileBinding
+import com.cious.learnhub.ui.notifications.NotificationsViewModel
+import com.cious.learnhub.utils.GenericViewModelFactory
+import com.cious.learnhub.utils.proceedWhen
 
 class EditProfileFragment : Fragment() {
 
     lateinit var binding : FragmentEditProfileBinding
 
-    private lateinit var viewModel: EditProfileViewModel
+    private val viewModel: EditProfileViewModel by viewModels {
+        val service = ProfileService.invoke(ChuckerInterceptor(requireContext()), requireContext())
+        val dataSource = ProfileDataSourceImpl(service)
+        val repository = ProfileRepositoryImpl(dataSource)
+        GenericViewModelFactory.create(EditProfileViewModel(repository))
+    }
     private val IMAGE_REQUEST_CODE = 100
 
     override fun onCreateView(
@@ -28,6 +45,7 @@ class EditProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
 
         binding.btnBack.setOnClickListener {
             findNavController().navigate(R.id.action_editProfileFragment_to_navigation_profile)
@@ -49,6 +67,23 @@ class EditProfileFragment : Fragment() {
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK){
             binding.imgAbout.setImageURI(data?.data)
         }
+    }
+    private fun observeViewModel() {
+        viewModel.profile.observe(viewLifecycleOwner) {
+            it.proceedWhen (
+                doOnSuccess = {
+                    it.payload?.let {
+                        binding.inputNameLay.setText(it.name)
+                        binding.inputEmailLay.setText(it.email)
+                        binding.inputNoPhoneLay.setText(it.phoneNumber)
+                        binding.inputCountryLay.setText(it.country)
+                        binding.inputCityLay.setText(it.city)
+                    }
+
+                }
+            )
+        }
+
     }
 
 
