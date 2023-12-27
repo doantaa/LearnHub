@@ -1,5 +1,6 @@
 package com.cious.learnhub.data.network.api.model.enrollments
 
+import com.cious.learnhub.data.network.api.model.course.CategoryNameResponse
 import com.cious.learnhub.model.Enrollment
 import com.google.gson.annotations.SerializedName
 
@@ -22,8 +23,6 @@ data class Data(
     @SerializedName("categoryId")
     val categoryId: String,
 
-    @SerializedName("categoryId")
-    val categoryName: String,
 
     @SerializedName("level")
     val level: String,
@@ -59,7 +58,10 @@ data class Data(
     val updatedAt: String,
 
     @SerializedName("createdAt")
-    val createdAt: String
+    val createdAt: String,
+
+    @SerializedName("Category")
+    val category: CategoryNameResponse
 )
 
 fun Data.toEnrollment() = Enrollment(
@@ -69,7 +71,7 @@ fun Data.toEnrollment() = Enrollment(
     objective = this.objective.orEmpty(),
     onboarding = this.onboarding.orEmpty(),
     categoryId = this.categoryId.orEmpty(),
-    categoryName = this.categoryName.orEmpty(),
+    categoryName = this.category.categoryName.orEmpty(),
     level = this.level.orEmpty(),
     courseType = this.courseType.orEmpty(),
     imageUrl = this.imageUrl.orEmpty(),

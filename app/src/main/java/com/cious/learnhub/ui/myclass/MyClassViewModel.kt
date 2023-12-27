@@ -21,10 +21,11 @@ class MyClassViewModel(private val repository: EnrollmentRepository) : ViewModel
     fun getCourses(
         category: String? = null,
         title: String? = null,
+        courseType: String? = null,
         level: String? = null
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getEnrollment(category, title, level).collect {
+            repository.getEnrollment(category, title, courseType, level).collect {
                 _enrollment.postValue(it)
             }
         }

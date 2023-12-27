@@ -60,10 +60,10 @@ class CategoryMyClassListViewHolder(
             binding.root.setOnClickListener {
                 onItemClick.invoke(item)
             }
+            binding.ivCategory.load(item.imageUrl){
+                crossfade(true)
+            }
             binding.tvCategory.text = item.name
-            binding.ivCategory.load(
-                item.imageUrl
-            )
         }
     }
 }

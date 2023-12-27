@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 interface EnrollmentService {
     @GET("enrollment")
     suspend fun getEnrollments(
-        @Query("categoryIds") category: String? = null,
+        @Query("categoryId") category: String? = null,
         @Query("title") title: String? = null,
         @Query("courseType") courseType: String? = null,
         @Query("level") level: String? = null
