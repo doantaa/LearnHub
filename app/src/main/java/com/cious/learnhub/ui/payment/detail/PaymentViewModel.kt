@@ -1,4 +1,4 @@
-package com.cious.learnhub.ui.payment
+package com.cious.learnhub.ui.payment.detail
 
 import android.os.Bundle
 import androidx.lifecycle.LiveData

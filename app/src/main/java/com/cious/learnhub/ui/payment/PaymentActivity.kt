@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.cious.learnhub.databinding.ActivityPaymentBinding
 import com.cious.learnhub.databinding.BottomSheetPaymentBinding
+import com.cious.learnhub.ui.payment.detail.PaymentDetailActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class PaymentActivity : AppCompatActivity() {
