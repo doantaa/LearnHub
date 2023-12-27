@@ -17,8 +17,7 @@ interface NotificationService {
 
 
     @GET("notification/my")
-    suspend fun getNotification(
-    ) : NotificationResponse
+    suspend fun getNotification() : NotificationResponse
 
     companion object {
         @JvmStatic
