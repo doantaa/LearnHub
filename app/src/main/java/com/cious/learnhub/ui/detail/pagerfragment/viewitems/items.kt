@@ -10,7 +10,7 @@ import com.cious.learnhub.databinding.ItemChapterHeaderBinding
 import com.cious.learnhub.databinding.ItemCourseChapterBinding
 import com.cious.learnhub.model.Course
 import com.cious.learnhub.model.Video
-import com.cious.learnhub.ui.payment.PaymentDetailActivity
+import com.cious.learnhub.ui.payment.detail.PaymentDetailActivity
 import com.cious.learnhub.utils.toCurrencyFormat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.xwray.groupie.viewbinding.BindableItem

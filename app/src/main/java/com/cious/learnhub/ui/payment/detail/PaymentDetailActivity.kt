@@ -1,4 +1,4 @@
-package com.cious.learnhub.ui.payment
+package com.cious.learnhub.ui.payment.detail
 
 import android.content.Context
 import android.content.Intent
@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.cious.learnhub.databinding.ActivityPaymentDetailBinding
 import com.cious.learnhub.model.Course
+import com.cious.learnhub.ui.payment.midtrans.PaymentMidtransActivity.Companion.navigateToPaymentMidtrans
 import com.cious.learnhub.utils.proceedWhen
 import com.cious.learnhub.utils.toCurrencyFormat
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,7 +36,9 @@ class PaymentDetailActivity : AppCompatActivity() {
         viewModel.paymentData.observe(this){
             it.proceedWhen(
                 doOnSuccess = {
-                    navigateToPaymentMidtrans(it.payload?.redirectUrl.orEmpty())
+                    val url = it.payload?.redirectUrl.orEmpty()
+                    val id = viewModel.extraCourse?.id ?: 0
+                    navigateToPaymentMidtrans(this, url, id)
                 }
             )
         }
@@ -60,11 +63,7 @@ class PaymentDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToPaymentMidtrans(url: String) {
-        val intent = Intent(this, PaymentMidtransActivity::class.java)
-        intent.putExtra("URL", url)
-        startActivity(intent)
-    }
+
 
     companion object {
         const val EXTRA_COURSE = "EXTRA_COURSE"
