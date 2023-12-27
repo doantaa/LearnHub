@@ -19,6 +19,7 @@ import com.cious.learnhub.model.NotificationModel
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
 import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordActivity
+import com.cious.learnhub.utils.ApiException
 import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.highLightWord
@@ -27,13 +28,14 @@ import com.cious.learnhub.utils.proceedWhen
 class NotificationsFragment : Fragment() {
 
     private lateinit var binding: FragmentNotificationsBinding
-    private val notificationsAdapter:NotificationsAdapter by lazy{
-        NotificationsAdapter{
+    private val notificationsAdapter: NotificationsAdapter by lazy {
+        NotificationsAdapter {
 
         }
     }
     private val viewModel: NotificationsViewModel by viewModels {
-        val service = NotificationService.invoke(ChuckerInterceptor(requireContext()), requireContext())
+        val service =
+            NotificationService.invoke(ChuckerInterceptor(requireContext()), requireContext())
         val dataSource = NotificationDataSourceImpl(service)
         val repository = NotificationRepositoryImpl(dataSource)
         GenericViewModelFactory.create(NotificationsViewModel(repository))
@@ -90,26 +92,41 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.notification.observe(viewLifecycleOwner) {
-            it.proceedWhen (
+        viewModel.notifRequestResult.observe(viewLifecycleOwner) {
+            it.proceedWhen(
+                doOnLoading = {
+                    binding.pbLoading.isVisible = true
+                    binding.rvNotification.isVisible = false
+                },
                 doOnSuccess = {
+                    binding.pbLoading.isVisible = false
+                    binding.rvNotification.isVisible = true
                     it.payload?.let {
                         notificationsAdapter.setData(it)
                     }
+                },
+                doOnError = {
+                    if (it.exception is ApiException) {
+                        val message = it.exception.getParsedError()?.message.orEmpty()
+                        if (message == "jwt expired") {
+                            SessionManager.clearData(requireContext())
+                        }
+                    }
+                    checkTokenUser()
                 }
             )
         }
     }
 
     private fun observeNotificationData() {
-//        notificationsAdapter.setData(notificationDummy)
+        viewModel.getNotification()
     }
 
     private fun setupRecyclerView() {
-        binding.rvNotification.adapter=notificationsAdapter
+        binding.rvNotification.adapter = notificationsAdapter
     }
 
-    val notificationDummy= listOf<NotificationModel>(
+    val notificationDummy = listOf<NotificationModel>(
         NotificationModel(
             1, "Promosi",
             "2 Maret, 12:00",
