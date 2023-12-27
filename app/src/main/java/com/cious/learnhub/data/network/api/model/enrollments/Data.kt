@@ -26,6 +26,7 @@ data class Data(
     @SerializedName("categoryId")
     val categoryId: String,
 
+
     @SerializedName("level")
     val level: String,
 

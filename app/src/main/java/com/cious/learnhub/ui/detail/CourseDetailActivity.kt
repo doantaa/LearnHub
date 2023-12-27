@@ -9,7 +9,6 @@ import android.provider.Settings
 import android.util.Log
 import android.view.OrientationEventListener
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -55,7 +54,6 @@ class CourseDetailActivity : AppCompatActivity() {
         youtubePlayer()
         observeData()
         invokeData()
-        Toast.makeText(this, viewModel.courseId.toString() , Toast.LENGTH_SHORT).show()
     }
 
     private fun observeData() {
@@ -111,11 +109,6 @@ class CourseDetailActivity : AppCompatActivity() {
         viewModel.course.observe(this){
             it.proceedWhen(
                 doOnSuccess = {item ->
-                    binding.shimmerDetailCourseActivity.isVisible = false
-                    binding.cvHeaderClassInfo.isVisible = true
-                    binding.youtubePlayerView.isVisible = true
-                    binding.tlDetail.isVisible = true
-                    binding.viewPager2.isVisible = true
                     item.payload?.let {data ->
                         binding.tvTitleClass.text = data.title
                         binding.tvModule.text = buildString {
@@ -130,7 +123,6 @@ class CourseDetailActivity : AppCompatActivity() {
                             append(getString(R.string.txt_sps_minutes))
                         }
                         binding.tvTitleCategoryClass.text = data.categoryName
-                        Log.d("AMBIL DATA", data.toString())
                     }
                 }, doOnLoading = {
                     binding.shimmerDetailCourseActivity.isVisible = true
