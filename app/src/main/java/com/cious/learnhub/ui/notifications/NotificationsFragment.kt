@@ -125,41 +125,4 @@ class NotificationsFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.rvNotification.adapter = notificationsAdapter
     }
-
-    val notificationDummy = listOf<NotificationModel>(
-        NotificationModel(
-            1, "Promosi",
-            "2 Maret, 12:00",
-            "Dapatkan Potongan 50% selama Bulan Maret!",
-            "Syarat dan Ketentuan berlaku!"
-        ),
-        NotificationModel(
-            2,
-            "Promosi",
-            "2 Maret, 12:00",
-            "Dapatkan Potongan 50% selama Bulan Maret!",
-            "Syarat dan Ketentuan berlaku!"
-        ),
-        NotificationModel(
-            3,
-            "Promosi",
-            "2 Maret, 12:00",
-            "Dapatkan Potongan 50% selama Bulan Maret!",
-            "Syarat dan Ketentuan berlaku!"
-        ),
-        NotificationModel(
-            4,
-            "Promosi",
-            "2 Maret, 12:00",
-            "Dapatkan Potongan 50% selama Bulan Maret!",
-            "Syarat dan Ketentuan berlaku!"
-        ),
-        NotificationModel(
-            5,
-            "Promosi",
-            "2 Maret, 12:00",
-            "Dapatkan Potongan 50% selama Bulan Maret!",
-            "Syarat dan Ketentuan berlaku!"
-        ),
-    )
 }
