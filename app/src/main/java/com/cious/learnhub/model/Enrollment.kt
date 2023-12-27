@@ -17,7 +17,7 @@ data class Enrollment(
     val moduleCount: Int,
     val price: Int,
     val totalDuration: String,
-    val progress: Int,
+    val progress: Double,
     val updatedAt: String,
     val createdAt: String
 )

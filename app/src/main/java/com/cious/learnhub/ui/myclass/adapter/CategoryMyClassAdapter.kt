@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.cious.learnhub.core.ViewHolderBinder
 import com.cious.learnhub.databinding.ItemMyClassCategoriesBinding
 import com.cious.learnhub.model.Category
@@ -63,6 +64,7 @@ class CategoryMyClassListViewHolder(
             binding.ivCategory.load(item.imageUrl){
                 crossfade(true)
             }
+            Log.d("Image url", item.imageUrl)
             binding.tvCategory.text = item.name
         }
     }

@@ -1,6 +1,7 @@
 package com.cious.learnhub.ui.myclass
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,6 +63,7 @@ class MyClassFragment : Fragment() {
     private fun observeCourseData() {
         viewModel.courses.observe(viewLifecycleOwner) {
             it.proceedWhen(doOnSuccess = {
+                binding.shimmerMyClass.isVisible = false
                 binding.rvClass.apply {
                     isVisible = true
                     adapter = progressiveCourseAdapter

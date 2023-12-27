@@ -1,11 +1,13 @@
 package com.cious.learnhub.ui.myclass.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.cious.learnhub.R
 import com.cious.learnhub.databinding.ItemListProgressiveCourseBinding
 import com.cious.learnhub.model.Enrollment
 
@@ -40,7 +42,8 @@ class ProgressiveCourseAdapter(private val itemClick: (Enrollment) -> Unit) :
                 parent,
                 false
             ),
-            itemClick = itemClick
+            itemClick = itemClick,
+            parent.context
         )
     }
 
@@ -58,7 +61,8 @@ class ProgressiveCourseAdapter(private val itemClick: (Enrollment) -> Unit) :
 
 class ProgressiveCourseItemViewHolder(
     private val binding: ItemListProgressiveCourseBinding,
-    private val itemClick: (Enrollment) -> Unit
+    private val itemClick: (Enrollment) -> Unit,
+    private val context: Context
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindView(item: Enrollment) {
@@ -69,8 +73,14 @@ class ProgressiveCourseItemViewHolder(
             binding.tvTitleClass.text = item.title
             binding.tvLevel.text = item.level
             binding.tvInstructor.text = item.instructor
-            binding.tvDuration.text = item.totalDuration
-            binding.tvModule.text = item.moduleCount.toString()
+            binding.tvDuration.text = buildString {
+                append(item.totalDuration)
+                append(context.getString(R.string.txt_sps_minutes))
+            }
+            binding.tvModule.text = buildString {
+                append(item.moduleCount)
+                append(context.getString(R.string.txt_sps_module))
+            }
             binding.tvCategoryClass.text = item.title
             binding.tvRate.text = item.rating.toString()
             itemView.setOnClickListener { itemClick(item) }

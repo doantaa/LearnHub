@@ -159,9 +159,9 @@ class CourseDetailActivity : AppCompatActivity() {
 
     private fun observeDataVideo() {
         viewModel.detailCourse.observe(this) { detailCourseResult ->
-            if (detailCourseResult != null && detailCourseResult.payload?.dataDetailResponse?.modules?.isNotEmpty() == true) {
-                val firstVideoUrl: String? =
-                    detailCourseResult.payload.dataDetailResponse.modules[0].videos[0]?.videoUrl
+            if (detailCourseResult != null ) {
+                val modules = detailCourseResult.payload?.module
+                val firstVideoUrl: String? = modules?.get(0)?.videos?.get(0)?.videoUrl
                 playVideo(firstVideoUrl)
             }
         }

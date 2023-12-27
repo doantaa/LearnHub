@@ -16,8 +16,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_image_category"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="18dp"
             android:layout_marginTop="16dp"
             app:cardCornerRadius="8dp"
             app:layout_constraintBottom_toTopOf="@id/tv_category"
@@ -29,8 +30,7 @@
                 android:id="@+id/iv_category"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                tools:src="@tools:sample/avatars" />
+                android:scaleType="centerCrop"/>
         </androidx.cardview.widget.CardView>
 
         <TextView

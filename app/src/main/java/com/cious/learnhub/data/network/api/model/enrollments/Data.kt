@@ -23,7 +23,6 @@ data class Data(
     @SerializedName("categoryId")
     val categoryId: String,
 
-
     @SerializedName("level")
     val level: String,
 
@@ -52,7 +51,7 @@ data class Data(
     val totalDuration: String,
 
     @SerializedName("progress")
-    val progress: Int,
+    val progress: Double,
 
     @SerializedName("updatedAt")
     val updatedAt: String,
