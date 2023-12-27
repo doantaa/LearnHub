@@ -4,7 +4,6 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebResourceRequest
@@ -62,10 +61,6 @@ class PaymentMidtransActivity : AppCompatActivity() {
                         startActivity(intent)
                         return true
                     } else if (requestUrl.contains("cious.learnhub.com/")) {
-
-                        val deeplink = "learnhubapp://cious.learnhub.com"
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(deeplink))
-                        startActivity(intent)
                         val id = viewModel.courseId ?: 0
                         CourseDetailActivity.startActivity(this@PaymentMidtransActivity, id)
                         return true
