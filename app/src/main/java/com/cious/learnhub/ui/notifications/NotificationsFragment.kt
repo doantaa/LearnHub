@@ -49,6 +49,7 @@ class NotificationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        observeNotificationData()
         observeViewModel()
 
         val token = SessionManager.getToken(requireContext())
