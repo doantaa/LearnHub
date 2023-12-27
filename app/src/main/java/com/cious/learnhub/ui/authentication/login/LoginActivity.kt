@@ -1,17 +1,17 @@
 package com.cious.learnhub.ui.authentication.login
 
 import android.content.Intent
-import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import androidx.core.view.isVisible
+import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.R
 import com.cious.learnhub.data.network.api.model.login.LoginRequest
 import com.cious.learnhub.databinding.ActivityLoginBinding
 import com.cious.learnhub.model.LoginData
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
 import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordActivity
-import com.cious.learnhub.ui.main.MainActivity
+import com.cious.learnhub.utils.ApiException
 import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
@@ -29,11 +29,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val token = SessionManager.getToken(this)
-        if (!token.isNullOrBlank()) {
-            navigateToHome()
-        }
-
         setClickListeners()
         observeResult()
     }
@@ -48,28 +43,28 @@ class LoginActivity : AppCompatActivity() {
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
                     binding.btnLogin.isVisible = true
-                    processLogin(it.payload)
+                    saveToken(it.payload)
+                    navigateToHome()
                 },
                 doOnError = {
                     binding.pbLoading.isVisible = false
                     binding.btnLogin.isVisible = true
                     binding.llMessage.isVisible = true
 
-                    // MASIH Error, handling error:
-                    val errorMessage = it.payload?.token.toString()
-                    binding.tvMessage.text = errorMessage
+                    if (it.exception is ApiException) {
+                        val message = it.exception.getParsedError()?.message.orEmpty()
+                        binding.tvMessage.text = message
+                    }
                 },
                 doOnEmpty = {}
             )
         }
     }
 
-    private fun processLogin(loginData: LoginData?) {
+    private fun saveToken(loginData: LoginData?) {
         val token = loginData?.token
-        Log.d("token", token.toString())
         if (!token.isNullOrBlank()) {
             token.let { SessionManager.saveAuthToken(this, it) }
-            navigateToHome()
         }
     }
 
@@ -86,9 +81,6 @@ class LoginActivity : AppCompatActivity() {
         binding.tvIntentRegister.highLightWord(getString(R.string.text_highlight_register)) {
             navigateToRegister()
         }
-        binding.tvIntentGuestMode.setOnClickListener {
-            navigateToHomeGuestMode()
-        }
         binding.btnLogin.setOnClickListener {
             doLogin()
         }
@@ -103,12 +95,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun navigateToResetPassword() {
         startActivity(Intent(this, ResetPasswordActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        })
-    }
-
-    private fun navigateToHomeGuestMode() {
-        startActivity(Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         })
     }

@@ -1,20 +1,27 @@
 package com.cious.learnhub.ui.notifications
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.cious.learnhub.R
 import com.cious.learnhub.data.network.api.datasource.NotificationDataSourceImpl
 import com.cious.learnhub.data.network.api.service.NotificationService
 import com.cious.learnhub.data.repository.NotificationRepositoryImpl
 import com.cious.learnhub.databinding.FragmentNotificationsBinding
 import com.cious.learnhub.model.NotificationModel
+import com.cious.learnhub.ui.authentication.login.LoginActivity
+import com.cious.learnhub.ui.authentication.register.RegisterActivity
+import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordActivity
 import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.SessionManager
+import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
 
 class NotificationsFragment : Fragment() {
@@ -46,9 +53,40 @@ class NotificationsFragment : Fragment() {
         setupRecyclerView()
         observeNotificationData()
         observeViewModel()
+        checkTokenUser()
+        setClickListeners()
+    }
 
+    private fun setClickListeners() {
+        binding.incUserNotLogin.btnLogin.setOnClickListener {
+            navigateToLogin()
+        }
+        binding.incUserNotLogin.tvIntentRegister.highLightWord(getString(R.string.text_highlight_register)) {
+            navigateToRegister()
+        }
+    }
+
+    private fun navigateToRegister() {
+        startActivity(Intent(requireContext(), RegisterActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+    }
+
+    private fun navigateToLogin() {
+        startActivity(Intent(requireContext(), LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+    }
+
+    private fun checkTokenUser() {
         val token = SessionManager.getToken(requireContext())
-        Log.d("ini token", token.orEmpty())
+        if (token.isNullOrBlank()) {
+            binding.clUserNotLogin.isVisible = true
+            binding.clUserLogin.isVisible = false
+        } else {
+            binding.clUserNotLogin.isVisible = false
+            binding.clUserLogin.isVisible = true
+        }
     }
 
     private fun observeViewModel() {

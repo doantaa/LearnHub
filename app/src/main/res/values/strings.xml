@@ -26,7 +26,7 @@
     <string name="text_password">Password</string>
     <string name="text_lupa_kata_sandi">Lupa kata sandi</string>
     <string name="text_masukkan_password">Masukkan password</string>
-    <string name="text_belum_punya_aku_daftar_di_sini">Belum punya aku? Daftar di sini</string>
+    <string name="text_belum_punya_akun_daftar_di_sini">Belum punya akun? Daftar di sini</string>
     <string name="text_masuk_tanpa_login">Masuk Tanpa Login</string>
     <string name="text_highlight_register">Daftar di sini</string>
     <string name="text_daftar">Daftar</string>
@@ -84,4 +84,17 @@
     <string name="tab_text_2">Materi Kelas</string>
     <string name="txt_sps_module">" Modul"</string>
     <string name="txt_sps_minutes">" Menit"</string>
+    <string name="text_anda_perlu_masuk_untuk_mengakses_fitur_ini">Anda Perlu Masuk\nUntuk Mengakses\nFitur Ini</string>
+    <string name="text_minimum_password_must_be_8_character">Minimum password must be 8 character</string>
+    <string name="text_email_address_is_incorrect_format">Email address is incorrect format</string>
+    <string name="text_email_cannot_be_empty">Email cannot be empty</string>
+    <string name="text_name_cannot_be_empty">Name cannot be empty</string>
+    <string name="text_maximum_50_characters">Maximum 50 characters</string>
+    <string name="text_password_minimum_8_characters_and_maximum_12_characters">password minimum 8 characters and maximum 12 characters</string>
+    <string name="text_name_cannot_be_longer_than_50_characters">Name cannot be longer than 50 characters</string>
+    <string name="text_fill_out_the_form_correctly">Fill out the form correctly</string>
+    <string name="text_phone_number_cannot_be_empty">Phone number cannot be empty</string>
+    <string name="text_invalid_phone_number_length">Invalid phone number length</string>
+    <string name="text_please_make_sure_you_ve_entered_the_complete_6_digit_otp_code">Please make sure you\'ve entered the complete 6-digit OTP code</string>
+    <string name="text_password_and_confirm_password_do_not_match">Password and confirm password do not match</string>
 </resources>

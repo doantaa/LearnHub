@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.authentication.login.LoginActivity">
@@ -60,10 +61,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:background="@drawable/bg_form"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:boxCornerRadiusBottomEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusTopStart="16dp"
+            app:endIconMode="custom"
             app:hintAnimationEnabled="false"
             app:hintEnabled="false"
             app:layout_constraintTop_toBottomOf="@id/tv_name">
@@ -73,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/text_nama_lengkap"
-                android:inputType="textPersonName"/>
+                android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -105,10 +110,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:background="@drawable/bg_form"
             app:boxCornerRadiusBottomEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusTopStart="16dp"
+            app:endIconMode="custom"
             app:hintAnimationEnabled="false"
             app:hintEnabled="false"
             app:layout_constraintTop_toBottomOf="@id/tv_email">
@@ -150,10 +157,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:background="@drawable/bg_form"
             app:boxCornerRadiusBottomEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusTopStart="16dp"
+            app:endIconMode="custom"
             app:hintAnimationEnabled="false"
             app:hintEnabled="false"
             app:layout_constraintTop_toBottomOf="@id/tv_phone_number"
@@ -196,6 +205,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:background="@drawable/bg_form"
             app:boxCornerRadiusBottomEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
@@ -241,7 +251,7 @@
 
     <LinearLayout
         android:id="@+id/ll_footer"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="35dp"
         android:orientation="vertical"
@@ -249,21 +259,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <LinearLayout
-            android:id="@+id/ll_button_nav"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_intent_register"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_intent_register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_sudah_punya_akun_masuk_di_sini"
-                android:textColor="@color/neutral_05" />
-        </LinearLayout>
+            android:text="@string/text_sudah_punya_akun_masuk_di_sini"
+            android:textColor="@color/neutral_05" />
 
         <LinearLayout
             android:id="@+id/ll_message"
@@ -282,6 +283,7 @@
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginVertical="16dp"
                 android:fontFamily="@font/montserrat"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -290,6 +292,4 @@
                 tools:text="@string/text_alamat_email_tidak_terdaftar" />
         </LinearLayout>
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

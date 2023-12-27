@@ -10,10 +10,12 @@ data class RegisterResponse(
     @SerializedName("message")
     val message: String?,
     @SerializedName("success")
-    val isSuccess: Boolean?
+    val isSuccess: Boolean?,
+    @SerializedName("token")
+    val token: String?
 )
 
 fun RegisterResponse.toRegisterData() = RegisterData(
     message = this.message.orEmpty(),
-    token = this.message.orEmpty()
+    token = this.token.orEmpty()
 )

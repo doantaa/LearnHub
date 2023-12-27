@@ -6,11 +6,13 @@ import com.cious.learnhub.data.network.api.model.otp.OtpRequest
 import com.cious.learnhub.data.network.api.model.otp.OtpResponse
 import com.cious.learnhub.data.network.api.model.register.RegisterRequest
 import com.cious.learnhub.data.network.api.model.register.RegisterResponse
+import com.cious.learnhub.data.network.api.model.resetpassword.VerifyResetPasswordRequest
+import com.cious.learnhub.data.network.api.model.resetpassword.VerifyResetPasswordResponse
 import com.cious.learnhub.data.network.api.service.AuthenticationService
 
 
 interface AuthDataSource {
-    suspend fun getOtp(
+    suspend fun sendOtpRegister(
         email: OtpRequest
     ): OtpResponse
 
@@ -21,15 +23,23 @@ interface AuthDataSource {
     suspend fun doLogin(
         loginRequest: LoginRequest
     ): LoginResponse
+
+    suspend fun sendOtpResetPassword(
+        email: OtpRequest
+    ): OtpResponse
+
+    suspend fun doResetPassword(
+        verifyResetPasswordRequest: VerifyResetPasswordRequest
+    ) : VerifyResetPasswordResponse
 }
 
 class AuthDataSourceImpl(
     private val service: AuthenticationService
 ) : AuthDataSource {
-    override suspend fun getOtp(
+    override suspend fun sendOtpRegister(
         email: OtpRequest
     ): OtpResponse {
-        return service.getOtp(email)
+        return service.otpRegister(email)
     }
 
     override suspend fun doRegister(
@@ -42,5 +52,17 @@ class AuthDataSourceImpl(
         loginRequest: LoginRequest
     ): LoginResponse {
         return service.login(loginRequest)
+    }
+
+    override suspend fun sendOtpResetPassword(
+        email: OtpRequest
+    ): OtpResponse {
+        return service.otpResetPassword(email)
+    }
+
+    override suspend fun doResetPassword(
+        verifyResetPasswordRequest: VerifyResetPasswordRequest
+    ): VerifyResetPasswordResponse {
+        return service.resetPassword(verifyResetPasswordRequest)
     }
 }
