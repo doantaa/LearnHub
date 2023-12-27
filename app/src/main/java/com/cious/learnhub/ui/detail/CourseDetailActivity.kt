@@ -71,7 +71,7 @@ class CourseDetailActivity : AppCompatActivity() {
                     binding.tlDetail.isVisible = true
                     binding.viewPager2.isVisible = true
                     item.payload?.let {data ->
-                        binding.tvTitleClass.text = data.title
+                        binding.tvTitleClass.text = data?.title
                         binding.tvModule.text = buildString {
                             append(data.moduleCount)
                             append(getString(R.string.txt_sps_module))
@@ -84,7 +84,6 @@ class CourseDetailActivity : AppCompatActivity() {
                             append(getString(R.string.txt_sps_minutes))
                         }
                         binding.tvTitleCategoryClass.text = data.categoryName
-                        Log.d("DATA COURSE ADALAH", data.toString())
                     }
                 }, doOnLoading = {
                     binding.shimmerDetailCourseActivity.isVisible = true
