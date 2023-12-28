@@ -34,7 +34,13 @@
         android:id="@+id/navigation_my_class"
         android:name="com.cious.learnhub.ui.myclass.MyClassFragment"
         android:label="@string/title_my_class"
-        tools:layout="@layout/fragment_class_material" />
+        tools:layout="@layout/fragment_class_material">
+        <deepLink
+            android:id="@+id/deepLink3"
+            app:action="ACTION_VIEW"
+            app:mimeType="text/html"
+            app:uri="cious://learnhub.myclass/payment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_course"
