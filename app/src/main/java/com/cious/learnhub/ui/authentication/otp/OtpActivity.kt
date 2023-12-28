@@ -4,29 +4,24 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.R
-import com.cious.learnhub.data.network.api.datasource.AuthDataSourceImpl
-import com.cious.learnhub.data.network.api.service.AuthenticationService
-import com.cious.learnhub.data.repository.AuthRepositoryImpl
+import com.cious.learnhub.data.network.api.model.otp.OtpRequest
 import com.cious.learnhub.databinding.ActivityOtpBinding
-import com.cious.learnhub.databinding.SheetRegistrationSuccessBinding
 import com.cious.learnhub.model.AuthenticationData
 import com.cious.learnhub.model.RegisterData
-import com.cious.learnhub.ui.authentication.register.RegisterActivity
+import com.cious.learnhub.ui.authentication.register.RegisterViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.utils.ApiException
-import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.SessionManager
+import com.cious.learnhub.utils.hideKeyboard
+import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import org.koin.core.parameter.parametersOf
 
 class OtpActivity : AppCompatActivity() {
@@ -35,6 +30,7 @@ class OtpActivity : AppCompatActivity() {
         ActivityOtpBinding.inflate(layoutInflater)
     }
     private val viewModel: OtpViewModel by viewModel { parametersOf(intent?.extras) }
+    private val registerViewModel: RegisterViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +38,32 @@ class OtpActivity : AppCompatActivity() {
 
         setClickListeners()
         observeResult()
+        countDown()
+    }
+
+    private fun setClickListeners() {
+        binding.ibBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
+        binding.btnSubmit.setOnClickListener {
+            hideKeyboard(binding.otpView)
+            doRegisterRequest()
+        }
+    }
+
+    private fun doRegisterRequest() {
+        val dataParcel = viewModel.dataParcel
+        val authenticationData = AuthenticationData(
+            name = dataParcel?.name.orEmpty(),
+            email = dataParcel?.email.orEmpty(),
+            phoneNumber = dataParcel?.phoneNumber ?: 0,
+            password = dataParcel?.password.orEmpty(),
+            hashOtp = dataParcel?.hashOtp.orEmpty()
+        )
+        val otp = binding.otpView.text.toString()
+
+        viewModel.doRegister(authenticationData, otp)
     }
 
     private fun observeResult() {
@@ -90,30 +112,32 @@ class OtpActivity : AppCompatActivity() {
         }, 3000)
     }
 
-    private fun setClickListeners() {
-        binding.ibBack.setOnClickListener {
-            navigateToLogin()
-        }
-        binding.btnSubmit.setOnClickListener {
-            val dataParcel = viewModel.dataParcel
-            val authenticationData = AuthenticationData(
-                name = dataParcel?.name.orEmpty(),
-                email = dataParcel?.email.orEmpty(),
-                phoneNumber = dataParcel?.phoneNumber ?: 0,
-                password = dataParcel?.password.orEmpty(),
-                hashOtp = dataParcel?.hashOtp.orEmpty()
-            )
-            val otp = binding.otpView.text.toString()
+    private fun countDown() {
+        val countDownTimer = object : CountDownTimer(60000, 1000) {
+            override fun onTick(milisUntilFinished: Long) {
+                val secondRemaining = milisUntilFinished / 1000
+                val formattedSeconds = secondRemaining.toString() + getString(R.string.text_detik)
+                binding.tvCountdown.text = formattedSeconds
+            }
 
-            viewModel.doRegister(authenticationData, otp)
+            override fun onFinish() {
+                binding.llCountdown.isVisible = false
+                binding.tvResendOtp.text = getString(R.string.text_kirim_ulang_otp)
+                handleResendOtpClick()
+            }
         }
+        countDownTimer.start()
     }
 
-    private fun navigateToLogin() {
-        startActivity(
-            Intent(this, RegisterActivity::class.java)
-        )
-        finish()
+    private fun handleResendOtpClick() {
+        binding.tvResendOtp.highLightWord(getString(R.string.text_kirim_ulang_otp)) {
+            val email = viewModel.dataParcel?.email.orEmpty()
+            val otpRequest = OtpRequest(email)
+            registerViewModel.sendOtpRegister(otpRequest)
+
+            binding.llCountdown.isVisible = true
+            countDown()
+        }
     }
 
     companion object {

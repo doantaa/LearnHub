@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.cious.learnhub.R
@@ -14,7 +13,6 @@ import com.cious.learnhub.data.network.api.model.resetpassword.VerifyResetPasswo
 import com.cious.learnhub.databinding.ActivityVerifyPasswordBinding
 import com.cious.learnhub.model.UserOtpPasswordData
 import com.cious.learnhub.ui.authentication.login.LoginActivity
-import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.utils.ApiException
 import com.cious.learnhub.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,45 +33,10 @@ class VerifyResetPasswordActivity : AppCompatActivity() {
         observeResult()
     }
 
-    private fun observeResult() {
-        viewModel.resetPasswordResult.observe(this) { resultwrapper ->
-            resultwrapper.proceedWhen(
-                doOnLoading = {
-                    binding.pbLoading.isVisible = true
-                    binding.btnSave.isVisible = false
-                },
-                doOnSuccess = {
-                    binding.pbLoading.isVisible = false
-                    binding.btnSave.isVisible = true
-
-                    val endIconTint = ContextCompat.getColorStateList(this, R.color.ALLERTGREEN)
-                    binding.llMessage.backgroundTintList = endIconTint
-                    binding.llMessage.isVisible = true
-                    binding.tvMessage.text = it.payload?.message.toString()
-                    navigateToLogin()
-                },
-                doOnError = {
-                    binding.pbLoading.isVisible = false
-                    binding.btnSave.isVisible = true
-                    binding.llMessage.isVisible = true
-                    if (it.exception is ApiException) {
-                        val message = it.exception.getParsedError()?.message.orEmpty()
-                        binding.tvMessage.text = message
-                    }
-                }
-            )
-        }
-    }
-
-    private fun navigateToLogin() {
-        Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            })
-        }, 3000)
-    }
-
     private fun setClickListeners() {
+        binding.ibBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         binding.btnSave.setOnClickListener {
             processResetPassword()
         }
@@ -96,43 +59,82 @@ class VerifyResetPasswordActivity : AppCompatActivity() {
         val password = binding.etPassword.text.toString()
         val confirmPassword = binding.etConfirmPassword.text.toString()
 
-        return checkPasswordValidation(password) && checkConfirmPasswordValidation(password, confirmPassword)
-    }
-
-    private fun checkConfirmPasswordValidation(password: String, confirmPassword: String): Boolean {
-        return if (password != confirmPassword) {
-            binding.tilConfirmPassword.setBackgroundResource(R.drawable.bg_form_error)
-            val endIconTint = ContextCompat.getColorStateList(this, R.color.ALLERTRED)
-            binding.tilConfirmPassword.setEndIconTintList(endIconTint)
-            binding.llMessage.isVisible = true
-            binding.tvMessage.text =
-                getString(R.string.text_password_and_confirm_password_do_not_match)
-            false
-        } else {
-            binding.tilConfirmPassword.setBackgroundResource(R.drawable.bg_form)
-            val endIconTint = ContextCompat.getColorStateList(this, R.color.ALLERTGREEN)
-            binding.tilConfirmPassword.setEndIconTintList(endIconTint)
-            binding.llMessage.isVisible = false
-            true
-        }
+        return checkPasswordValidation(password) &&
+                checkConfirmPasswordValidation(password, confirmPassword)
     }
 
     private fun checkPasswordValidation(password: String): Boolean {
         return if (password.length < 8 || password.length > 12) {
+            val colorState = ContextCompat.getColorStateList(this, R.color.ALLERTRED)
+            binding.tilPassword.setEndIconTintList(colorState)
             binding.tilPassword.setBackgroundResource(R.drawable.bg_form_error)
-            val endIconTint = ContextCompat.getColorStateList(this, R.color.ALLERTRED)
-            binding.tilPassword.setEndIconTintList(endIconTint)
             binding.llMessage.isVisible = true
             binding.tvMessage.text =
                 getString(R.string.text_password_minimum_8_characters_and_maximum_12_characters)
             false
         } else {
+            val colorState = ContextCompat.getColorStateList(this, R.color.ALLERTGREEN)
+            binding.tilPassword.setEndIconTintList(colorState)
             binding.tilPassword.setBackgroundResource(R.drawable.bg_form)
-            val endIconTint = ContextCompat.getColorStateList(this, R.color.ALLERTGREEN)
-            binding.tilPassword.setEndIconTintList(endIconTint)
             binding.llMessage.isVisible = false
             true
         }
+    }
+
+    private fun checkConfirmPasswordValidation(password: String, confirmPassword: String): Boolean {
+        return if (password != confirmPassword) {
+            val colorState = ContextCompat.getColorStateList(this, R.color.ALLERTRED)
+            binding.tilConfirmPassword.setEndIconTintList(colorState)
+            binding.tilConfirmPassword.setBackgroundResource(R.drawable.bg_form_error)
+            binding.llMessage.isVisible = true
+            binding.tvMessage.text =
+                getString(R.string.text_password_and_confirm_password_do_not_match)
+            false
+        } else {
+            val colorState = ContextCompat.getColorStateList(this, R.color.ALLERTGREEN)
+            binding.tilConfirmPassword.setEndIconTintList(colorState)
+            binding.tilConfirmPassword.setBackgroundResource(R.drawable.bg_form)
+            binding.llMessage.isVisible = false
+            true
+        }
+    }
+
+    private fun observeResult() {
+        viewModel.resetPasswordResult.observe(this) { resultWrapper ->
+            resultWrapper.proceedWhen(
+                doOnLoading = {
+                    binding.pbLoading.isVisible = true
+                    binding.btnSave.isVisible = false
+                },
+                doOnSuccess = {
+                    binding.pbLoading.isVisible = false
+                    binding.btnSave.isVisible = true
+
+                    val colorState = ContextCompat.getColorStateList(this, R.color.ALLERTGREEN)
+                    binding.llMessage.backgroundTintList = colorState
+                    binding.llMessage.isVisible = true
+                    binding.tvMessage.text = it.payload?.message.toString()
+                    navigateToLogin()
+                },
+                doOnError = {
+                    binding.pbLoading.isVisible = false
+                    binding.btnSave.isVisible = true
+                    binding.llMessage.isVisible = true
+                    if (it.exception is ApiException) {
+                        val message = it.exception.getParsedError()?.message.orEmpty()
+                        binding.tvMessage.text = message
+                    }
+                }
+            )
+        }
+    }
+
+    private fun navigateToLogin() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            })
+        }, 2000)
     }
 
     companion object {
