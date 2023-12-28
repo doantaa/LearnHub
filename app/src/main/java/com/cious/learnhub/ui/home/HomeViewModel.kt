@@ -3,9 +3,9 @@ package com.cious.learnhub.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.cious.learnhub.data.repository.CourseRepository
+import com.cious.learnhub.model.Category
 import com.cious.learnhub.model.Course
 import com.cious.learnhub.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,16 @@ class HomeViewModel(
     val courses: LiveData<ResultWrapper<List<Course>>>
         get() = _courses
 
-    val categories = repository.getCategories().asLiveData(Dispatchers.IO)
+    private val _categories = MutableLiveData<ResultWrapper<List<Category>>>()
+
+    val categories: LiveData<ResultWrapper<List<Category>>>
+        get() = _categories
+
+    fun getCategories() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getCategories().collect() { _categories.postValue(it) }
+        }
+    }
 
     fun getCourses(
         category: String? = null, title: String? = null, level: String? = null
