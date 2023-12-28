@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="10dp"
     android:orientation="vertical">
 
@@ -26,9 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Promosi"
+            tools:text="Promosi"
             android:fontFamily="@font/montserrat"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
             android:gravity="center_vertical"
             android:textSize="13sp"
             android:textColor="@color/dark_blue"/>
@@ -38,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="2 maret, 12.00"
+            tools:text="2 maret, 12.00"
             android:fontFamily="@font/montserrat_semibold"
             android:textSize="11sp"
             android:textColor="#8A8A8A" />
@@ -50,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:text="Dapatkan Potongan 50% selama Bulan Maret!"
+        tools:text="Dapatkan Potongan 50% selama Bulan Maret!"
         android:fontFamily="@font/montserrat_semibold"
         android:textSize="13sp"
         android:textColor="@color/black" />
@@ -60,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:text="Syarat dan Ketentuan berlaku!"
+        tools:text="Syarat dan Ketentuan berlaku!"
         android:fontFamily="@font/montserrat"
         android:textSize="13sp"
         android:textColor="#8A8A8A"/>

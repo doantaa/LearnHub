@@ -80,13 +80,21 @@ class NotificationsFragment : Fragment() {
                 doOnLoading = {
                     binding.pbLoading.isVisible = true
                     binding.rvNotification.isVisible = false
+                    binding.tvEmptyNotif.isVisible = false
                 },
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
                     binding.rvNotification.isVisible = true
+                    binding.tvEmptyNotif.isVisible = false
                     it.payload?.let {
                         notificationsAdapter.setData(it)
                     }
+                },
+                doOnEmpty = {
+                    binding.pbLoading.isVisible = false
+                    binding.rvNotification.isVisible = false
+                    binding.tvEmptyNotif.isVisible = true
+                    binding.tvEmptyNotif.text = "Tidak ada Notifikasi"
                 },
                 doOnError = {
                     if (it.exception is ApiException) {
