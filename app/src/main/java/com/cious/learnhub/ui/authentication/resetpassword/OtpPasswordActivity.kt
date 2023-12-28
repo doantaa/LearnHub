@@ -3,18 +3,13 @@ package com.cious.learnhub.ui.authentication.resetpassword
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.ActivityOtpBinding
-import com.cious.learnhub.model.AuthenticationData
 import com.cious.learnhub.model.UserOtpPasswordData
 import com.cious.learnhub.model.UserResetData
-import com.cious.learnhub.ui.authentication.otp.OtpActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -39,7 +34,7 @@ class OtpPasswordActivity : AppCompatActivity() {
 
     private fun setClickListeners() {
         binding.ibBack.setOnClickListener {
-            navigateToResetPassword()
+            onBackPressedDispatcher.onBackPressed()
         }
         binding.btnSubmit.setOnClickListener {
             binding.pbLoading.isVisible = true
@@ -70,12 +65,6 @@ class OtpPasswordActivity : AppCompatActivity() {
             binding.llMessage.isVisible = false
             true
         }
-    }
-
-    private fun navigateToResetPassword() {
-        startActivity(Intent(this, ResetPasswordActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        })
     }
 
     companion object {

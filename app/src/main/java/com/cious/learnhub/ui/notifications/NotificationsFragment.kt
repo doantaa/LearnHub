@@ -2,7 +2,6 @@ package com.cious.learnhub.ui.notifications
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +14,8 @@ import com.cious.learnhub.data.network.api.datasource.NotificationDataSourceImpl
 import com.cious.learnhub.data.network.api.service.NotificationService
 import com.cious.learnhub.data.repository.NotificationRepositoryImpl
 import com.cious.learnhub.databinding.FragmentNotificationsBinding
-import com.cious.learnhub.model.NotificationModel
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
-import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordActivity
 import com.cious.learnhub.utils.ApiException
 import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.SessionManager
@@ -69,15 +66,11 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun navigateToRegister() {
-        startActivity(Intent(requireContext(), RegisterActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        })
+        startActivity(Intent(requireContext(), RegisterActivity::class.java))
     }
 
     private fun navigateToLogin() {
-        startActivity(Intent(requireContext(), LoginActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        })
+        startActivity(Intent(requireContext(), LoginActivity::class.java))
     }
 
     private fun checkTokenUser() {
@@ -108,7 +101,7 @@ class NotificationsFragment : Fragment() {
                 doOnError = {
                     if (it.exception is ApiException) {
                         val message = it.exception.getParsedError()?.message.orEmpty()
-                        if (message == "jwt expired") {
+                        if (message == getString(R.string.text_jwt_expired)) {
                             SessionManager.clearData(requireContext())
                         }
                     }

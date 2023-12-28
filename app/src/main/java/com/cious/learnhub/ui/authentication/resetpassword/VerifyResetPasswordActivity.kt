@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.cious.learnhub.R
@@ -14,7 +13,6 @@ import com.cious.learnhub.data.network.api.model.resetpassword.VerifyResetPasswo
 import com.cious.learnhub.databinding.ActivityVerifyPasswordBinding
 import com.cious.learnhub.model.UserOtpPasswordData
 import com.cious.learnhub.ui.authentication.login.LoginActivity
-import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.utils.ApiException
 import com.cious.learnhub.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -36,8 +34,8 @@ class VerifyResetPasswordActivity : AppCompatActivity() {
     }
 
     private fun observeResult() {
-        viewModel.resetPasswordResult.observe(this) { resultwrapper ->
-            resultwrapper.proceedWhen(
+        viewModel.resetPasswordResult.observe(this) { resultWrapper ->
+            resultWrapper.proceedWhen(
                 doOnLoading = {
                     binding.pbLoading.isVisible = true
                     binding.btnSave.isVisible = false
@@ -74,6 +72,9 @@ class VerifyResetPasswordActivity : AppCompatActivity() {
     }
 
     private fun setClickListeners() {
+        binding.ibBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         binding.btnSave.setOnClickListener {
             processResetPassword()
         }
@@ -96,7 +97,10 @@ class VerifyResetPasswordActivity : AppCompatActivity() {
         val password = binding.etPassword.text.toString()
         val confirmPassword = binding.etConfirmPassword.text.toString()
 
-        return checkPasswordValidation(password) && checkConfirmPasswordValidation(password, confirmPassword)
+        return checkPasswordValidation(password) && checkConfirmPasswordValidation(
+            password,
+            confirmPassword
+        )
     }
 
     private fun checkConfirmPasswordValidation(password: String, confirmPassword: String): Boolean {

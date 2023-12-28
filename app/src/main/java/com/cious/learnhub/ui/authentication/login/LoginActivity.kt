@@ -3,6 +3,7 @@ package com.cious.learnhub.ui.authentication.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.R
@@ -28,14 +29,23 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         setClickListeners()
         observeResult()
     }
 
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        }
+    }
+
     private fun observeResult() {
         viewModel.loginRequestResult.observe(this) { resultWrapper ->
-            resultWrapper.proceedWhen (
+            resultWrapper.proceedWhen(
                 doOnLoading = {
                     binding.pbLoading.isVisible = true
                     binding.btnLogin.isVisible = false
@@ -94,14 +104,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToResetPassword() {
-        startActivity(Intent(this, ResetPasswordActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        })
+        startActivity(Intent(this, ResetPasswordActivity::class.java))
     }
 
     private fun navigateToRegister() {
-        startActivity(Intent(this, RegisterActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        })
+        startActivity(Intent(this, RegisterActivity::class.java))
     }
 }
