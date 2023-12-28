@@ -35,3 +35,11 @@ fun Context.hideKeyboard(view: View) {
 fun Fragment.hideKeyboard() {
     view?.let { activity?.hideKeyboard(it) }
 }
+
+fun removeLeadingZeroPhoneNumber(phoneNumber: String): String {
+    return if (phoneNumber.startsWith("0")) {
+        phoneNumber.substring(1)
+    } else {
+        phoneNumber
+    }
+}

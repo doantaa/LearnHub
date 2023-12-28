@@ -40,9 +40,9 @@
     <string name="text_password_string">LearnHub#123$^%</string>
     <string name="text_simpan">Simpan</string>
     <string name="text_kirim_ulang">Kirim Ulang</string>
-    <string name="text_kirim_ulang_otp_dalam_60_detik">Kirim Ulang OTP dalam 60 detik</string>
+    <string name="text_kirim_ulang_otp_dalam">Kirim Ulang OTP dalam</string>
     <string name="text_masukkan_otp">Masukkan OTP</string>
-    <string name="text_ketik_6_digit_kode_yang_dikirimkan_nke_email">Ketik 6 digit kode yang dikirimkan\nke email</string>
+    <string name="text_ketik_6_digit_kode_yang_dikirimkan_ke_email">Ketik 6 digit kode yang dikirimkan ke email </string>
     <string name="text_alamat_email_tidak_terdaftar">Alamat email tidak terdaftar!</string>
     <string name="text_masukkan_password_baru">Masukkan Password Baru</string>
     <string name="text_reset_password">Reset Password</string>
@@ -97,4 +97,12 @@
     <string name="text_invalid_phone_number_length">Invalid phone number length</string>
     <string name="text_please_make_sure_you_ve_entered_the_complete_6_digit_otp_code">Please make sure you\'ve entered the complete 6-digit OTP code</string>
     <string name="text_password_and_confirm_password_do_not_match">Password and confirm password do not match</string>
+    <string name="text_jwt_expired">jwt expired</string>
+    <string name="text_60_detik">60 detik</string>
+    <string name="text_detik">" detik"</string>
+    <string name="text_kirim_ulang_otp">Kirim Ulang OTP</string>
+    <string name="text_konfirmasi">Konfirmasi</string>
+    <string name="text_apakah_anda_yakin_ingin_kembali">Apakah Anda yakin ingin kembali?</string>
+    <string name="text_ya">Ya</string>
+    <string name="text_tidak">Tidak</string>
 </resources>

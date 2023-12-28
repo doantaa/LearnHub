@@ -1,20 +1,19 @@
 package com.cious.learnhub.ui.authentication.resetpassword
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
+import android.text.Html
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.ActivityOtpBinding
-import com.cious.learnhub.model.AuthenticationData
 import com.cious.learnhub.model.UserOtpPasswordData
 import com.cious.learnhub.model.UserResetData
-import com.cious.learnhub.ui.authentication.otp.OtpActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -28,18 +27,48 @@ class OtpPasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         setupView()
         setClickListeners()
     }
 
+    private val onBackPressedCallback = object  : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            showConfirmBackPressDialog()
+        }
+    }
+
+    private fun showConfirmBackPressDialog() {
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle(getString(R.string.text_konfirmasi))
+        builder.setMessage(getString(R.string.text_apakah_anda_yakin_ingin_kembali))
+
+        builder.setPositiveButton(getString(R.string.text_ya)) { dialogInterface: DialogInterface, _: Int ->
+            dialogInterface.dismiss()
+
+            val intent = Intent(this, ResetPasswordActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        }
+        builder.setNegativeButton(getString(R.string.text_tidak)) { dialogInterface: DialogInterface, _: Int ->
+            dialogInterface.dismiss()
+        }
+        builder.show()
+    }
+
     private fun setupView() {
         binding.llOtpInfo.isInvisible = true
+        val email = viewModel.dataParcel?.email
+        val oldSubtitle = getString(R.string.text_ketik_6_digit_kode_yang_dikirimkan_ke_email)
+        val newSubtitle = "$oldSubtitle <b>$email</b>"
+        binding.tvSubtitle.text = Html.fromHtml(newSubtitle, Html.FROM_HTML_MODE_COMPACT)
     }
 
     private fun setClickListeners() {
         binding.ibBack.setOnClickListener {
-            navigateToResetPassword()
+            onBackPressedDispatcher.onBackPressed()
         }
         binding.btnSubmit.setOnClickListener {
             binding.pbLoading.isVisible = true
@@ -70,12 +99,6 @@ class OtpPasswordActivity : AppCompatActivity() {
             binding.llMessage.isVisible = false
             true
         }
-    }
-
-    private fun navigateToResetPassword() {
-        startActivity(Intent(this, ResetPasswordActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        })
     }
 
     companion object {

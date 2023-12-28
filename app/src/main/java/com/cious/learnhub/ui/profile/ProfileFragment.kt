@@ -10,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentProfileBinding
 import com.cious.learnhub.ui.historypayment.HistoryPaymentActivity
+import com.cious.learnhub.utils.SessionManager
+import com.cious.learnhub.utils.highLightWord
 
 class ProfileFragment : Fragment() {
 
