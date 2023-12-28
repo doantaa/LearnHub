@@ -30,6 +30,7 @@ import com.cious.learnhub.ui.authentication.resetpassword.VerifyResetPasswordVie
 import com.cious.learnhub.ui.course.CourseViewModel
 import com.cious.learnhub.ui.detail.CourseDetailViewModel
 import com.cious.learnhub.ui.home.HomeViewModel
+import com.cious.learnhub.ui.home.search.HomeSearchViewModel
 import com.cious.learnhub.ui.notifications.NotificationsViewModel
 import com.cious.learnhub.ui.payment.detail.PaymentViewModel
 import com.cious.learnhub.ui.payment.midtrans.PaymentMidtransViewModel
@@ -81,6 +82,7 @@ object AppModules {
         viewModel { params -> OtpPasswordViewModel(extras = params.get()) }
         viewModel { params -> VerifyResetPasswordViewModel(extras = params.get(), get()) }
         viewModelOf(::PaymentMidtransViewModel)
+        viewModelOf(::HomeSearchViewModel)
     }
 
     val modules: List<Module> = listOf(

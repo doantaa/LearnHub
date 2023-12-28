@@ -1,88 +1,64 @@
-package com.cious.learnhub.ui.course
+package com.cious.learnhub.ui.home.search
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import com.cious.learnhub.R
-import com.cious.learnhub.databinding.FragmentCourseBinding
+import com.cious.learnhub.databinding.ActivityHomeSearchBinding
+import com.cious.learnhub.ui.course.CourseListAdapter
 import com.cious.learnhub.ui.detail.CourseDetailActivity
 import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.proceedWhen
-import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class CourseFragment : Fragment() {
+class HomeSearchActivity : AppCompatActivity() {
+    private val binding: ActivityHomeSearchBinding by lazy {
+        ActivityHomeSearchBinding.inflate(layoutInflater)
+    }
 
-    private lateinit var binding: FragmentCourseBinding
+    private val viewModel: HomeSearchViewModel by viewModel {
+        parametersOf(intent?.extras)
+    }
 
-    private val courseListAdapter: CourseListAdapter by lazy {
+
+    private val courseListAdapter : CourseListAdapter by lazy {
         CourseListAdapter {
-            Log.d("BEFORE", it.id.toString())
-            CourseDetailActivity.startActivity(requireContext(), it.id)
+            CourseDetailActivity.startActivity(this, it.id)
         }
     }
 
-
-    private val viewModel: CourseViewModel by viewModel()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentCourseBinding.inflate(inflater, container, false)
-        return binding.root
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
         setupRecyclerView()
         invokeCourseData()
         observeCourseData()
-        setupCourseType()
         setupSearch()
     }
 
     private fun setupSearch() {
-        binding.fieldSearch.etSearch.clearFocus()
+        binding.fieldSearch.etSearch.setText(viewModel.title)
         val keyword = binding.fieldSearch.etSearch.text
         binding.fieldSearch.btnSearch.setOnClickListener {
-            Toast.makeText(requireContext(), keyword, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, keyword, Toast.LENGTH_SHORT).show()
+            viewModel.getCourse(title = keyword.toString())
             binding.fieldSearch.etSearch.clearFocus()
-            hideKeyboard()
+            hideKeyboard(it)
         }
         binding.fieldSearch.etSearch.setOnEditorActionListener { textView, i, keyEvent ->
-            viewModel.getCourses(title = keyword.toString())
+            viewModel.getCourse(title = keyword.toString())
             binding.fieldSearch.etSearch.clearFocus()
-            hideKeyboard()
+            hideKeyboard(textView)
             return@setOnEditorActionListener true
         }
-
-
-    }
-
-    private fun setupCourseType() {
-        binding.chipGroupMain.setOnCheckedStateChangeListener { group, checkedId ->
-
-            if(checkedId != emptyList<Int>()){
-                val chip: Chip? = group.findViewById(checkedId[0])
-                chip?.let {
-                    viewModel.getCourses(courseType = it.text.toString())
-                }
-            } else {
-                binding.chipAll.isChecked = true
-            }
-        }
-
-
     }
 
     private fun observeCourseData() {
-        viewModel.courses.observe(viewLifecycleOwner) {
+        viewModel.course.observe(this) {
             it.proceedWhen(
 
                 doOnSuccess = {
@@ -111,10 +87,19 @@ class CourseFragment : Fragment() {
     }
 
     private fun invokeCourseData() {
-        viewModel.getCourses()
+        viewModel.getCourse(viewModel.title)
     }
 
     private fun setupRecyclerView() {
         binding.rvCourse.adapter = courseListAdapter
+    }
+
+    companion object {
+        const val EXTRA_TITLE = "EXTRA_TITLE"
+        fun startActivity(context: Context, title: String) {
+            val intent = Intent(context, HomeSearchActivity::class.java)
+            intent.putExtra(EXTRA_TITLE, title)
+            context.startActivity(intent)
+        }
     }
 }

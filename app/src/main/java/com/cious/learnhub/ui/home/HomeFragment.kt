@@ -2,21 +2,24 @@ package com.cious.learnhub.ui.home
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import coil.load
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentHomeBinding
 import com.cious.learnhub.model.Category
+import com.cious.learnhub.ui.detail.CourseDetailActivity
 import com.cious.learnhub.ui.home.adapter.HomeCourseListAdapter
+import com.cious.learnhub.ui.home.search.HomeSearchActivity
 import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.proceedWhen
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.math.ceil
 
 class HomeFragment : Fragment() {
 
@@ -25,7 +28,7 @@ class HomeFragment : Fragment() {
 
     private val homeCourseListAdapter: HomeCourseListAdapter by lazy {
         HomeCourseListAdapter {
-
+            CourseDetailActivity.startActivity(requireContext(), it.id)
         }
     }
 
@@ -46,17 +49,30 @@ class HomeFragment : Fragment() {
         setupSearchBar()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.search.etSearch.clearFocus()
+        binding.chipGroupCategory.check(0 + 1)
+    }
 
     private fun setupSearchBar() {
-        binding.search.root.clearFocus()
+        binding.search.etSearch.clearFocus()
         val keyword = binding.search.etSearch.text
         binding.search.btnSearch.setOnClickListener {
             viewModel.getCourses(title = keyword.toString())
             binding.search.root.clearFocus()
             hideKeyboard()
+            HomeSearchActivity.startActivity(requireContext(), keyword.toString())
+
+        }
+        binding.search.etSearch.setOnFocusChangeListener { view, boolean ->
+            if (boolean) {
+                Toast.makeText(requireContext(), boolean.toString(), Toast.LENGTH_SHORT).show()
+                HomeSearchActivity.startActivity(requireContext(), keyword.toString())
+                hideKeyboard()
+            }
         }
         binding.search.etSearch.setOnEditorActionListener { textView, i, keyEvent ->
-            viewModel.getCourses(title = keyword.toString())
             binding.search.root.clearFocus()
             hideKeyboard()
             return@setOnEditorActionListener true
@@ -116,7 +132,6 @@ class HomeFragment : Fragment() {
                             category
                         )
                     )
-
                 }
                 data.payload?.let { categories ->
                     setCategoryListener(categories)
@@ -137,13 +152,11 @@ class HomeFragment : Fragment() {
                 binding.chipGroupCategory.isVisible = false
                 binding.shimmerHomeCategory.isVisible = false
                 binding.shimmerHomeCategory.isVisible = false
-                Log.d("CATEGORY", it.message.toString())
 
 
             })
         }
     }
-
 
 
     private fun createCategoryChip(context: Context, category: Category): Chip {
@@ -159,18 +172,27 @@ class HomeFragment : Fragment() {
 
     private fun setCategoryListener(category: List<Category>) {
         binding.chipGroupCategory.setOnCheckedStateChangeListener { group, checkedId ->
-            Log.d("CLICKED", checkedId.toString())
-            if(checkedId != emptyList<Int>()){
+            if(group.checkedChipId > category.size){
+                val checkedIdDouble = checkedId[0].toDouble() / 10
+                val groupSize: Int = (ceil(checkedIdDouble)* 10).toInt()
+                val chipId = checkedId[0] - (groupSize - category.size)
+                val categoryId = category[chipId].id
+                binding.chipGroupCategory.check(chipId)
+                viewModel.getCourses(category = categoryId)
+            } else if (checkedId != emptyList<Int>() && group.checkedChipId < category.size) {
                 val id = category[checkedId[0] - 1].id
                 viewModel.getCourses(category = id)
             } else {
                 binding.chipGroupCategory.check(0 + 1)
+                viewModel.getCourses()
             }
         }
 
     }
+
     private fun invokeData() {
         viewModel.getCourses()
+        viewModel.getCategories()
     }
 
     private fun setupRecyclerView() {

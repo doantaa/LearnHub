@@ -17,9 +17,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.home.search.HomeSearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.payment.midtrans.PaymentMidtransActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.authentication.resetpassword.VerifyResetPasswordActivity"
             android:exported="false" />
@@ -28,8 +30,10 @@
             android:exported="true">
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="cious.learnhub.com"
                     android:scheme="learnhubapp" />
@@ -40,23 +44,22 @@
             android:exported="false" />
         <activity
             android:name=".ui.authentication.login.LoginActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.authentication.register.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".ui.authentication.resetpassword.OtpPasswordActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.authentication.resetpassword.ResetPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -65,7 +68,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.payment.detail.PaymentDetailActivity"
-            android:exported="true"/>
+            android:exported="true" />
 
         <meta-data
             android:name="preloaded_fonts"
