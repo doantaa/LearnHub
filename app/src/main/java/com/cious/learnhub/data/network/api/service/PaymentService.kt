@@ -1,6 +1,5 @@
 package com.cious.learnhub.data.network.api.service
 
-import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
 import com.cious.learnhub.data.network.api.model.payment.PaymentResponse
@@ -29,7 +28,7 @@ interface PaymentService {
                     @Throws(IOException::class)
                     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
                         val newRequest = chain.request().newBuilder()
-                            .addHeader("Authorization", "Bearer $token")
+                            .addHeader("Authorization", token)
                             .build()
                         return chain.proceed(newRequest)
                     }

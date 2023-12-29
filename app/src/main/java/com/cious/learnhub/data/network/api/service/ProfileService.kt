@@ -1,10 +1,9 @@
 package com.cious.learnhub.data.network.api.service
 
-import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
-import com.cious.learnhub.data.network.api.model.profile.ChangePasswordResponse
 import com.cious.learnhub.data.network.api.model.profile.ChangePasswordRequest
+import com.cious.learnhub.data.network.api.model.profile.ChangePasswordResponse
 import com.cious.learnhub.data.network.api.model.profile.ProfileRequest
 import com.cious.learnhub.data.network.api.model.profile.ProfileResponse
 import com.cious.learnhub.utils.SessionManager
@@ -41,7 +40,7 @@ interface ProfileService {
                     @Throws(IOException::class)
                     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
                         val newRequest = chain.request().newBuilder()
-                            .addHeader("Authorization", "Bearer $token")
+                            .addHeader("Authorization", token)
                             .build()
                         return chain.proceed(newRequest)
                     }

@@ -10,6 +10,7 @@ interface NotificaitonDataSource {
 class NotificationDataSourceImpl(
     private val service: NotificationService
 ): NotificaitonDataSource {
+
     override suspend fun getNotification(): NotificationResponse {
         return service.getNotification()
     }

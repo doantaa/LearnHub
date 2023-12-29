@@ -1,18 +1,17 @@
 package com.cious.learnhub.data.network.api.service
 
-import android.content.Context
+import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
 import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
 import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentDetailResponse
 import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentsResponse
+import com.cious.learnhub.data.network.api.model.enrollments.ProgressResponse
 import com.cious.learnhub.utils.SessionManager
 import okhttp3.Interceptor
-import com.cious.learnhub.data.network.api.model.enrollments.ProgressResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -49,8 +48,9 @@ interface EnrollmentService {
                 .addInterceptor(object : Interceptor {
                     @Throws(IOException::class)
                     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
+                        Log.d("TOKEN SERVICE ENROLLMENT", token)
                         val newRequest = chain.request().newBuilder()
-                            .addHeader("Authorization", "Bearer $token")
+                            .addHeader("Authorization", token)
                             .build()
                         return chain.proceed(newRequest)
                     }

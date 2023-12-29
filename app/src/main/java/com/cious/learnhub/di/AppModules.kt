@@ -1,6 +1,7 @@
 package com.cious.learnhub.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.R
 import com.cious.learnhub.data.network.api.datasource.AuthDataSource
@@ -11,10 +12,10 @@ import com.cious.learnhub.data.network.api.datasource.EnrollmentApiDataSource
 import com.cious.learnhub.data.network.api.datasource.EnrollmentDataSource
 import com.cious.learnhub.data.network.api.datasource.NotificaitonDataSource
 import com.cious.learnhub.data.network.api.datasource.NotificationDataSourceImpl
-import com.cious.learnhub.data.network.api.datasource.ProfileDataSource
-import com.cious.learnhub.data.network.api.datasource.ProfileDataSourceImpl
 import com.cious.learnhub.data.network.api.datasource.PaymentApiDataSource
 import com.cious.learnhub.data.network.api.datasource.PaymentDataSource
+import com.cious.learnhub.data.network.api.datasource.ProfileDataSource
+import com.cious.learnhub.data.network.api.datasource.ProfileDataSourceImpl
 import com.cious.learnhub.data.network.api.service.AuthenticationService
 import com.cious.learnhub.data.network.api.service.CourseService
 import com.cious.learnhub.data.network.api.service.EnrollmentService
@@ -29,10 +30,10 @@ import com.cious.learnhub.data.repository.EnrollmentRepository
 import com.cious.learnhub.data.repository.EnrollmentRepositoryImpl
 import com.cious.learnhub.data.repository.NotifiacationRepository
 import com.cious.learnhub.data.repository.NotificationRepositoryImpl
-import com.cious.learnhub.data.repository.ProfileRepository
-import com.cious.learnhub.data.repository.ProfileRepositoryImpl
 import com.cious.learnhub.data.repository.PaymentRepository
 import com.cious.learnhub.data.repository.PaymentRepositoryImpl
+import com.cious.learnhub.data.repository.ProfileRepository
+import com.cious.learnhub.data.repository.ProfileRepositoryImpl
 import com.cious.learnhub.ui.authentication.login.LoginViewModel
 import com.cious.learnhub.ui.authentication.otp.OtpViewModel
 import com.cious.learnhub.ui.authentication.register.RegisterViewModel
@@ -42,8 +43,8 @@ import com.cious.learnhub.ui.authentication.resetpassword.VerifyResetPasswordVie
 import com.cious.learnhub.ui.course.CourseViewModel
 import com.cious.learnhub.ui.detail.CourseDetailViewModel
 import com.cious.learnhub.ui.home.HomeViewModel
-import com.cious.learnhub.ui.myclass.MyClassViewModel
 import com.cious.learnhub.ui.home.search.HomeSearchViewModel
+import com.cious.learnhub.ui.myclass.MyClassViewModel
 import com.cious.learnhub.ui.notifications.NotificationsViewModel
 import com.cious.learnhub.ui.payment.detail.PaymentViewModel
 import com.cious.learnhub.ui.payment.midtrans.PaymentMidtransViewModel
@@ -60,7 +61,7 @@ import org.koin.dsl.module
 object AppModules {
 
     private val localModule = module {
-        single {
+        single<SharedPreferences> {
             androidContext().getSharedPreferences(androidContext().getString(R.string.app_name), Context.MODE_PRIVATE)
         }
         single { SessionManager(get()) }

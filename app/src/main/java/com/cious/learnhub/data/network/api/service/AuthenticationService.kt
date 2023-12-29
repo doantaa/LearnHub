@@ -1,6 +1,6 @@
 package com.cious.learnhub.data.network.api.service
 
-import android.content.Context
+import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
 import com.cious.learnhub.data.network.api.model.login.LoginRequest
@@ -47,8 +47,9 @@ interface AuthenticationService {
                 .addInterceptor(object : Interceptor {
                     @Throws(IOException::class)
                     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
+                        Log.d("TOKEN AUTH SERVICE", token)
                         val newRequest = chain.request().newBuilder()
-                            .addHeader("Authorization", "Bearer $token")
+                            .addHeader("Authorization", token)
                             .build()
                         return chain.proceed(newRequest)
                     }
