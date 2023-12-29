@@ -2,6 +2,7 @@ package com.cious.learnhub.ui.home
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -175,10 +176,11 @@ class HomeFragment : Fragment() {
             if(group.checkedChipId > category.size){
                 val checkedIdDouble = checkedId[0].toDouble() / 10
                 val groupSize: Int = (ceil(checkedIdDouble)* 10).toInt()
-                val chipId = checkedId[0] - (groupSize - category.size)
+                val chipId = checkedId[0] - (groupSize - category.size) - 1
                 val categoryId = category[chipId].id
                 binding.chipGroupCategory.check(chipId)
                 viewModel.getCourses(category = categoryId)
+                Log.d("CATEGORY", categoryId)
             } else if (checkedId != emptyList<Int>() && group.checkedChipId < category.size) {
                 val id = category[checkedId[0] - 1].id
                 viewModel.getCourses(category = id)
