@@ -1,6 +1,8 @@
 package com.cious.learnhub.di
 
+import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.cious.learnhub.R
 import com.cious.learnhub.data.network.api.datasource.AuthDataSource
 import com.cious.learnhub.data.network.api.datasource.AuthDataSourceImpl
 import com.cious.learnhub.data.network.api.datasource.CourseApiDataSource
@@ -45,7 +47,10 @@ import com.cious.learnhub.ui.home.search.HomeSearchViewModel
 import com.cious.learnhub.ui.notifications.NotificationsViewModel
 import com.cious.learnhub.ui.payment.detail.PaymentViewModel
 import com.cious.learnhub.ui.payment.midtrans.PaymentMidtransViewModel
+import com.cious.learnhub.ui.profile.ProfileViewModel
 import com.cious.learnhub.ui.profile.changepassword.ChangePasswordViewModel
+import com.cious.learnhub.ui.profile.editprofile.EditProfileViewModel
+import com.cious.learnhub.utils.SessionManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -55,17 +60,23 @@ import org.koin.dsl.module
 object AppModules {
 
     private val localModule = module {
-
+        single {
+            androidContext().getSharedPreferences(androidContext().getString(R.string.app_name), Context.MODE_PRIVATE)
+        }
+        single { SessionManager(get()) }
     }
 
     private val networkModule = module {
         single { ChuckerInterceptor(androidContext()) }
         single { CourseService.invoke(get()) }
-        single { AuthenticationService.invoke(get(), androidContext()) }
-        single { NotificationService.invoke(get(), androidContext()) }
-        single { PaymentService.invoke(get(), androidContext()) }
-        single { EnrollmentService.invoke(get(), androidContext()) }
-        single { ProfileService.invoke(get(),androidContext()) }
+        single { AuthenticationService.invoke(get(), get()) }
+        single { NotificationService.invoke(get(), get()) }
+        single { PaymentService.invoke(get(), get()) }
+        single { EnrollmentService.invoke(get(), get()) }
+        single { ProfileService.invoke(get(),get()) }
+        single { AuthenticationService.invoke(get(), get()) }
+        single { NotificationService.invoke(get(), get()) }
+        single { PaymentService.invoke(get(), get()) }
 
     }
 
@@ -80,7 +91,7 @@ object AppModules {
 
     private val repositoryModule = module {
         single<CourseRepository> { CourseRepositoryImpl(get()) }
-        single<AuthRepository> { AuthRepositoryImpl(get()) }
+        single<AuthRepository> { AuthRepositoryImpl(get(), get()) }
         single<NotifiacationRepository> { NotificationRepositoryImpl(get()) }
         single<EnrollmentRepository> { EnrollmentRepositoryImpl(get(), get(), androidContext()) }
         single<PaymentRepository> { PaymentRepositoryImpl(get()) }
@@ -91,7 +102,7 @@ object AppModules {
         viewModelOf(::HomeViewModel)
         viewModelOf(::CourseViewModel)
         viewModelOf(::LoginViewModel)
-        viewModel { params -> OtpViewModel(extras = params.get(), get()) }
+        viewModelOf(::OtpViewModel)
         viewModelOf(::RegisterViewModel)
         viewModelOf(::NotificationsViewModel)
         viewModelOf(::MyClassViewModel)
@@ -103,6 +114,8 @@ object AppModules {
         viewModelOf(::PaymentMidtransViewModel)
         viewModelOf(::ChangePasswordViewModel)
         viewModelOf(::HomeSearchViewModel)
+        viewModelOf(::ProfileViewModel)
+        viewModelOf(::EditProfileViewModel)
     }
 
     val modules: List<Module> = listOf(

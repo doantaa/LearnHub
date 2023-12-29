@@ -14,6 +14,7 @@ import com.cious.learnhub.ui.authentication.register.RegisterActivity
 import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordActivity
 import com.cious.learnhub.utils.ApiException
 import com.cious.learnhub.utils.SessionManager
+import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -51,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
             navigateToRegister()
         }
         binding.btnLogin.setOnClickListener {
+            hideKeyboard(binding.root)
             doLogin()
         }
     }
@@ -100,8 +102,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun saveToken(loginData: LoginData?) {
         val token = loginData?.token
-        if (!token.isNullOrBlank()) {
-            token.let { SessionManager.saveAuthToken(this, it) }
+        if (viewModel.isLogin) {
+            token?.let { viewModel.saveAuthToken(it) }
         }
     }
 

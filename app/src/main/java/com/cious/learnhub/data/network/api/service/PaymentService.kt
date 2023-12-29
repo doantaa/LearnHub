@@ -19,11 +19,10 @@ interface PaymentService {
     @POST("payment/{id}")
     suspend fun createPayment(@Path("id") id: Int): PaymentResponse
 
-
     companion object {
         @JvmStatic
-        operator fun invoke(chucker: ChuckerInterceptor, context: Context): PaymentService {
-            val token = SessionManager.getToken(context) ?: ""
+        operator fun invoke(sessionManager: SessionManager, chucker: ChuckerInterceptor): PaymentService {
+            val token = sessionManager.getToken() ?: ""
             val client = OkHttpClient.Builder()
                 .addInterceptor(chucker)
                 .addInterceptor(object : Interceptor {

@@ -7,16 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentProfileBinding
 import com.cious.learnhub.ui.historypayment.HistoryPaymentActivity
 import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.highLightWord
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
+    private val viewModel: ProfileViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +44,7 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
         binding.tvLogout.setOnClickListener {
-            SessionManager.clearData(requireContext())
+            viewModel.clearToken()
             Toast.makeText(requireContext(), "logout successfully", Toast.LENGTH_SHORT).show()
         }
     }
