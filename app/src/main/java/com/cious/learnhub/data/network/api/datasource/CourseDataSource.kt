@@ -14,6 +14,13 @@ interface CourseDataSource {
         level: String? = null
     ): CoursesResponse
 
+    suspend fun getCourses(
+        category: List<String>? = null,
+        title: String? = null,
+        courseType: String? = null,
+        level: String? = null
+    ): CoursesResponse
+
     suspend fun getCoursesById(
         id: Int
     ): EnrollmentDetailResponse
@@ -33,6 +40,16 @@ class CourseApiDataSource(
     ): CoursesResponse {
         return service.getCourses(category, title, courseType, level)
     }
+
+    override suspend fun getCourses(
+        category: List<String>?,
+        title: String?,
+        courseType: String?,
+        level: String?
+    ): CoursesResponse {
+        return service.getCourses(category, title, courseType, level)
+    }
+
 
     override suspend fun getCoursesById(
         id: Int

@@ -23,6 +23,13 @@ interface CourseService {
         @Query("level") level: String? = null
     ): CoursesResponse
 
+    @GET("course")
+    suspend fun getCourses(
+        @Query("categoryIds") category: List<String>? = null,
+        @Query("title") title: String? = null,
+        @Query("courseType") courseType: String? = null,
+        @Query("level") level: String? = null
+    ): CoursesResponse
 
     @GET("course/{id}")
     suspend fun getCourseById(

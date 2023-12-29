@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="300dp"
+    android:layout_marginHorizontal="24dp"
+    android:paddingVertical="30dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.course.filter.FilterDialogFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_category_list"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/layout_item_category_filter"
+        tools:itemCount="5"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    <TextView
+        android:id="@+id/tv_level_title"
+        android:text="LEVEL"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_category_list"
+        android:layout_height="wrap_content"/>
+    <RadioGroup
+        app:layout_constraintTop_toBottomOf="@id/tv_level_title"
+        android:id="@+id/rg_level"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/radio_beginner"
+            android:layout_width="wrap_content"
+            android:text="Beginner"
+            android:layout_height="wrap_content"/>
+
+        <RadioButton
+            android:id="@+id/radio_intermediate"
+            android:layout_width="wrap_content"
+            android:text="Intermediate"
+            android:layout_height="wrap_content"/>
+
+        <RadioButton
+            android:id="@+id/radio_advance"
+            android:layout_width="wrap_content"
+            android:text="Sepuh"
+            android:layout_height="wrap_content"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_apply_filter"
+        app:layout_constraintTop_toBottomOf="@id/rg_level"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:text="Terapkan Filter"/>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

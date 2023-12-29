@@ -46,7 +46,11 @@
         android:id="@+id/navigation_course"
         android:name="com.cious.learnhub.ui.course.CourseFragment"
         android:label="@string/title_course"
-        tools:layout="@layout/fragment_course"/>
+        tools:layout="@layout/fragment_course">
+        <action
+            android:id="@+id/action_navigation_course_to_filterDialogFragment"
+            app:destination="@id/filterDialogFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
@@ -78,5 +82,10 @@
             android:id="@+id/action_editProfileFragment_to_navigation_profile"
             app:destination="@id/navigation_profile" />
     </fragment>
+    <fragment
+        android:id="@+id/filterDialogFragment"
+        android:name="com.cious.learnhub.ui.course.filter.FilterDialogFragment"
+        android:label="fragment_filter_dialog"
+        tools:layout="@layout/fragment_filter_dialog" />
 
 </navigation>

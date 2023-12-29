@@ -57,6 +57,7 @@
             @android:color/transparent
         </item>
     </style>
+
     <style name="BottomSheetTheme" parent="Theme.Material3.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">
             @style/BottomSheetStyle

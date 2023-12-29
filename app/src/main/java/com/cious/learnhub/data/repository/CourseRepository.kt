@@ -2,9 +2,8 @@ package com.cious.learnhub.data.repository
 
 import com.cious.learnhub.data.network.api.datasource.CourseDataSource
 import com.cious.learnhub.data.network.api.model.category.toCategoryList
-import com.cious.learnhub.data.network.api.model.course.toCourse
 import com.cious.learnhub.data.network.api.model.course.toCourseList
-import com.cious.learnhub.data.network.api.model.enrollments.toEnrollment
+import com.cious.learnhub.data.network.api.model.enrollments.Data
 import com.cious.learnhub.model.Category
 import com.cious.learnhub.model.Course
 import com.cious.learnhub.utils.ResultWrapper
@@ -22,6 +21,18 @@ interface CourseRepository {
         level: String? = null
     ): Flow<ResultWrapper<List<Course>>>
 
+    fun getCourses(
+        category: List<String>? = null,
+        title: String? = null,
+        courseType: String? = null,
+        level: String? = null
+    ): Flow<ResultWrapper<List<Course>>>
+
+
+    fun getCoursesById(
+        id: Int
+    ): Flow<ResultWrapper<Data>>
+
     fun getCategories(): Flow<ResultWrapper<List<Category>>>
 }
 
@@ -37,6 +48,33 @@ class CourseRepositoryImpl(
         return proceedFlow {
             courseDataSource.getCourses(category, title, courseType, level).data?.toCourseList()
                 ?: emptyList()
+        }.onStart {
+            emit(ResultWrapper.Loading())
+            delay(2000)
+        }
+    }
+
+    override fun getCourses(
+        category: List<String>?,
+        title: String?,
+        courseType: String?,
+        level: String?
+    ): Flow<ResultWrapper<List<Course>>> {
+        return proceedFlow {
+            courseDataSource.getCourses(category, title, courseType, level).data?.toCourseList()
+                ?: emptyList()
+        }.onStart {
+            emit(ResultWrapper.Loading())
+            delay(2000)
+        }
+    }
+
+
+    override fun getCoursesById(
+        id: Int
+    ): Flow<ResultWrapper<Data>> {
+        return proceedFlow {
+            courseDataSource.getCoursesById(id).dataDetailResponse
         }.onStart {
             emit(ResultWrapper.Loading())
             delay(2000)
