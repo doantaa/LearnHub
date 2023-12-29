@@ -9,6 +9,7 @@ import com.cious.learnhub.databinding.BottomSheetPaymentBinding
 import com.cious.learnhub.databinding.ItemChapterHeaderBinding
 import com.cious.learnhub.databinding.ItemCourseChapterBinding
 import com.cious.learnhub.model.Course
+import com.cious.learnhub.model.Enrollment
 import com.cious.learnhub.model.Video
 import com.cious.learnhub.ui.payment.detail.PaymentDetailActivity
 import com.cious.learnhub.utils.toCurrencyFormat
@@ -30,7 +31,7 @@ class HeaderItem(private val title: String?) : BindableItem<ItemChapterHeaderBin
 class DataItem(
     private val data: Video,
     private val context: Context,
-    private val detailData: Course?,
+    private val detailData: Enrollment?,
     private val onItemClick: (Video) -> Unit
 ) : BindableItem<ItemCourseChapterBinding>() {
 
@@ -38,22 +39,26 @@ class DataItem(
     val binding = BottomSheetPaymentBinding.inflate(LayoutInflater.from(context))
 
     override fun bind(viewBinding: ItemCourseChapterBinding, position: Int) {
-        viewBinding.tvTitleCourse.text = data?.title
-        viewBinding.tvNumberCourse.text = data?.no.toString()
-        viewBinding.ivButtonPlay.apply {
-            if (data?.isLocked == false) {
-                setImageResource(R.drawable.ic_play_course)
-            } else {
-                setImageResource(R.drawable.ic_lock)
-            }
-        }
         viewBinding.root.setOnClickListener {
-            if (data.isLocked == false) {
+            if (!data.isLocked) {
                 onItemClick.invoke(data)
             } else {
                 showBottomSheet()
             }
         }
+
+        viewBinding.tvTitleCourse.text = data.title
+        viewBinding.tvNumberCourse.text = data.no.toString()
+        viewBinding.ivButtonPlay.apply {
+            if (!data.isLocked && !data.isWatched) {
+                setImageResource(R.drawable.ic_play_course_not_palyed)
+            } else if (data.isWatched ) {
+                setImageResource(R.drawable.ic_play_course)
+            } else {
+                setImageResource(R.drawable.ic_lock)
+            }
+        }
+
     }
 
 

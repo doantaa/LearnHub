@@ -13,6 +13,8 @@ data class VideoResponse(
     val id: Int?,
     @SerializedName("isLocked")
     val isLocked: Boolean,
+    @SerializedName("isWatched")
+    val isWatched: Boolean,
     @SerializedName("moduleId")
     val moduleId: Int?,
     @SerializedName("no")
@@ -27,6 +29,7 @@ fun VideoResponse.toVideo() = Video (
     duration = this.duration ?: 0,
     id = this.id ?: 0,
     isLocked = this.isLocked,
+    isWatched = this.isWatched,
     moduleId = this.moduleId ?: 0,
     no = this.no ?: 0,
     title = this.title.orEmpty(),

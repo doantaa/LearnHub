@@ -5,6 +5,7 @@ import com.cious.learnhub.BuildConfig
 import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
 import com.cious.learnhub.data.network.api.model.course.CourseDetailResponse
 import com.cious.learnhub.data.network.api.model.course.CoursesResponse
+import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentDetailResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,7 +27,7 @@ interface CourseService {
     @GET("course/{id}")
     suspend fun getCourseById(
         @Path("id") id: Int
-    ): CourseDetailResponse
+    ): EnrollmentDetailResponse
 
     @GET("category")
     suspend fun getCategories(): CategoriesResponse

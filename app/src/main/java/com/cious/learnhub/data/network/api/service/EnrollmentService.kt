@@ -4,13 +4,18 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
 import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
+import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentDetailResponse
 import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentsResponse
+import com.cious.learnhub.data.network.api.model.enrollments.ProgressResponse
 import com.cious.learnhub.utils.SessionManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -26,8 +31,11 @@ interface EnrollmentService {
 
     @GET("enrollment/{id}")
     suspend fun getCourseById(
-        @Query("id") id: Int
-    ): EnrollmentsResponse
+        @Path("id") id: Int
+    ): EnrollmentDetailResponse
+
+    @POST("progress/{id}")
+    suspend fun postProgress(@Path("id") id: Int) : ProgressResponse
 
     @GET("category")
     suspend fun getCategories(): CategoriesResponse

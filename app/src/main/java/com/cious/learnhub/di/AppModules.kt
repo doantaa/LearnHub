@@ -83,7 +83,7 @@ object AppModules {
         single<CourseRepository> { CourseRepositoryImpl(get()) }
         single<AuthRepository> { AuthRepositoryImpl(get()) }
         single<NotifiacationRepository> { NotificationRepositoryImpl(get()) }
-        single<EnrollmentRepository> { EnrollmentRepositoryImpl(get()) }
+        single<EnrollmentRepository> { EnrollmentRepositoryImpl(get(), get(), androidContext()) }
         single<PaymentRepository> { PaymentRepositoryImpl(get()) }
         single <ProfileRepository> { ProfileRepositoryImpl(get())  }
     }
@@ -101,8 +101,8 @@ object AppModules {
         viewModelOf(::ResetPasswordViewModel)
         viewModel { params -> OtpPasswordViewModel(extras = params.get()) }
         viewModel { params -> VerifyResetPasswordViewModel(extras = params.get(), get()) }
-        viewModelOf(::ChangePasswordViewModel)
         viewModelOf(::PaymentMidtransViewModel)
+        viewModelOf(::ChangePasswordViewModel)
         viewModelOf(::HomeSearchViewModel)
     }
 

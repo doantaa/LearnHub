@@ -35,7 +35,7 @@ class AboutFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.detailCourse.observe(viewLifecycleOwner){
+        viewModel.enrollment.observe(viewLifecycleOwner){
             it.proceedWhen (
                 doOnSuccess = {
                     it.payload?.let {data ->

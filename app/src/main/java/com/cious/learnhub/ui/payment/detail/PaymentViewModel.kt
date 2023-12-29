@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cious.learnhub.data.repository.PaymentRepository
 import com.cious.learnhub.model.Course
+import com.cious.learnhub.model.Enrollment
 import com.cious.learnhub.model.PaymentData
 import com.cious.learnhub.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,7 @@ class PaymentViewModel(
 ) : ViewModel(){
 
     val extraCourseBundle = extras?.getBundle("EXTRA_COURSE")
-    val extraCourse: Course? = extraCourseBundle?.getParcelable("COURSE")
+    val extraCourse: Enrollment? = extraCourseBundle?.getParcelable("COURSE")
     private val _paymentData = MutableLiveData<ResultWrapper<PaymentData>>()
 
     val paymentData: LiveData<ResultWrapper<PaymentData>>

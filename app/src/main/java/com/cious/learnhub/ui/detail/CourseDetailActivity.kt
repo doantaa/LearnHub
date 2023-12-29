@@ -9,6 +9,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.OrientationEventListener
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -54,6 +55,12 @@ class CourseDetailActivity : AppCompatActivity() {
         youtubePlayer()
         observeData()
         invokeData()
+        Toast.makeText(this, viewModel.courseId.toString() , Toast.LENGTH_SHORT).show()
+    }
+
+    private fun observeData() {
+        observeEnrollmentData()
+        observeCourseData()
     }
 
     private fun invokeData() {
@@ -61,8 +68,8 @@ class CourseDetailActivity : AppCompatActivity() {
         viewModel.getCourseById(id)
     }
 
-    private fun observeData() {
-        viewModel.detailCourse.observe(this){
+    private fun observeEnrollmentData() {
+        viewModel.enrollment.observe(this){
             it.proceedWhen(
                 doOnSuccess = {item ->
                     binding.shimmerDetailCourseActivity.isVisible = false
@@ -71,7 +78,7 @@ class CourseDetailActivity : AppCompatActivity() {
                     binding.tlDetail.isVisible = true
                     binding.viewPager2.isVisible = true
                     item.payload?.let {data ->
-                        binding.tvTitleClass.text = data?.title
+                        binding.tvTitleClass.text = data.title
                         binding.tvModule.text = buildString {
                             append(data.moduleCount)
                             append(getString(R.string.txt_sps_module))
@@ -84,6 +91,46 @@ class CourseDetailActivity : AppCompatActivity() {
                             append(getString(R.string.txt_sps_minutes))
                         }
                         binding.tvTitleCategoryClass.text = data.categoryName
+                        Log.d("AMBIL DATA", data.toString())
+                    }
+                }, doOnLoading = {
+                    binding.shimmerDetailCourseActivity.isVisible = true
+                    binding.cvHeaderClassInfo.isVisible = false
+                    binding.youtubePlayerView.isVisible = false
+                    binding.tlDetail.isVisible = false
+                    binding.viewPager2.isVisible = false
+                },
+                doOnError = {
+                    Log.d("DATA COURSE", it.exception?.message.toString())
+                }
+            )
+        }
+    }
+
+    private fun observeCourseData() {
+        viewModel.course.observe(this){
+            it.proceedWhen(
+                doOnSuccess = {item ->
+                    binding.shimmerDetailCourseActivity.isVisible = false
+                    binding.cvHeaderClassInfo.isVisible = true
+                    binding.youtubePlayerView.isVisible = true
+                    binding.tlDetail.isVisible = true
+                    binding.viewPager2.isVisible = true
+                    item.payload?.let {data ->
+                        binding.tvTitleClass.text = data.title
+                        binding.tvModule.text = buildString {
+                            append(data.moduleCount)
+                            append(getString(R.string.txt_sps_module))
+                        }
+                        binding.tvLevel.text = data.level
+                        binding.tvInstructor.text = data.instructor
+                        binding.tvRating.text = data.rating.toString()
+                        binding.tvDuration.text = buildString {
+                            append(data.totalDuration)
+                            append(getString(R.string.txt_sps_minutes))
+                        }
+                        binding.tvTitleCategoryClass.text = data.categoryName
+                        Log.d("AMBIL DATA", data.toString())
                     }
                 }, doOnLoading = {
                     binding.shimmerDetailCourseActivity.isVisible = true
@@ -157,7 +204,7 @@ class CourseDetailActivity : AppCompatActivity() {
     }
 
     private fun observeDataVideo() {
-        viewModel.detailCourse.observe(this) { detailCourseResult ->
+        viewModel.enrollment.observe(this) { detailCourseResult ->
             if (detailCourseResult != null ) {
                 val modules = detailCourseResult.payload?.module
                 val firstVideoUrl: String? = modules?.get(0)?.videos?.get(0)?.videoUrl

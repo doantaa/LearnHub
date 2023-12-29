@@ -1,22 +1,21 @@
 package com.cious.learnhub.ui.myclass
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.R
-import com.cious.learnhub.data.network.api.datasource.EnrollmentApiDataSource
-import com.cious.learnhub.data.network.api.service.EnrollmentService
-import com.cious.learnhub.data.repository.EnrollmentRepositoryImpl
 import com.cious.learnhub.databinding.FragmentMyClassBinding
+import com.cious.learnhub.ui.authentication.login.LoginActivity
+import com.cious.learnhub.ui.authentication.register.RegisterActivity
+import com.cious.learnhub.ui.detail.CourseDetailActivity
 import com.cious.learnhub.ui.myclass.adapter.CategoryMyClassAdapter
 import com.cious.learnhub.ui.myclass.adapter.ProgressiveCourseAdapter
-import com.cious.learnhub.utils.GenericViewModelFactory
+import com.cious.learnhub.utils.SessionManager
+import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -29,6 +28,7 @@ class MyClassFragment : Fragment() {
 
     private val progressiveCourseAdapter: ProgressiveCourseAdapter by lazy {
         ProgressiveCourseAdapter {
+            CourseDetailActivity.startActivity(requireContext(), it.id)
         }
     }
 
@@ -53,6 +53,40 @@ class MyClassFragment : Fragment() {
         getData()
         setupRecyclerView()
         observeData()
+        checkTokenUser()
+        setClickListeners()
+    }
+
+    private fun setClickListeners() {
+        binding.incUserNotLogin.btnLogin.setOnClickListener {
+            navigateToLogin()
+        }
+        binding.incUserNotLogin.tvIntentRegister.highLightWord(getString(R.string.text_highlight_register)) {
+            navigateToRegister()
+        }
+    }
+
+    private fun navigateToRegister() {
+        startActivity(Intent(requireContext(), RegisterActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+    }
+
+    private fun navigateToLogin() {
+        startActivity(Intent(requireContext(), LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+    }
+
+    private fun checkTokenUser() {
+        val token = SessionManager.getToken(requireContext())
+        if (token.isNullOrBlank()) {
+            binding.clUserNotLogin.isVisible = true
+            binding.nsUserLogin.isVisible = false
+        } else {
+            binding.nsUserLogin.isVisible = true
+            binding.clUserNotLogin.isVisible = false
+        }
     }
 
     private fun observeData() {
@@ -85,8 +119,7 @@ class MyClassFragment : Fragment() {
                 binding.shimmerMyClass.isVisible = false
                 binding.rvClass.isVisible = false
                 binding.layoutState.tvEmptyTitle.text = getString(R.string.text_error)
-                binding.layoutState.tvEmptyDescription.text = it.exception?.message
-                Log.d("Exception message", it.exception?.message.orEmpty())
+                binding.layoutState.tvEmptyDescription.text = it.message
             }
             )
         }
@@ -113,7 +146,6 @@ class MyClassFragment : Fragment() {
             }, doOnError = {
                 binding.rvCategoryClass.isVisible = false
                 binding.shimmerMyClassCategories.isVisible = false
-                Log.d("CATEGORY", it.message.toString())
             })
         }
     }

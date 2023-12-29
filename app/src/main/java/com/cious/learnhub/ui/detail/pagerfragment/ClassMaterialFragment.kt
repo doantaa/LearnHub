@@ -50,7 +50,7 @@ class ClassMaterialFragment : Fragment() {
             adapter = groupieAdapter
         }
 
-        viewModel.detailCourse.observe(viewLifecycleOwner) {
+        viewModel.enrollment.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = { course ->
                     groupieAdapter.clear()
@@ -62,6 +62,8 @@ class ClassMaterialFragment : Fragment() {
                             val contentList = module.videos.map { video ->
                                 DataItem(video, context, courseData) { videoUrl ->
                                     viewModel.getVideoUrl(videoUrl.videoUrl)
+                                    viewModel.postProgress(videoUrl.id)
+                                    invokeData()
                                 }
                             }
                             addAll(contentList)
