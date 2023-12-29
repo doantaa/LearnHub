@@ -105,4 +105,6 @@
     <string name="text_apakah_anda_yakin_ingin_kembali">Apakah Anda yakin ingin kembali?</string>
     <string name="text_ya">Ya</string>
     <string name="text_tidak">Tidak</string>
+    <string name="text_percent">" %"</string>
+    <string name="text_complete">"Complete "</string>
 </resources>

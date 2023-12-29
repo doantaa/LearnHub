@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentMyClassBinding
 import com.cious.learnhub.ui.authentication.login.LoginActivity
@@ -51,6 +52,7 @@ class MyClassFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        SessionManager.getToken(requireContext())
         getData()
         setupRecyclerView()
         observeData()

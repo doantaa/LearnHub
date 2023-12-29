@@ -10,6 +10,7 @@ import coil.load
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.ItemListProgressiveCourseBinding
 import com.cious.learnhub.model.Enrollment
+import kotlin.math.roundToInt
 
 class ProgressiveCourseAdapter(private val itemClick: (Enrollment) -> Unit) :
     RecyclerView.Adapter<ProgressiveCourseItemViewHolder>() {
@@ -70,6 +71,21 @@ class ProgressiveCourseItemViewHolder(
             binding.ivClassImage.load(item.imageUrl) {
                 crossfade(true)
             }
+            binding.progress.apply {
+                progress = item.progress.roundToInt()
+                max = 100
+            }
+            binding.tvProgress.text = buildString {
+                append(context.getString(R.string.text_complete))
+                var maxProgress = 0
+                if (item.progress >= 100){
+                    maxProgress = 100
+                } else {
+                    maxProgress = item.progress.roundToInt()
+                }
+                append(maxProgress)
+                append(context.getString(R.string.text_percent))
+            }
             binding.tvTitleClass.text = item.title
             binding.tvLevel.text = item.level
             binding.tvInstructor.text = item.instructor
@@ -81,7 +97,7 @@ class ProgressiveCourseItemViewHolder(
                 append(item.moduleCount)
                 append(context.getString(R.string.txt_sps_module))
             }
-            binding.tvCategoryClass.text = item.title
+            binding.tvCategoryClass.text = item.categoryName
             binding.tvRate.text = item.rating.toString()
             itemView.setOnClickListener { itemClick(item) }
         }
