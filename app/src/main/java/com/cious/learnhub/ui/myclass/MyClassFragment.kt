@@ -50,15 +50,19 @@ class MyClassFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        getData()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        SessionManager.getToken(requireContext())
-        getData()
         setupRecyclerView()
         observeData()
         checkTokenUser()
         setClickListeners()
     }
+
 
     private fun setClickListeners() {
         binding.incUserNotLogin.btnLogin.setOnClickListener {

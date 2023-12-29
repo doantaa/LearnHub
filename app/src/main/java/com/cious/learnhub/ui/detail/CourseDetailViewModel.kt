@@ -20,6 +20,10 @@ class CourseDetailViewModel(extras: Bundle?, private val repository: EnrollmentR
     val enrollment: LiveData<ResultWrapper<Enrollment>>
         get() = _enrollment
 
+    private val _updatedVideoList = MutableLiveData<ResultWrapper<Enrollment>>()
+    val updatedVideoList: LiveData<ResultWrapper<Enrollment>>
+        get() = _updatedVideoList
+
     private val _course = MutableLiveData<ResultWrapper<Course>>()
     val course: LiveData<ResultWrapper<Course>>
         get() = _course
@@ -28,10 +32,23 @@ class CourseDetailViewModel(extras: Bundle?, private val repository: EnrollmentR
     val progress : LiveData<ResultWrapper<Progress>>
         get() = _progress
 
+    init {
+        courseId?.let { getCourseById(it) }
+    }
+
     fun getCourseById(id: Int){
         viewModelScope.launch(Dispatchers.IO) {
             repository.getCoursesById(id).collect(){
                 _enrollment.postValue(it)
+            }
+        }
+    }
+    fun refreshCourseList(){
+        viewModelScope.launch(Dispatchers.IO) {
+            courseId?.let {
+                repository.getCoursesById(it).collect(){
+                    _updatedVideoList.postValue(it)
+                }
             }
         }
     }
