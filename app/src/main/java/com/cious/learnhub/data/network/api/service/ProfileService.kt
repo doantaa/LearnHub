@@ -3,13 +3,18 @@ package com.cious.learnhub.data.network.api.service
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
+import com.cious.learnhub.data.network.api.model.profile.ChangePasswordResponse
+import com.cious.learnhub.data.network.api.model.profile.ChangePasswordRequest
+import com.cious.learnhub.data.network.api.model.profile.ProfileRequest
 import com.cious.learnhub.data.network.api.model.profile.ProfileResponse
 import com.cious.learnhub.utils.SessionManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
@@ -18,6 +23,12 @@ interface ProfileService {
     @GET("auth/profile")
     suspend fun  getDataUser(
     ): ProfileResponse
+
+    @PATCH("auth/profile/edit/data")
+    suspend fun editData(@Body profileRequest: ProfileRequest): ProfileResponse
+
+    @PATCH("auth/profile/edit/ubah-password")
+    suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): ChangePasswordResponse
 
 
     companion object {
