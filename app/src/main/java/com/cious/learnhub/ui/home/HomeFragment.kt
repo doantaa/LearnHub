@@ -49,6 +49,7 @@ class HomeFragment : Fragment() {
         setupSearchBar()
     }
 
+
     override fun onResume() {
         super.onResume()
         binding.search.etSearch.clearFocus()
@@ -97,6 +98,9 @@ class HomeFragment : Fragment() {
                         binding.tvLastCourseItemSubtitle.text = this?.categoryName
                         binding.ivLastCourseItemImage.load(this?.imageUrl)
                         Log.d("USER ENROLL SUCCESS", this.toString())
+                        binding.llLastCourse.setOnClickListener{
+                            CourseDetailActivity.startActivity(requireContext(), this?.id ?: 1)
+                        }
                     }
                 },
                 doOnLoading = {
