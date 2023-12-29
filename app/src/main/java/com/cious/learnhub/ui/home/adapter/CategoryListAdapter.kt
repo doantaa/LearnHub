@@ -1,6 +1,5 @@
 package com.cious.learnhub.ui.home.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -47,7 +46,7 @@ class CategoryListAdapter(
 
     fun setData(categoryList: List<Category>) {
         differ.submitList(categoryList)
-        Log.d("DIFFER SIZE", categoryList.toString())
+
     }
 
 }

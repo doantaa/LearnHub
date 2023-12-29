@@ -10,15 +10,18 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentCourseBinding
+import com.cious.learnhub.model.Category
+import com.cious.learnhub.ui.course.filter.FilterDialogFragment
 import com.cious.learnhub.ui.detail.CourseDetailActivity
 import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.proceedWhen
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CourseFragment : Fragment() {
+class CourseFragment : Fragment(), FilterDialogFragment.onFilterListener {
 
     private lateinit var binding: FragmentCourseBinding
+    private val filterDialogFragment : FilterDialogFragment by lazy { FilterDialogFragment() }
 
     private val courseListAdapter: CourseListAdapter by lazy {
         CourseListAdapter {
@@ -38,6 +41,9 @@ class CourseFragment : Fragment() {
 
     }
 
+    private var selectedCategories: List<Category>? = null
+    private var selectedLevel : String? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
@@ -45,6 +51,14 @@ class CourseFragment : Fragment() {
         observeCourseData()
         setupCourseType()
         setupSearch()
+        setFilterButtonListener()
+    }
+
+    private fun setFilterButtonListener() {
+        binding.tvFilter.setOnClickListener{
+            filterDialogFragment.applyFilterListener(this)
+            filterDialogFragment.show(childFragmentManager, "Filter")
+        }
     }
 
     private fun setupSearch() {
@@ -117,4 +131,13 @@ class CourseFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.rvCourse.adapter = courseListAdapter
     }
+
+    override fun filterApplied(category: List<Category>?, level: String?) {
+        selectedCategories = category
+        val idCategory = category?.map { it.id }
+        selectedLevel = level
+
+        viewModel.getCourses(category = idCategory, level = selectedLevel)
+    }
+
 }

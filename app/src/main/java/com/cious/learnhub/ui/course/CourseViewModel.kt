@@ -3,8 +3,10 @@ package com.cious.learnhub.ui.course
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.cious.learnhub.data.repository.CourseRepository
+import com.cious.learnhub.model.Category
 import com.cious.learnhub.model.Course
 import com.cious.learnhub.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
@@ -17,8 +19,15 @@ class CourseViewModel(
     val courses: LiveData<ResultWrapper<List<Course>>>
         get() = _courses
 
+    private val _selectedCategories = MutableLiveData<List<Category>>()
+
+    val selectedCategories: LiveData<List<Category>?>
+        get() = _selectedCategories
+
+
+    val categories = repository.getCategories().asLiveData(Dispatchers.IO)
     fun getCourses(
-        category: String? = null, title: String? = null, courseType: String? = null, level: String? = null
+        category: List<String>? = null, title: String? = null, courseType: String? = null, level: String? = null
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getCourses(
@@ -32,5 +41,12 @@ class CourseViewModel(
         }
     }
 
+    fun addSelectedCategory(category: Category){
+        _selectedCategories.value = (_selectedCategories.value.orEmpty() + category).distinct()
+    }
+
+    fun removeSelectedCategory(category: Category){
+        _selectedCategories.value = (_selectedCategories.value.orEmpty() - category).distinct()
+    }
 
 }
