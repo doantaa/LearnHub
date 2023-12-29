@@ -1,11 +1,18 @@
 package com.cious.learnhub.data.repository
 
+import android.content.Context
+import com.cious.learnhub.data.network.api.datasource.CourseDataSource
 import com.cious.learnhub.data.network.api.datasource.EnrollmentDataSource
 import com.cious.learnhub.data.network.api.model.category.toCategoryList
+import com.cious.learnhub.data.network.api.model.course.toCourse
+import com.cious.learnhub.data.network.api.model.enrollments.toEnrollment
 import com.cious.learnhub.data.network.api.model.enrollments.toEnrollmentList
+import com.cious.learnhub.data.network.api.model.enrollments.toProgress
 import com.cious.learnhub.model.Category
 import com.cious.learnhub.model.Enrollment
+import com.cious.learnhub.model.Progress
 import com.cious.learnhub.utils.ResultWrapper
+import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.proceedFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -22,13 +29,19 @@ interface EnrollmentRepository {
 
     fun getCoursesById(
         id: Int
-    ): Flow<ResultWrapper<List<Enrollment>>>
+    ): Flow<ResultWrapper<Enrollment>>
+
+    suspend fun postProgress(
+        id: Int
+    ): Flow<ResultWrapper<Progress>>
 
     fun getCategories(): Flow<ResultWrapper<List<Category>>>
 }
 
 class EnrollmentRepositoryImpl(
-    private val enrollmentDataSource: EnrollmentDataSource
+    private val enrollmentDataSource: EnrollmentDataSource,
+    private val courseDataSource: CourseDataSource,
+    private val context: Context
 ) : EnrollmentRepository {
     override fun getEnrollment(
         category: String?,
@@ -37,7 +50,12 @@ class EnrollmentRepositoryImpl(
         level: String?
     ): Flow<ResultWrapper<List<Enrollment>>> {
         return proceedFlow {
-            enrollmentDataSource.getEnrollment(category, title, courseType, level).data?.toEnrollmentList()
+            enrollmentDataSource.getEnrollment(
+                category,
+                title,
+                courseType,
+                level
+            ).data?.toEnrollmentList()
                 ?: emptyList()
         }.onStart {
             emit(ResultWrapper.Loading())
@@ -45,13 +63,23 @@ class EnrollmentRepositoryImpl(
         }
     }
 
-    override fun getCoursesById(id: Int): Flow<ResultWrapper<List<Enrollment>>> {
+    override fun getCoursesById(id: Int): Flow<ResultWrapper<Enrollment>> {
         return proceedFlow {
-            enrollmentDataSource.getCoursesById(id).data?.toEnrollmentList()
-                ?: emptyList()
+            val token = SessionManager.getToken(context)
+            if (token != null) {
+                enrollmentDataSource.getCoursesById(id).dataDetailResponse.toEnrollment()
+            } else {
+                courseDataSource.getCoursesById(id).dataDetailResponse.toEnrollment()
+            }
         }.onStart {
             emit(ResultWrapper.Loading())
             delay(2000)
+        }
+    }
+
+    override suspend fun postProgress(id: Int): Flow<ResultWrapper<Progress>> {
+        return proceedFlow {
+            enrollmentDataSource.postProgress(id).toProgress()
         }
     }
 

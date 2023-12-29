@@ -56,13 +56,57 @@ class CourseDetailActivity : AppCompatActivity() {
         invokeData()
     }
 
+    private fun observeData() {
+        observeEnrollmentData()
+        observeCourseData()
+    }
+
     private fun invokeData() {
         val id = viewModel.courseId ?: 0
         viewModel.getCourseById(id)
     }
 
-    private fun observeData() {
-        viewModel.detailCourse.observe(this){
+    private fun observeEnrollmentData() {
+        viewModel.enrollment.observe(this){
+            it.proceedWhen(
+                doOnSuccess = {item ->
+                    binding.shimmerDetailCourseActivity.isVisible = false
+                    binding.cvHeaderClassInfo.isVisible = true
+                    binding.youtubePlayerView.isVisible = true
+                    binding.tlDetail.isVisible = true
+                    binding.viewPager2.isVisible = true
+                    item.payload?.let {data ->
+                        binding.tvTitleClass.text = data.title
+                        binding.tvModule.text = buildString {
+                            append(data.moduleCount)
+                            append(getString(R.string.txt_sps_module))
+                        }
+                        binding.tvLevel.text = data.level
+                        binding.tvInstructor.text = data.instructor
+                        binding.tvRating.text = data.rating.toString()
+                        binding.tvDuration.text = buildString {
+                            append(data.totalDuration)
+                            append(getString(R.string.txt_sps_minutes))
+                        }
+                        binding.tvTitleCategoryClass.text = data.categoryName
+                        Log.d("AMBIL DATA", data.toString())
+                    }
+                }, doOnLoading = {
+                    binding.shimmerDetailCourseActivity.isVisible = true
+                    binding.cvHeaderClassInfo.isVisible = false
+                    binding.youtubePlayerView.isVisible = false
+                    binding.tlDetail.isVisible = false
+                    binding.viewPager2.isVisible = false
+                },
+                doOnError = {
+                    Log.d("DATA COURSE", it.exception?.message.toString())
+                }
+            )
+        }
+    }
+
+    private fun observeCourseData() {
+        viewModel.course.observe(this){
             it.proceedWhen(
                 doOnSuccess = {item ->
                     item.payload?.let {data ->
@@ -79,8 +123,13 @@ class CourseDetailActivity : AppCompatActivity() {
                             append(getString(R.string.txt_sps_minutes))
                         }
                         binding.tvTitleCategoryClass.text = data.categoryName
-                        Log.d("DATA COURSE ADALAH", data.toString())
                     }
+                }, doOnLoading = {
+                    binding.shimmerDetailCourseActivity.isVisible = true
+                    binding.cvHeaderClassInfo.isVisible = false
+                    binding.youtubePlayerView.isVisible = false
+                    binding.tlDetail.isVisible = false
+                    binding.viewPager2.isVisible = false
                 },
                 doOnError = {
                     Log.d("DATA COURSE", it.exception?.message.toString())
@@ -147,23 +196,24 @@ class CourseDetailActivity : AppCompatActivity() {
     }
 
     private fun observeDataVideo() {
-        viewModel.videoUrl.observe(this){result ->
-            playVideo(result)
+        viewModel.enrollment.observe(this) { detailCourseResult ->
+            if (detailCourseResult != null ) {
+                val modules = detailCourseResult.payload?.module
+                val firstVideoUrl: String? = modules?.get(0)?.videos?.get(0)?.videoUrl
+                playVideo(firstVideoUrl)
+            }
+        }
+        viewModel.videoUrl.observe(this) { result ->
+                playVideo(result)
         }
     }
 
     private fun playVideo(videoUrl: String?) {
-        if (!videoUrl.isNullOrBlank()) {
+        if (youtubePlayer != null && !videoUrl.isNullOrBlank()) {
             youtubePlayer?.loadVideo(videoUrl, 0f)
-        } else {
-            val firstVideoUrl = viewModel.detailCourse.observe(this){
-                it.payload?.module?.let {
-                    it.get(0).videos[0].videoUrl
-                }
-            }
-            youtubePlayer?.loadVideo(firstVideoUrl.toString(), 0f)
         }
     }
+
 
     private fun showLayout() {
         val sectionsPagerAdapter = MyPagerAdapter(this)

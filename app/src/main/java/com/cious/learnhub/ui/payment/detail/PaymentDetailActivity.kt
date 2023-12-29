@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.cious.learnhub.databinding.ActivityPaymentDetailBinding
 import com.cious.learnhub.model.Course
+import com.cious.learnhub.model.Enrollment
 import com.cious.learnhub.ui.payment.midtrans.PaymentMidtransActivity.Companion.navigateToPaymentMidtrans
 import com.cious.learnhub.utils.proceedWhen
 import com.cious.learnhub.utils.toCurrencyFormat
@@ -68,7 +69,7 @@ class PaymentDetailActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_COURSE = "EXTRA_COURSE"
         const val COURSE = "COURSE"
-        fun startActivity(context: Context, course: Course?) {
+        fun startActivity(context: Context, course: Enrollment?) {
             val intent = Intent(context, PaymentDetailActivity::class.java)
             val bundle = Bundle()
             bundle.putParcelable(COURSE, course)

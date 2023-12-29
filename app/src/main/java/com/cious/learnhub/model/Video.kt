@@ -8,6 +8,7 @@ data class Video(
     val duration: Int,
     val id: Int,
     val isLocked: Boolean,
+    val isWatched: Boolean,
     val moduleId: Int,
     val no: Int,
     val title: String,

@@ -10,7 +10,6 @@
     <ImageView
         android:id="@+id/iv_empty_course"
         android:layout_width="150dp"
-
         android:layout_height="150dp"
         android:src="@drawable/img_empty"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,22 +21,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_bold"
-        app:layout_constraintVertical_bias="0.45"
         android:text="@string/text_state_empty_title"
         android:textColor="@color/DARKBLUE05"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_empty_course"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
 
     <TextView
         android:id="@+id/tv_empty_description"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/iv_empty_course"
         android:text="@string/text_empty_class"
         android:fontFamily="@font/montserrat"
         android:textColor="@color/DARKBLUE05"
-        app:layout_constraintTop_toBottomOf="@id/tv_empty_title"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_empty_title"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

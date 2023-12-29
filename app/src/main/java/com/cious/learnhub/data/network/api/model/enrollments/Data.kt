@@ -1,5 +1,9 @@
 package com.cious.learnhub.data.network.api.model.enrollments
 
+import com.cious.learnhub.data.network.api.model.course.CategoryNameResponse
+import com.cious.learnhub.data.network.api.model.course.ModuleResponse
+import com.cious.learnhub.data.network.api.model.course.toCourse
+import com.cious.learnhub.data.network.api.model.course.toModuleList
 import com.cious.learnhub.model.Enrollment
 import com.google.gson.annotations.SerializedName
 
@@ -21,9 +25,6 @@ data class Data(
 
     @SerializedName("categoryId")
     val categoryId: String,
-
-    @SerializedName("categoryId")
-    val categoryName: String,
 
     @SerializedName("level")
     val level: String,
@@ -53,13 +54,19 @@ data class Data(
     val totalDuration: String,
 
     @SerializedName("progress")
-    val progress: Int,
+    val progress: Double,
 
     @SerializedName("updatedAt")
     val updatedAt: String,
 
     @SerializedName("createdAt")
-    val createdAt: String
+    val createdAt: String,
+
+    @SerializedName("Modules")
+    val moduleResponses: List<ModuleResponse>?,
+
+    @SerializedName("Category")
+    val category: CategoryNameResponse
 )
 
 fun Data.toEnrollment() = Enrollment(
@@ -69,7 +76,7 @@ fun Data.toEnrollment() = Enrollment(
     objective = this.objective.orEmpty(),
     onboarding = this.onboarding.orEmpty(),
     categoryId = this.categoryId.orEmpty(),
-    categoryName = this.categoryName.orEmpty(),
+    categoryName = this.category.categoryName.orEmpty(),
     level = this.level.orEmpty(),
     courseType = this.courseType.orEmpty(),
     imageUrl = this.imageUrl.orEmpty(),
@@ -81,7 +88,8 @@ fun Data.toEnrollment() = Enrollment(
     totalDuration = this.totalDuration.orEmpty(),
     progress = this.progress,
     updatedAt = this.updatedAt.orEmpty(),
-    createdAt = this.createdAt.orEmpty()
+    createdAt = this.createdAt.orEmpty(),
+    module = this.moduleResponses?.toModuleList() ?: emptyList()
 )
 
 fun Collection<Data>.toEnrollmentList() = this.map { it.toEnrollment() }

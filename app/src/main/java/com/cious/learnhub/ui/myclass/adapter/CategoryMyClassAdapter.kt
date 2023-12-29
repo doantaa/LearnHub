@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.cious.learnhub.core.ViewHolderBinder
-import com.cious.learnhub.databinding.ItemClassCategoriesBinding
+import com.cious.learnhub.databinding.ItemMyClassCategoriesBinding
 import com.cious.learnhub.model.Category
 
 class CategoryMyClassAdapter(
@@ -28,7 +29,7 @@ class CategoryMyClassAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryMyClassListViewHolder {
         return CategoryMyClassListViewHolder(
-            binding = ItemClassCategoriesBinding.inflate(
+            binding = ItemMyClassCategoriesBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -53,13 +54,17 @@ class CategoryMyClassAdapter(
 }
 
 class CategoryMyClassListViewHolder(
-    private val binding: ItemClassCategoriesBinding, val onItemClick: (Category) -> Unit
+    private val binding: ItemMyClassCategoriesBinding, val onItemClick: (Category) -> Unit
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Category> {
     override fun bind(item: Category) {
         with(item) {
             binding.root.setOnClickListener {
                 onItemClick.invoke(item)
             }
+            binding.ivCategory.load(item.imageUrl){
+                crossfade(true)
+            }
+            Log.d("Image url", item.imageUrl)
             binding.tvCategory.text = item.name
         }
     }
