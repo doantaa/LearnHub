@@ -45,7 +45,6 @@ import com.cious.learnhub.ui.home.search.HomeSearchViewModel
 import com.cious.learnhub.ui.notifications.NotificationsViewModel
 import com.cious.learnhub.ui.payment.detail.PaymentViewModel
 import com.cious.learnhub.ui.payment.midtrans.PaymentMidtransViewModel
-import com.cious.learnhub.ui.payment.PaymentViewModel
 import com.cious.learnhub.ui.profile.changepassword.ChangePasswordViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
