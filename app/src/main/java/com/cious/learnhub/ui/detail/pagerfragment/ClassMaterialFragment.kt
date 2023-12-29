@@ -63,7 +63,6 @@ class ClassMaterialFragment : Fragment() {
                                 DataItem(video, context, courseData) { videoUrl ->
                                     viewModel.getVideoUrl(videoUrl.videoUrl)
                                     viewModel.postProgress(videoUrl.id)
-                                    invokeData()
                                 }
                             }
                             addAll(contentList)
