@@ -46,7 +46,6 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         invokeData()
         observeData()
-        setupProfileData()
         setupSearchBar()
     }
 
@@ -80,15 +79,59 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupProfileData() {
-        binding.ivProfile.load("https://pbs.twimg.com/profile_images/1663195620851716099/GbxCSqEZ_400x400.jpg")
-        val name = "IU"
-        binding.tvGreetingTitle.text = getString(R.string.hello, name)
-    }
-
     private fun observeData() {
         observeCategoryData()
         observeCourseData()
+        observeUserData()
+        observeLastEnrollCourse()
+    }
+
+    private fun observeLastEnrollCourse() {
+        viewModel.enrollment.observe(viewLifecycleOwner) {
+            it.proceedWhen(
+                doOnSuccess = {
+                    it.payload?.get(0).apply {
+                        binding.shimmerHomeLastCourse.isVisible = false
+                        binding.clLastCourseItem.isVisible = true
+                        binding.tvLastCourseItemTitle.text = this?.title
+                        binding.tvLastCourseItemSubtitle.text = this?.categoryName
+                        binding.ivLastCourseItemImage.load(this?.imageUrl)
+                        Log.d("USER ENROLL SUCCESS", this.toString())
+                    }
+                },
+                doOnLoading = {
+                              binding.shimmerHomeLastCourse.isVisible = true
+                    binding.clLastCourseItem.isVisible = false
+                },
+                doOnEmpty = {
+                    binding.clLastCourseItem.isVisible = false
+                    binding.clEmptyCourse.isVisible = true
+                    binding.shimmerHomeLastCourse.isVisible = false
+                },
+                doOnError = {
+                    binding.clLastCourseItem.isVisible = false
+                    binding.clEmptyCourse.isVisible = true
+                    binding.shimmerHomeLastCourse.isVisible = false
+                    Log.d("ERROR", it.message.toString())
+                }
+            )
+        }
+
+
+    }
+
+    private fun observeUserData() {
+        viewModel.userData.observe(viewLifecycleOwner) {
+            it.proceedWhen(
+                doOnSuccess = {
+                    it.payload?.let {
+                        binding.ivProfile.load(it.profileUrl)
+                        val name = it.name
+                        binding.tvGreetingTitle.text = getString(R.string.hello, name)
+                    }
+                }
+            )
+        }
     }
 
     private fun observeCourseData() {
@@ -173,9 +216,9 @@ class HomeFragment : Fragment() {
 
     private fun setCategoryListener(category: List<Category>) {
         binding.chipGroupCategory.setOnCheckedStateChangeListener { group, checkedId ->
-            if(group.checkedChipId > category.size){
+            if (group.checkedChipId > category.size) {
                 val checkedIdDouble = checkedId[0].toDouble() / 10
-                val groupSize: Int = (ceil(checkedIdDouble)* 10).toInt()
+                val groupSize: Int = (ceil(checkedIdDouble) * 10).toInt()
                 val chipId = checkedId[0] - (groupSize - category.size) - 1
                 val categoryId = category[chipId].id
                 binding.chipGroupCategory.check(chipId)

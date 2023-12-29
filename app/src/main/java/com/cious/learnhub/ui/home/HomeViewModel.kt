@@ -3,8 +3,11 @@ package com.cious.learnhub.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.cious.learnhub.data.repository.CourseRepository
+import com.cious.learnhub.data.repository.EnrollmentRepository
+import com.cious.learnhub.data.repository.ProfileRepository
 import com.cious.learnhub.model.Category
 import com.cious.learnhub.model.Course
 import com.cious.learnhub.utils.ResultWrapper
@@ -12,7 +15,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val repository: CourseRepository
+    private val courseRepository: CourseRepository,
+    private val userRepository: ProfileRepository,
+    private val enrollmentRepository: EnrollmentRepository
+
 ) : ViewModel() {
     private val _courses = MutableLiveData<ResultWrapper<List<Course>>>()
     val courses: LiveData<ResultWrapper<List<Course>>>
@@ -20,12 +26,18 @@ class HomeViewModel(
 
     private val _categories = MutableLiveData<ResultWrapper<List<Category>>>()
 
+    val userData = userRepository.getProfile().asLiveData(Dispatchers.IO)
+
     val categories: LiveData<ResultWrapper<List<Category>>>
         get() = _categories
 
+    val enrollment = enrollmentRepository.getEnrollment().asLiveData(Dispatchers.IO)
+
+
+
     fun getCategories() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getCategories().collect() { _categories.postValue(it) }
+            courseRepository.getCategories().collect() { _categories.postValue(it) }
         }
     }
 
@@ -33,7 +45,7 @@ class HomeViewModel(
         category: String? = null, title: String? = null, level: String? = null
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getCourses(
+            courseRepository.getCourses(
                 if (category == "C-0ALL") null else category, title, level
             ).collect() {
                 _courses.postValue(it)
