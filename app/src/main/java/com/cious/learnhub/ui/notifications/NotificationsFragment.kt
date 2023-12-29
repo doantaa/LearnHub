@@ -7,20 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.R
-import com.cious.learnhub.data.network.api.datasource.NotificationDataSourceImpl
-import com.cious.learnhub.data.network.api.service.NotificationService
-import com.cious.learnhub.data.repository.NotificationRepositoryImpl
 import com.cious.learnhub.databinding.FragmentNotificationsBinding
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
 import com.cious.learnhub.utils.ApiException
-import com.cious.learnhub.utils.GenericViewModelFactory
-import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NotificationsFragment : Fragment() {
 
@@ -30,13 +24,7 @@ class NotificationsFragment : Fragment() {
 
         }
     }
-    private val viewModel: NotificationsViewModel by viewModels {
-        val service =
-            NotificationService.invoke(ChuckerInterceptor(requireContext()), requireContext())
-        val dataSource = NotificationDataSourceImpl(service)
-        val repository = NotificationRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(NotificationsViewModel(repository))
-    }
+    private val viewModel: NotificationsViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,8 +62,7 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun checkTokenUser() {
-        val token = SessionManager.getToken(requireContext())
-        if (token.isNullOrBlank()) {
+        if (!viewModel.isLogin) {
             binding.clUserNotLogin.isVisible = true
             binding.clUserLogin.isVisible = false
         } else {
@@ -102,7 +89,7 @@ class NotificationsFragment : Fragment() {
                     if (it.exception is ApiException) {
                         val message = it.exception.getParsedError()?.message.orEmpty()
                         if (message == getString(R.string.text_jwt_expired)) {
-                            SessionManager.clearData(requireContext())
+//                            SessionManager.clearData(requireContext())
                         }
                     }
                     checkTokenUser()

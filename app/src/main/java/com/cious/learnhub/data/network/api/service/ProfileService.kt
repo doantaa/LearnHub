@@ -33,8 +33,8 @@ interface ProfileService {
 
     companion object {
         @JvmStatic
-        operator fun invoke(chucker: ChuckerInterceptor, context: Context): ProfileService {
-            val token = SessionManager.getToken(context) ?: ""
+        operator fun invoke(sessionManager: SessionManager, chucker: ChuckerInterceptor): ProfileService {
+            val token = sessionManager.getToken() ?: ""
             val client = OkHttpClient.Builder()
                 .addInterceptor(chucker)
                 .addInterceptor(object : Interceptor {

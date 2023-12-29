@@ -2,13 +2,11 @@ package com.cious.learnhub.ui.myclass
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentMyClassBinding
 import com.cious.learnhub.ui.authentication.login.LoginActivity
@@ -16,7 +14,6 @@ import com.cious.learnhub.ui.authentication.register.RegisterActivity
 import com.cious.learnhub.ui.detail.CourseDetailActivity
 import com.cious.learnhub.ui.myclass.adapter.CategoryMyClassAdapter
 import com.cious.learnhub.ui.myclass.adapter.ProgressiveCourseAdapter
-import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -52,7 +49,6 @@ class MyClassFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        SessionManager.getToken(requireContext())
         getData()
         setupRecyclerView()
         observeData()
@@ -82,8 +78,7 @@ class MyClassFragment : Fragment() {
     }
 
     private fun checkTokenUser() {
-        val token = SessionManager.getToken(requireContext())
-        if (token.isNullOrBlank()) {
+        if (!viewModel.isLogin) {
             binding.clUserNotLogin.isVisible = true
             binding.nsUserLogin.isVisible = false
         } else {

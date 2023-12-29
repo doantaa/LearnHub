@@ -14,7 +14,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class EditProfileViewModel(
-    private val repository: ProfileRepository
+    private val repository: ProfileRepository,
+
 ) : ViewModel() {
     private val _profileRequestResult = MutableLiveData<ResultWrapper<UserEditModel>>()
     val profilefRequestResult: LiveData<ResultWrapper<UserEditModel>>

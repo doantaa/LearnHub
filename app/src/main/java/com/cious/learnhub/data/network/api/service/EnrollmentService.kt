@@ -42,8 +42,8 @@ interface EnrollmentService {
 
     companion object {
         @JvmStatic
-        operator fun invoke(chucker: ChuckerInterceptor, context: Context): EnrollmentService {
-            val token = SessionManager.getToken(context) ?: ""
+        operator fun invoke(sessionManager: SessionManager, chucker: ChuckerInterceptor): EnrollmentService {
+            val token = sessionManager.getToken() ?: ""
             val client = OkHttpClient.Builder()
                 .addInterceptor(chucker)
                 .addInterceptor(object : Interceptor {

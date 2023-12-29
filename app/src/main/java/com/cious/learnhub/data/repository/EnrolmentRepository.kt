@@ -4,7 +4,6 @@ import android.content.Context
 import com.cious.learnhub.data.network.api.datasource.CourseDataSource
 import com.cious.learnhub.data.network.api.datasource.EnrollmentDataSource
 import com.cious.learnhub.data.network.api.model.category.toCategoryList
-import com.cious.learnhub.data.network.api.model.course.toCourse
 import com.cious.learnhub.data.network.api.model.enrollments.toEnrollment
 import com.cious.learnhub.data.network.api.model.enrollments.toEnrollmentList
 import com.cious.learnhub.data.network.api.model.enrollments.toProgress
@@ -65,12 +64,7 @@ class EnrollmentRepositoryImpl(
 
     override fun getCoursesById(id: Int): Flow<ResultWrapper<Enrollment>> {
         return proceedFlow {
-            val token = SessionManager.getToken(context)
-            if (token != null) {
-                enrollmentDataSource.getCoursesById(id).dataDetailResponse.toEnrollment()
-            } else {
-                courseDataSource.getCoursesById(id).dataDetailResponse.toEnrollment()
-            }
+            enrollmentDataSource.getCoursesById(id).dataDetailResponse.toEnrollment()
         }.onStart {
             emit(ResultWrapper.Loading())
             delay(2000)

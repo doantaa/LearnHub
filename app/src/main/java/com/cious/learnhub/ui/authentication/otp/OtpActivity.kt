@@ -99,8 +99,8 @@ class OtpActivity : AppCompatActivity() {
 
     private fun saveToken(registerData: RegisterData?) {
         val token = registerData?.token
-        if (!token.isNullOrBlank()) {
-            token.let { SessionManager.saveAuthToken(this, it) }
+        if (viewModel.isLogin) {
+            token?.let { viewModel.saveAuthToken(it) }
         }
     }
 

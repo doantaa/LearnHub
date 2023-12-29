@@ -21,8 +21,8 @@ interface NotificationService {
 
     companion object {
         @JvmStatic
-        operator fun invoke(chucker: ChuckerInterceptor, context: Context): NotificationService {
-            val token = SessionManager.getToken(context) ?: ""
+        operator fun invoke(sessionManager: SessionManager, chucker: ChuckerInterceptor): NotificationService {
+            val token = sessionManager.getToken() ?: ""
             val client = OkHttpClient.Builder()
                 .addInterceptor(chucker)
                 .addInterceptor(object : Interceptor {

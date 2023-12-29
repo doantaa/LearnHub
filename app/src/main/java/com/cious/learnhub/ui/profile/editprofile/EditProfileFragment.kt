@@ -27,17 +27,13 @@ import com.cious.learnhub.databinding.FragmentEditProfileBinding
 import com.cious.learnhub.ui.notifications.NotificationsViewModel
 import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditProfileFragment : Fragment() {
 
     lateinit var binding: FragmentEditProfileBinding
 
-    private val viewModel: EditProfileViewModel by viewModels {
-        val service = ProfileService.invoke(ChuckerInterceptor(requireContext()), requireContext())
-        val dataSource = ProfileDataSourceImpl(service)
-        val repository = ProfileRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(EditProfileViewModel(repository))
-    }
+    private val viewModel: EditProfileViewModel by viewModel()
     private val IMAGE_REQUEST_CODE = 100
 
     override fun onCreateView(
@@ -65,23 +61,23 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun observeEditProfile() {
-        viewModel.profilefRequestResult.observe(viewLifecycleOwner){
-            it.proceedWhen (
+        viewModel.profilefRequestResult.observe(viewLifecycleOwner) {
+            it.proceedWhen(
                 doOnLoading = {
-                    binding.btnSave.isVisible=false
-                    binding.pbLoading.isVisible=true
-
-
+                    binding.btnSave.isVisible = false
+                    binding.pbLoading.isVisible = true
                 },
                 doOnSuccess = {
-                    binding.btnSave.isVisible=true
-                    binding.pbLoading.isVisible=false
-                    Toast.makeText(requireContext(), "edit profile success", Toast.LENGTH_SHORT).show()
+                    binding.btnSave.isVisible = true
+                    binding.pbLoading.isVisible = false
+                    Toast.makeText(requireContext(), "edit profile success", Toast.LENGTH_SHORT)
+                        .show()
                 },
                 doOnError = {
-                    binding.btnSave.isVisible=true
-                    binding.pbLoading.isVisible=false
-                    Toast.makeText(requireContext(), "edit profile failed", Toast.LENGTH_SHORT).show()
+                    binding.btnSave.isVisible = true
+                    binding.pbLoading.isVisible = false
+                    Toast.makeText(requireContext(), "edit profile failed", Toast.LENGTH_SHORT)
+                        .show()
                 }
 
             )

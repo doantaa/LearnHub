@@ -15,6 +15,7 @@ import com.cious.learnhub.model.OtpData
 import com.cious.learnhub.model.RegisterData
 import com.cious.learnhub.model.VerifyResetPasswordData
 import com.cious.learnhub.utils.ResultWrapper
+import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 
@@ -39,10 +40,13 @@ interface AuthRepository {
     suspend fun doResetPassword(
         verifyResetPasswordRequest: VerifyResetPasswordRequest
     ): Flow<ResultWrapper<VerifyResetPasswordData>>
+
+    fun isLogin(): Boolean
 }
 
 class AuthRepositoryImpl(
-    private val dataSource: AuthDataSource
+    private val dataSource: AuthDataSource,
+    private val sessionManager: SessionManager
 ) : AuthRepository {
     override suspend fun sendOtpRegister(
         otpRequest: OtpRequest
@@ -91,5 +95,9 @@ class AuthRepositoryImpl(
         return proceedFlow {
             dataSource.doResetPassword(verifyResetPasswordRequest).toVerifyResetPasswordData()
         }
+    }
+
+    override fun isLogin(): Boolean {
+        return !sessionManager.getToken().isNullOrEmpty()
     }
 }
