@@ -25,13 +25,7 @@ class AboutFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        invokeData()
         observeData()
-    }
-
-    private fun invokeData() {
-        val id = viewModel.courseId ?: 0
-        viewModel.getCourseById(id)
     }
 
     private fun observeData() {
