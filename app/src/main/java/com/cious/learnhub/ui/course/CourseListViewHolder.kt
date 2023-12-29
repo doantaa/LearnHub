@@ -29,7 +29,11 @@ class CourseListViewHolder(
                 append(" Menit")
             }
             binding.tvCourseInstructor.text = item.instructor
-            binding.tvPrice.text = item.price.toCurrencyFormat()
+            binding.tvPrice.text = if(item.price == 0){
+                "GRATIS"
+            } else {
+                item.price.toCurrencyFormat()
+            }
         }
     }
 
