@@ -282,6 +282,14 @@ class CourseDetailActivity : AppCompatActivity() {
             context.startActivity(intent)
         }
 
+        fun startNewActivity(context: Context, id: Int) {
+            val intent = Intent(context, CourseDetailActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            intent.putExtra(EXTRA_ID, id)
+            context.startActivity(intent)
+        }
+
         @StringRes
         private val TAB_TITLES = intArrayOf(
             R.string.tab_text_1,

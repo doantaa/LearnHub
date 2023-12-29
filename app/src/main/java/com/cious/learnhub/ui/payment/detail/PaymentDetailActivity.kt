@@ -7,7 +7,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.cious.learnhub.databinding.ActivityPaymentDetailBinding
-import com.cious.learnhub.model.Course
 import com.cious.learnhub.model.Enrollment
 import com.cious.learnhub.ui.payment.midtrans.PaymentMidtransActivity.Companion.navigateToPaymentMidtrans
 import com.cious.learnhub.utils.proceedWhen

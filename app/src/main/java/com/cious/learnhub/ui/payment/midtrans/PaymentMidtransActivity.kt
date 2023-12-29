@@ -62,7 +62,7 @@ class PaymentMidtransActivity : AppCompatActivity() {
                         return true
                     } else if (requestUrl.contains("cious.learnhub.com/")) {
                         val id = viewModel.courseId ?: 0
-                        CourseDetailActivity.startActivity(this@PaymentMidtransActivity, id)
+                        CourseDetailActivity.startNewActivity(this@PaymentMidtransActivity, id)
                         return true
 
                     } else {
