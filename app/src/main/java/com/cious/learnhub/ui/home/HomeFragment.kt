@@ -1,18 +1,21 @@
 package com.cious.learnhub.ui.home
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import coil.load
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentHomeBinding
 import com.cious.learnhub.model.Category
+import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.detail.CourseDetailActivity
 import com.cious.learnhub.ui.home.adapter.HomeCourseListAdapter
 import com.cious.learnhub.ui.home.search.HomeSearchActivity
@@ -20,7 +23,6 @@ import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.proceedWhen
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.math.ceil
 
 class HomeFragment : Fragment() {
 
@@ -47,6 +49,14 @@ class HomeFragment : Fragment() {
         invokeData()
         observeData()
         setupSearchBar()
+        setButtonListener()
+    }
+
+    private fun setButtonListener() {
+        binding.btnGoToLogin.setOnClickListener {
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
@@ -55,6 +65,7 @@ class HomeFragment : Fragment() {
         binding.search.etSearch.clearFocus()
         binding.chipGroupCategory.check(0 + 1)
     }
+
 
     private fun setupSearchBar() {
         binding.search.etSearch.clearFocus()
@@ -98,13 +109,13 @@ class HomeFragment : Fragment() {
                         binding.tvLastCourseItemSubtitle.text = this?.categoryName
                         binding.ivLastCourseItemImage.load(this?.imageUrl)
                         Log.d("USER ENROLL SUCCESS", this.toString())
-                        binding.llLastCourse.setOnClickListener{
+                        binding.llLastCourse.setOnClickListener {
                             CourseDetailActivity.startActivity(requireContext(), this?.id ?: 1)
                         }
                     }
                 },
                 doOnLoading = {
-                              binding.shimmerHomeLastCourse.isVisible = true
+                    binding.shimmerHomeLastCourse.isVisible = true
                     binding.clLastCourseItem.isVisible = false
                 },
                 doOnEmpty = {
@@ -125,6 +136,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeUserData() {
+
         viewModel.userData.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
@@ -132,7 +144,12 @@ class HomeFragment : Fragment() {
                         binding.ivProfile.load(it.profileUrl)
                         val name = it.name
                         binding.tvGreetingTitle.text = getString(R.string.hello, name)
+                        binding.btnGoToLogin.isVisible = false
                     }
+                },
+                doOnError = {
+                    binding.ivProfile.setImageResource(R.drawable.ic_non_login_profile)
+                    binding.tvGreetingTitle.text = getString(R.string.hello_learner)
                 }
             )
         }
@@ -173,6 +190,7 @@ class HomeFragment : Fragment() {
             it.proceedWhen(doOnSuccess = { data ->
                 binding.chipGroupCategory.isVisible = true
                 binding.shimmerHomeCategory.isVisible = false
+                binding.chipGroupCategory.removeAllViews()
                 data.payload?.map { category ->
                     binding.chipGroupCategory.addView(
                         createCategoryChip(
@@ -184,6 +202,7 @@ class HomeFragment : Fragment() {
                 data.payload?.let { categories ->
                     setCategoryListener(categories)
                 }
+                checkFirstChip()
 
 
             }, doOnLoading = {
@@ -206,6 +225,11 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun checkFirstChip() {
+        val firstChip = binding.chipGroupCategory.children.toList().get(0)
+        binding.chipGroupCategory.check( firstChip.id)
+    }
+
 
     private fun createCategoryChip(context: Context, category: Category): Chip {
         return Chip(context).apply {
@@ -221,19 +245,22 @@ class HomeFragment : Fragment() {
     private fun setCategoryListener(category: List<Category>) {
         binding.chipGroupCategory.setOnCheckedStateChangeListener { group, checkedId ->
             if (group.checkedChipId > category.size) {
-                val checkedIdDouble = checkedId[0].toDouble() / 10
-                val groupSize: Int = (ceil(checkedIdDouble) * 10).toInt()
-                val chipId = checkedId[0] - (groupSize - category.size) - 1
-                val categoryId = category[chipId].id
-                binding.chipGroupCategory.check(chipId)
+                val selectedChip = binding.chipGroupCategory.children.toList()
+                    .mapIndexed { index, view ->
+                        Pair(index, view)
+                    }
+                    .filter {
+                        (it.second as Chip).isChecked
+                    }
+                val categoryId = category[selectedChip[0].first].id
                 viewModel.getCourses(category = categoryId)
                 Log.d("CATEGORY", categoryId)
+
             } else if (checkedId != emptyList<Int>() && group.checkedChipId < category.size) {
                 val id = category[checkedId[0] - 1].id
                 viewModel.getCourses(category = id)
             } else {
-                binding.chipGroupCategory.check(0 + 1)
-                viewModel.getCourses()
+                checkFirstChip()
             }
         }
 
@@ -242,6 +269,7 @@ class HomeFragment : Fragment() {
     private fun invokeData() {
         viewModel.getCourses()
         viewModel.getCategories()
+        viewModel.getUserProfile()
     }
 
     private fun setupRecyclerView() {

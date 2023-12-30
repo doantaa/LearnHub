@@ -60,7 +60,7 @@
     <string name="text_course_topic">Topik Kelas</string>
     <string name="text_filter">Filter</string>
     <string name="text_search_best_course">Cari kursus terbaik</string>
-    <string name="text_greeting">Selamat pagi, Karina!</string>
+    <string name="text_greeting">Halo Learner!</string>
     <string name="text_greeting_description">Mau belajar apa hari ini?</string>
     <string name="text_hint_search_best_course">Cari kursus terbaik</string>
     <string name="text_last_course_title">Lanjutkan belajarmu!</string>
@@ -110,4 +110,5 @@
     <string name="text_keluar">Keluar</string>
     <string name="text_apakah_anda_yakin_ingin_keluar">Apakah anda yakin ingin keluar?</string>
     <string name="text_logout_successfully">logout successfully</string>
+    <string name="hello_learner">Hello Learner!</string>
 </resources>

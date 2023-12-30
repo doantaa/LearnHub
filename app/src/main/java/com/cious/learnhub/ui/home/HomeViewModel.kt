@@ -10,6 +10,7 @@ import com.cious.learnhub.data.repository.EnrollmentRepository
 import com.cious.learnhub.data.repository.ProfileRepository
 import com.cious.learnhub.model.Category
 import com.cious.learnhub.model.Course
+import com.cious.learnhub.model.ProfileModel
 import com.cious.learnhub.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,7 +27,10 @@ class HomeViewModel(
 
     private val _categories = MutableLiveData<ResultWrapper<List<Category>>>()
 
-    val userData = userRepository.getProfile().asLiveData(Dispatchers.IO)
+
+    private val _userData = MutableLiveData<ResultWrapper<ProfileModel>>()
+    val userData : LiveData<ResultWrapper<ProfileModel>>
+        get() = _userData
 
     val categories: LiveData<ResultWrapper<List<Category>>>
         get() = _categories
@@ -49,6 +53,14 @@ class HomeViewModel(
                 if (category == "C-0ALL") null else category, title, level
             ).collect() {
                 _courses.postValue(it)
+            }
+        }
+    }
+
+    fun getUserProfile(){
+        viewModelScope.launch(Dispatchers.IO) {
+            userRepository.getProfile().collect(){
+                _userData.postValue(it)
             }
         }
     }
