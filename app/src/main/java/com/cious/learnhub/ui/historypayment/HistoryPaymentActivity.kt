@@ -3,12 +3,9 @@ package com.cious.learnhub.ui.historypayment
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import com.cious.learnhub.data.dummy.DummyHistoryPaymentDataSourceImpl
 import com.cious.learnhub.databinding.ActivityHistoryPaymentBinding
-import com.cious.learnhub.model.HistoryPayment
 import com.cious.learnhub.ui.historypayment.adapter.HistoryPaymentAdapter
-import com.cious.learnhub.ui.historypayment.adapter.HistoryPaymentTypeAdapter
+import com.cious.learnhub.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HistoryPaymentActivity : AppCompatActivity() {
@@ -31,10 +28,22 @@ class HistoryPaymentActivity : AppCompatActivity() {
         setData()
         setUpRecyclerView()
         setClickListener()
+        observeData()
         Log.d("ambil data",viewModel.getTransaction().toString())
 
     }
 
+    private fun observeData() {
+        viewModel.transaction.observe(this){
+            it.proceedWhen(
+                doOnSuccess = {
+                    it.payload?.let {
+                        adapterPayment.setData(it)
+                    }
+                }
+            )
+        }
+    }
 
 
     private fun setData() {
