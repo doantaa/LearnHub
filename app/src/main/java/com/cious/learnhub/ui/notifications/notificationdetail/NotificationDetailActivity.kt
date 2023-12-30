@@ -1,22 +1,22 @@
-package com.cious.learnhub.ui.notificationdetailpopup
+package com.cious.learnhub.ui.notifications.notificationdetail
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.cious.learnhub.databinding.FragmentNotificationDetailBottomSheetBinding
+import com.cious.learnhub.databinding.ActivityNotificationDetailBinding
 import com.cious.learnhub.model.NotificationModel
 import com.cious.learnhub.utils.toDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class NotificationDetailBottomSheet : AppCompatActivity() {
-    private val binding: FragmentNotificationDetailBottomSheetBinding by lazy {
-        FragmentNotificationDetailBottomSheetBinding.inflate(
+class NotificationDetailActivity : AppCompatActivity() {
+    private val binding: ActivityNotificationDetailBinding by lazy {
+        ActivityNotificationDetailBinding.inflate(
             layoutInflater
         )
     }
-    private val viewModel:NotificationDetailViewModel by viewModel { parametersOf(intent?.extras)  }
+    private val viewModel: NotificationDetailViewModel by viewModel { parametersOf(intent?.extras)  }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,7 @@ class NotificationDetailBottomSheet : AppCompatActivity() {
     companion object {
         const val EXTRA_NOTIFICATION = "EXTRA_NOTIFICATION"
         fun startActivity(context: Context, notification : NotificationModel) {
-            val intent = Intent(context, NotificationDetailBottomSheet::class.java)
+            val intent = Intent(context, NotificationDetailActivity::class.java)
             intent.putExtra(EXTRA_NOTIFICATION, notification)
             context.startActivity(intent)
         }

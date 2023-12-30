@@ -2,11 +2,9 @@ package com.cious.learnhub.ui.notifications
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.cious.learnhub.R
@@ -14,8 +12,7 @@ import com.cious.learnhub.databinding.FragmentNotificationsBinding
 import com.cious.learnhub.model.NotificationModel
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
-import com.cious.learnhub.ui.notificationdetailpopup.NotificationDetailBottomSheet
-import com.cious.learnhub.ui.payment.PaymentActivity
+import com.cious.learnhub.ui.notifications.notificationdetail.NotificationDetailActivity
 import com.cious.learnhub.utils.ApiException
 import com.cious.learnhub.utils.MethodCommon
 import com.cious.learnhub.utils.highLightWord
@@ -33,7 +30,7 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun navigateToDetail(item: NotificationModel) {
-        NotificationDetailBottomSheet.startActivity(requireContext(), item)
+        NotificationDetailActivity.startActivity(requireContext(), item)
     }
 
     private val viewModel: NotificationsViewModel by viewModel()

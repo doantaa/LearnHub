@@ -2,7 +2,6 @@ package com.cious.learnhub.data.repository
 
 import com.cious.learnhub.data.network.api.datasource.NotificaitonDataSource
 import com.cious.learnhub.data.network.api.model.notification.toMarkAsReadNotification
-import com.cious.learnhub.data.network.api.model.notification.toNotificationData
 import com.cious.learnhub.data.network.api.model.notification.toNotificationList
 import com.cious.learnhub.model.MarkAsReadNotification
 import com.cious.learnhub.model.NotificationModel
