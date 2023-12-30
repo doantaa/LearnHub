@@ -14,9 +14,10 @@ class NotificationViewHolder (
 
 ): RecyclerView.ViewHolder(binding.root), ViewHolderBinder<NotificationModel> {
     override fun bind(item: NotificationModel) {
-        with(binding) {
-            root.setOnClickListener {
-                onItemClick.invoke(item)
+        with(item) {
+            itemView.setOnClickListener{
+                onItemClick(this)
+
             }
             binding.root.setOnClickListener { onItemClick.invoke(item) }
             binding.textCategory.text = item.category.capitalize()

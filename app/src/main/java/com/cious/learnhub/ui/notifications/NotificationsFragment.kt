@@ -27,11 +27,14 @@ class NotificationsFragment : Fragment() {
     private lateinit var binding: FragmentNotificationsBinding
     private val notificationsAdapter: NotificationsAdapter by lazy {
         NotificationsAdapter {
-            NotificationDetailBottomSheet.newInstance(it).show(
-                childFragmentManager,null
-            )
+            navigateToDetail(it)
         }
     }
+
+    private fun navigateToDetail(item: NotificationModel) {
+        NotificationDetailBottomSheet.startActivity(requireContext(), item)
+    }
+
     private val viewModel: NotificationsViewModel by viewModel()
 
     override fun onCreateView(

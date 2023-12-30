@@ -17,6 +17,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.notificationdetailpopup.NotificationDetailBottomSheet"
+            android:exported="false" />
+        <activity
             android:name=".ui.home.search.HomeSearchActivity"
             android:exported="false" />
         <activity
