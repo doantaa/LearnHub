@@ -46,6 +46,7 @@ import com.cious.learnhub.ui.home.HomeViewModel
 import com.cious.learnhub.ui.home.search.HomeSearchViewModel
 import com.cious.learnhub.ui.main.MainViewModel
 import com.cious.learnhub.ui.myclass.MyClassViewModel
+import com.cious.learnhub.ui.notifications.notificationdetail.NotificationDetailViewModel
 import com.cious.learnhub.ui.notifications.NotificationsViewModel
 import com.cious.learnhub.ui.payment.detail.PaymentViewModel
 import com.cious.learnhub.ui.payment.midtrans.PaymentMidtransViewModel
@@ -120,6 +121,7 @@ object AppModules {
         viewModelOf(::HomeSearchViewModel)
         viewModelOf(::ProfileViewModel)
         viewModelOf(::EditProfileViewModel)
+        viewModelOf(::NotificationDetailViewModel)
         viewModelOf(::MainViewModel)
     }
 

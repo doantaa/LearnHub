@@ -23,10 +23,11 @@ data class NotificationItemResponse(
 
 fun NotificationItemResponse.toNotificaiton() = NotificationModel(
     id = this.id ?: 0,
-    category = "notification",
-    datetime = this.updatedAt.orEmpty(),
+    category = "Notification",
+    datetime = this.createdAt.orEmpty(),
     title = this.title.orEmpty(),
     description = this.description.orEmpty(),
+    isRead = this.isRead?:false
 )
 
 fun Collection<NotificationItemResponse>.toNotificationList() = this.map { it.toNotificaiton() }

@@ -13,6 +13,7 @@ class NotificationsAdapter (
     val onItemClick: (NotificationModel) -> Unit
 ) : RecyclerView.Adapter<NotificationViewHolder>(){
 
+
     private val differ = AsyncListDiffer(this,object: DiffUtil.ItemCallback<NotificationModel>(){
         override fun areItemsTheSame(
             oldItem: NotificationModel,

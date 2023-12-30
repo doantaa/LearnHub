@@ -9,8 +9,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentNotificationsBinding
+import com.cious.learnhub.model.NotificationModel
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
+import com.cious.learnhub.ui.notifications.notificationdetail.NotificationDetailActivity
 import com.cious.learnhub.utils.ApiException
 import com.cious.learnhub.utils.MethodCommon
 import com.cious.learnhub.utils.highLightWord
@@ -22,9 +24,15 @@ class NotificationsFragment : Fragment() {
     private lateinit var binding: FragmentNotificationsBinding
     private val notificationsAdapter: NotificationsAdapter by lazy {
         NotificationsAdapter {
-
+            navigateToDetail(it)
+            viewModel.markAsReadNotification(it.id)
         }
     }
+
+    private fun navigateToDetail(item: NotificationModel) {
+        NotificationDetailActivity.startActivity(requireContext(), item)
+    }
+
     private val viewModel: NotificationsViewModel by viewModel()
 
     override fun onCreateView(
@@ -46,6 +54,10 @@ class NotificationsFragment : Fragment() {
         setClickListeners()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getNotification()
+    }
 
     private fun setClickListeners() {
         binding.incUserNotLogin.btnLogin.setOnClickListener {
@@ -80,13 +92,22 @@ class NotificationsFragment : Fragment() {
                 doOnLoading = {
                     binding.pbLoading.isVisible = true
                     binding.rvNotification.isVisible = false
+                    binding.tvEmptyNotif.isVisible = false
                 },
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
                     binding.rvNotification.isVisible = true
+                    binding.tvEmptyNotif.isVisible = false
                     it.payload?.let {
                         notificationsAdapter.setData(it)
                     }
+
+                },
+                doOnEmpty = {
+                    binding.pbLoading.isVisible = false
+                    binding.rvNotification.isVisible = false
+                    binding.tvEmptyNotif.isVisible = true
+                    binding.tvEmptyNotif.text = "Tidak ada Notifikasi"
                 },
                 doOnError = {
                     if (it.exception is ApiException) {
@@ -100,6 +121,7 @@ class NotificationsFragment : Fragment() {
             )
         }
     }
+
 
     private fun observeNotificationData() {
         viewModel.getNotification()

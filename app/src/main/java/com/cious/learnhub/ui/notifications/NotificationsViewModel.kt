@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.room.PrimaryKey
 import com.cious.learnhub.data.repository.AuthRepository
 import com.cious.learnhub.data.repository.NotifiacationRepository
+import com.cious.learnhub.model.MarkAsReadNotification
 import com.cious.learnhub.model.NotificationModel
 import com.cious.learnhub.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +31,19 @@ class NotificationsViewModel(
             notifRepository.getNotification()
                 .collect {
                     _notifRequestResult.postValue(it)
+                }
+        }
+    }
+
+    private val _markAsRead = MutableLiveData<ResultWrapper<MarkAsReadNotification>>()
+    val markAsRead:LiveData<ResultWrapper<MarkAsReadNotification>>
+        get() = _markAsRead
+
+    fun markAsReadNotification(id:Int){
+        viewModelScope.launch (Dispatchers.IO){
+            notifRepository.markAsReadNotification(id)
+                .collect{
+                    _markAsRead.postValue(it)
                 }
         }
     }
