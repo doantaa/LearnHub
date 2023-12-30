@@ -18,7 +18,8 @@ interface CourseRepository {
         category: String? = null,
         title: String? = null,
         courseType: String? = null,
-        level: String? = null
+        level: String? = null,
+        popularity: String? = null
     ): Flow<ResultWrapper<List<Course>>>
 
     fun getCourses(
@@ -43,10 +44,11 @@ class CourseRepositoryImpl(
         category: String?,
         title: String?,
         courseType: String?,
-        level: String?
+        level: String?,
+        popularity: String?
     ): Flow<ResultWrapper<List<Course>>> {
         return proceedFlow {
-            courseDataSource.getCourses(category, title, courseType, level).data?.toCourseList()
+            courseDataSource.getCourses(category, title, courseType, level, popularity).data?.toCourseList()
                 ?: emptyList()
         }.onStart {
             emit(ResultWrapper.Loading())

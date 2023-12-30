@@ -29,14 +29,13 @@ class HomeViewModel(
 
 
     private val _userData = MutableLiveData<ResultWrapper<ProfileModel>>()
-    val userData : LiveData<ResultWrapper<ProfileModel>>
+    val userData: LiveData<ResultWrapper<ProfileModel>>
         get() = _userData
 
     val categories: LiveData<ResultWrapper<List<Category>>>
         get() = _categories
 
     val enrollment = enrollmentRepository.getEnrollment().asLiveData(Dispatchers.IO)
-
 
 
     fun getCategories() {
@@ -50,16 +49,16 @@ class HomeViewModel(
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             courseRepository.getCourses(
-                if (category == "C-0ALL") null else category, title, level
+                if (category == "C-0ALL") null else category, title, level, popularity = "asc"
             ).collect() {
                 _courses.postValue(it)
             }
         }
     }
 
-    fun getUserProfile(){
+    fun getUserProfile() {
         viewModelScope.launch(Dispatchers.IO) {
-            userRepository.getProfile().collect(){
+            userRepository.getProfile().collect() {
                 _userData.postValue(it)
             }
         }

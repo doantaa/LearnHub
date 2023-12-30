@@ -3,7 +3,6 @@ package com.cious.learnhub.data.network.api.service
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
 import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
-import com.cious.learnhub.data.network.api.model.course.CourseDetailResponse
 import com.cious.learnhub.data.network.api.model.course.CoursesResponse
 import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentDetailResponse
 import okhttp3.OkHttpClient
@@ -20,7 +19,8 @@ interface CourseService {
         @Query("categoryIds") category: String? = null,
         @Query("title") title: String? = null,
         @Query("courseType") courseType: String? = null,
-        @Query("level") level: String? = null
+        @Query("level") level: String? = null,
+        @Query("popularity") popularity: String? = null
     ): CoursesResponse
 
     @GET("course")
@@ -28,7 +28,7 @@ interface CourseService {
         @Query("categoryIds") category: List<String>? = null,
         @Query("title") title: String? = null,
         @Query("courseType") courseType: String? = null,
-        @Query("level") level: String? = null
+        @Query("level") level: String? = null,
     ): CoursesResponse
 
     @GET("course/{id}")
