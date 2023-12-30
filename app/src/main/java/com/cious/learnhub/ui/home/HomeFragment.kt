@@ -150,7 +150,6 @@ class HomeFragment : Fragment() {
                 doOnError = {
                     binding.ivProfile.setImageResource(R.drawable.ic_non_login_profile)
                     binding.tvGreetingTitle.text = getString(R.string.hello_learner)
-                    binding.btnGoToLogin.isVisible = true
                 }
             )
         }
