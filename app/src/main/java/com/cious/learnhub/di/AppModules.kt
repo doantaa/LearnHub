@@ -44,6 +44,7 @@ import com.cious.learnhub.ui.course.CourseViewModel
 import com.cious.learnhub.ui.detail.CourseDetailViewModel
 import com.cious.learnhub.ui.home.HomeViewModel
 import com.cious.learnhub.ui.home.search.HomeSearchViewModel
+import com.cious.learnhub.ui.main.MainViewModel
 import com.cious.learnhub.ui.myclass.MyClassViewModel
 import com.cious.learnhub.ui.notifications.NotificationsViewModel
 import com.cious.learnhub.ui.payment.detail.PaymentViewModel
@@ -119,6 +120,7 @@ object AppModules {
         viewModelOf(::HomeSearchViewModel)
         viewModelOf(::ProfileViewModel)
         viewModelOf(::EditProfileViewModel)
+        viewModelOf(::MainViewModel)
     }
 
     val modules: List<Module> = listOf(
