@@ -5,10 +5,12 @@ import com.cious.learnhub.data.network.api.model.profile.ChangePasswordRequest
 import com.cious.learnhub.data.network.api.model.profile.ProfileRequest
 import com.cious.learnhub.data.network.api.model.profile.toChangePasswordModel
 import com.cious.learnhub.data.network.api.model.profile.toProfile
+import com.cious.learnhub.data.network.api.model.profile.toTransactionList
 import com.cious.learnhub.data.network.api.model.profile.toUserEditModel
 import com.cious.learnhub.model.ChangePasswordModel
 import com.cious.learnhub.model.ProfileModel
 import com.cious.learnhub.model.UserEditModel
+import com.cious.learnhub.model.UserTransaction
 import com.cious.learnhub.utils.ResultWrapper
 import com.cious.learnhub.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
@@ -18,6 +20,7 @@ interface ProfileRepository {
 
     suspend fun doEditData(profileRequest: ProfileRequest):Flow<ResultWrapper<UserEditModel>>
     suspend fun doChangePassword(changePasswordRequest: ChangePasswordRequest): Flow<ResultWrapper<ChangePasswordModel>>
+    suspend fun  getUserTransaction():Flow<ResultWrapper<List<UserTransaction>>>
 }
 
 class ProfileRepositoryImpl (
@@ -38,6 +41,12 @@ class ProfileRepositoryImpl (
     override suspend fun doChangePassword(changePasswordRequest: ChangePasswordRequest): Flow<ResultWrapper<ChangePasswordModel>> {
         return  proceedFlow {
             dataSource.changePassword(changePasswordRequest).toChangePasswordModel()
+        }
+    }
+
+    override suspend fun getUserTransaction(): Flow<ResultWrapper<List<UserTransaction>>> {
+        return proceedFlow {
+            dataSource.getUserTransaction().data.toTransactionList()
         }
     }
 }
