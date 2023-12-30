@@ -44,6 +44,7 @@ interface AuthRepository {
 
     fun isLogin(): Boolean
 
+    fun clearToken()
 }
 
 class AuthRepositoryImpl(
@@ -105,6 +106,10 @@ class AuthRepositoryImpl(
 
     override fun isLogin(): Boolean {
         return !sessionManager.getToken().isNullOrEmpty()
+    }
+
+    override fun clearToken() {
+        sessionManager.clearData()
     }
 
 }
