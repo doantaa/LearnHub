@@ -27,6 +27,7 @@ fun NotificationItemResponse.toNotificaiton() = NotificationModel(
     datetime = this.updatedAt.orEmpty(),
     title = this.title.orEmpty(),
     description = this.description.orEmpty(),
+    isRead = this.isRead?:false
 )
 
 fun Collection<NotificationItemResponse>.toNotificationList() = this.map { it.toNotificaiton() }

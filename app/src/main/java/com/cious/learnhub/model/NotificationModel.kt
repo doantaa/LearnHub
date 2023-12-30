@@ -10,4 +10,5 @@ data class NotificationModel(
     val datetime: String,
     val title: String,
     val description: String,
+    val isRead: Boolean,
 ) : Parcelable

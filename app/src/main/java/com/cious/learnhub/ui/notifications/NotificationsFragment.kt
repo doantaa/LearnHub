@@ -28,6 +28,7 @@ class NotificationsFragment : Fragment() {
     private val notificationsAdapter: NotificationsAdapter by lazy {
         NotificationsAdapter {
             navigateToDetail(it)
+            viewModel.markAsReadNotification(it.id)
         }
     }
 
@@ -56,6 +57,10 @@ class NotificationsFragment : Fragment() {
         setClickListeners()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getNotification()
+    }
 
     private fun setClickListeners() {
         binding.incUserNotLogin.btnLogin.setOnClickListener {
@@ -99,6 +104,7 @@ class NotificationsFragment : Fragment() {
                     it.payload?.let {
                         notificationsAdapter.setData(it)
                     }
+
                 },
                 doOnEmpty = {
                     binding.pbLoading.isVisible = false

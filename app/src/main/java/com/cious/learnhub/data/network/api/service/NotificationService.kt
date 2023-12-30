@@ -2,12 +2,15 @@ package com.cious.learnhub.data.network.api.service
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
+import com.cious.learnhub.data.network.api.model.notification.MarkAsReadNotificationResponse
 import com.cious.learnhub.data.network.api.model.notification.NotificationResponse
 import com.cious.learnhub.utils.AuthInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.PATCH
+import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
 interface NotificationService {
@@ -15,6 +18,8 @@ interface NotificationService {
 
     @GET("notification/my")
     suspend fun getNotification() : NotificationResponse
+    @PATCH("notification/my/markasread/{id}")
+    suspend fun markAsReadNotification(@Path("id") id:Int) : MarkAsReadNotificationResponse
 
     companion object {
         @JvmStatic
@@ -33,4 +38,5 @@ interface NotificationService {
             return retrofit.create(NotificationService::class.java)
         }
     }
+
 }

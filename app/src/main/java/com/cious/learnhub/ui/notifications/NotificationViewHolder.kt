@@ -1,6 +1,7 @@
 package com.cious.learnhub.ui.notifications
 
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.cious.learnhub.R
 import com.cious.learnhub.core.ViewHolderBinder
@@ -16,7 +17,7 @@ class NotificationViewHolder (
     override fun bind(item: NotificationModel) {
         with(item) {
             itemView.setOnClickListener{
-                onItemClick(this)
+                onItemClick.invoke(item)
 
             }
             binding.root.setOnClickListener { onItemClick.invoke(item) }
@@ -24,6 +25,7 @@ class NotificationViewHolder (
             binding.textDatetime.text = item.datetime.toDate()
             binding.textTitle.text = item.title
             binding.textDescription.text = item.description
+            binding.imgRead.isVisible = !item.isRead
         }
     }
 }
