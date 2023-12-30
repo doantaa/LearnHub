@@ -14,9 +14,9 @@ import com.cious.learnhub.ui.historypayment.viewholder.HistoryPaymentPaidViewHol
 import com.cious.learnhub.ui.historypayment.viewholder.HistoryPaymentUnPaidViewHolder
 
 class HistoryPaymentAdapter (
-        var courseTypeAdapter: HistoryPaymentTypeAdapter,
+//        var courseTypeAdapter: HistoryPaymentTypeAdapter,
         private val onItemClick: (UserTransaction) -> Unit
-    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    ) : RecyclerView.Adapter<HistoryPaymentPaidViewHolder>() {
         private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<UserTransaction>() {
             override fun areItemsTheSame(
                 oldItem: UserTransaction,
@@ -34,31 +34,37 @@ class HistoryPaymentAdapter (
 
         })
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            return when (viewType) {
-                HistoryPaymentTypeAdapter.PAID.ordinal -> (
-                        HistoryPaymentPaidViewHolder(
-                            binding = ItemListHistoryPaymentPaidBinding.inflate(
-                                LayoutInflater.from(parent.context),
-                                parent,
-                                false
-                            ),
-                            onItemClick
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryPaymentPaidViewHolder {
+            return HistoryPaymentPaidViewHolder(
+                binding = ItemListHistoryPaymentPaidBinding.inflate(LayoutInflater.from(parent.context),parent,false),
+                onItemClick
+            )
 
-                        )
-                        )
-
-                else -> {
-                    HistoryPaymentUnPaidViewHolder(
-                        binding = ItemListHistoryPaymentUnpaidBinding.inflate(
-                            LayoutInflater.from(parent.context),
-                            parent,
-                            false
-                        ),
-                        onItemClick
-                    )
-                }
-            }
+//
+//            {
+//                HistoryPaymentTypeAdapter.PAID.ordinal -> (
+//                        HistoryPaymentPaidViewHolder(
+//                            binding = ItemListHistoryPaymentPaidBinding.inflate(
+//                                LayoutInflater.from(parent.context),
+//                                parent,
+//                                false
+//                            ),
+//                            onItemClick
+//
+//                        )
+//                        )
+//
+//                else -> {
+//                    HistoryPaymentUnPaidViewHolder(
+//                        binding = ItemListHistoryPaymentUnpaidBinding.inflate(
+//                            LayoutInflater.from(parent.context),
+//                            parent,
+//                            false
+//                        ),
+//                        onItemClick
+//                    )
+//                }
+//            }
         }
 
         fun setData(data: List<UserTransaction>) {
@@ -67,7 +73,7 @@ class HistoryPaymentAdapter (
 
         override fun getItemCount(): Int = differ.currentList.size
 
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: HistoryPaymentPaidViewHolder, position: Int) {
             (holder as ViewHolderBinder<UserTransaction>).bind(differ.currentList[position])
         }
 
