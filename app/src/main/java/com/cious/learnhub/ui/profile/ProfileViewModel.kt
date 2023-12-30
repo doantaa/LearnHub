@@ -11,7 +11,7 @@ class ProfileViewModel(
     private val sessionManager: SessionManager
 ) : ViewModel() {
 
-    fun clearToken() {
-        sessionManager.clearData()
-    }
+    val isLogin = authRepository.isLogin()
+
+    val clearToken = authRepository.clearToken()
 }

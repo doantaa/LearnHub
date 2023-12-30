@@ -12,6 +12,7 @@ import com.cious.learnhub.databinding.FragmentNotificationsBinding
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
 import com.cious.learnhub.utils.ApiException
+import com.cious.learnhub.utils.MethodCommon
 import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -91,7 +92,7 @@ class NotificationsFragment : Fragment() {
                     if (it.exception is ApiException) {
                         val message = it.exception.getParsedError()?.message.orEmpty()
                         if (message == getString(R.string.text_jwt_expired)) {
-//                            SessionManager.clearData(requireContext())
+                            MethodCommon.navigateToLogin(requireContext())
                         }
                     }
                     checkTokenUser()
