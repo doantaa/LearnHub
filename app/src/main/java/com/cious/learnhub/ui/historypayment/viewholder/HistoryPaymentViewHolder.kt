@@ -11,13 +11,16 @@ class HistoryPaymentPaidViewHolder(
     private val onClickListener: (UserTransaction) -> Unit
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<UserTransaction> {
     override fun bind(item: UserTransaction) {
-        binding.tvNameCourse.text=item.courseItemResponse?.category?.name
-        binding.tvRating.text=item.courseItemResponse?.rating.toString()
-        binding.tvTitleCourse.text=item.courseItemResponse?.title
-        binding.tvAuthorCourse.text=item.courseItemResponse?.instructor
-        binding.tvLevel.text=item.courseItemResponse?.level
-        binding.tvModul.text=item.courseItemResponse?.moduleCount.toString()
-        binding.tvDuration.text=item.courseItemResponse?.duration.toString()
+        binding.root.setOnClickListener {
+            onClickListener.invoke(item)
+        }
+        binding.tvNameCourse.text = item.courseItemResponse?.category?.name
+        binding.tvRating.text = item.courseItemResponse?.rating.toString()
+        binding.tvTitleCourse.text = item.courseItemResponse?.title
+        binding.tvAuthorCourse.text = item.courseItemResponse?.instructor
+        binding.tvLevel.text = item.courseItemResponse?.level
+        binding.tvModul.text = item.courseItemResponse?.moduleCount.toString()
+        binding.tvDuration.text = item.courseItemResponse?.duration.toString()
 
     }
 }
@@ -25,15 +28,15 @@ class HistoryPaymentPaidViewHolder(
 class HistoryPaymentUnPaidViewHolder(
     private val binding: ItemListHistoryPaymentUnpaidBinding,
     private val onClickListener: (UserTransaction) -> Unit
-): RecyclerView.ViewHolder(binding.root), ViewHolderBinder<UserTransaction>{
+) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<UserTransaction> {
     override fun bind(item: UserTransaction) {
-        binding.tvNameCourse.text=item.courseItemResponse?.category?.name
-        binding.tvRating.text=item.courseItemResponse?.rating.toString()
-        binding.tvTitleCourse.text=item.courseItemResponse?.title
-        binding.tvAuthorCourse.text=item.courseItemResponse?.instructor
-        binding.tvLevel.text=item.courseItemResponse?.level
-        binding.tvModul.text=item.courseItemResponse?.moduleCount.toString()
-        binding.tvDuration.text=item.courseItemResponse?.duration.toString()
+        binding.tvNameCourse.text = item.courseItemResponse?.category?.name
+        binding.tvRating.text = item.courseItemResponse?.rating.toString()
+        binding.tvTitleCourse.text = item.courseItemResponse?.title
+        binding.tvAuthorCourse.text = item.courseItemResponse?.instructor
+        binding.tvLevel.text = item.courseItemResponse?.level
+        binding.tvModul.text = item.courseItemResponse?.moduleCount.toString()
+        binding.tvDuration.text = item.courseItemResponse?.duration.toString()
     }
 
 }

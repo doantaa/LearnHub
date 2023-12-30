@@ -8,19 +8,14 @@ import com.cious.learnhub.data.network.api.datasource.AuthDataSource
 import com.cious.learnhub.data.network.api.datasource.AuthDataSourceImpl
 import com.cious.learnhub.data.network.api.datasource.CourseApiDataSource
 import com.cious.learnhub.data.network.api.datasource.CourseDataSource
-import com.cious.learnhub.data.network.api.datasource.EnrollmentApiDataSource
-import com.cious.learnhub.data.network.api.datasource.EnrollmentDataSource
 import com.cious.learnhub.data.network.api.datasource.NotificaitonDataSource
 import com.cious.learnhub.data.network.api.datasource.NotificationDataSourceImpl
 import com.cious.learnhub.data.network.api.datasource.PaymentApiDataSource
 import com.cious.learnhub.data.network.api.datasource.PaymentDataSource
 import com.cious.learnhub.data.network.api.datasource.ProfileDataSource
 import com.cious.learnhub.data.network.api.datasource.ProfileDataSourceImpl
-import com.cious.learnhub.data.network.api.datasource.PaymentApiDataSource
-import com.cious.learnhub.data.network.api.datasource.PaymentDataSource
 import com.cious.learnhub.data.network.api.service.AuthenticationService
 import com.cious.learnhub.data.network.api.service.CourseService
-import com.cious.learnhub.data.network.api.service.EnrollmentService
 import com.cious.learnhub.data.network.api.service.NotificationService
 import com.cious.learnhub.data.network.api.service.PaymentService
 import com.cious.learnhub.data.network.api.service.ProfileService
@@ -36,8 +31,6 @@ import com.cious.learnhub.data.repository.ProfileRepository
 import com.cious.learnhub.data.repository.ProfileRepositoryImpl
 import com.cious.learnhub.data.repository.PaymentRepository
 import com.cious.learnhub.data.repository.PaymentRepositoryImpl
-import com.cious.learnhub.data.repository.ProfileRepository
-import com.cious.learnhub.data.repository.ProfileRepositoryImpl
 import com.cious.learnhub.ui.authentication.login.LoginViewModel
 import com.cious.learnhub.ui.authentication.otp.OtpViewModel
 import com.cious.learnhub.ui.authentication.register.RegisterViewModel
@@ -46,7 +39,6 @@ import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordViewModel
 import com.cious.learnhub.ui.authentication.resetpassword.VerifyResetPasswordViewModel
 import com.cious.learnhub.ui.course.CourseViewModel
 import com.cious.learnhub.ui.detail.CourseDetailViewModel
-import com.cious.learnhub.ui.historypayment.HistoryPaymentViewModel
 import com.cious.learnhub.ui.home.HomeViewModel
 import com.cious.learnhub.ui.home.search.HomeSearchViewModel
 import com.cious.learnhub.ui.myclass.MyClassViewModel
@@ -80,7 +72,6 @@ object AppModules {
         single { AuthenticationService.invoke(get(), get()) }
         single { NotificationService.invoke(get(), get()) }
         single { PaymentService.invoke(get(), get()) }
-        single { EnrollmentService.invoke(get(), get()) }
         single { ProfileService.invoke(get(),get()) }
         single { AuthenticationService.invoke(get(), get()) }
         single { NotificationService.invoke(get(), get()) }
@@ -92,7 +83,6 @@ object AppModules {
         single<CourseDataSource> { CourseApiDataSource(get()) }
         single<AuthDataSource> { AuthDataSourceImpl(get()) }
         single<NotificaitonDataSource> { NotificationDataSourceImpl(get()) }
-        single<EnrollmentDataSource> { EnrollmentApiDataSource(get()) }
         single<PaymentDataSource> { PaymentApiDataSource(get()) }
         single<ProfileDataSource> { ProfileDataSourceImpl(get()) }
     }

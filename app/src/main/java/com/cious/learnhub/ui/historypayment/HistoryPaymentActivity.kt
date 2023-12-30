@@ -19,7 +19,7 @@ class HistoryPaymentActivity : AppCompatActivity() {
 
 
     private val adapterPayment : HistoryPaymentAdapter by lazy {
-        HistoryPaymentAdapter(HistoryPaymentTypeAdapter.PAID){
+        HistoryPaymentAdapter{
 
         }
     }
