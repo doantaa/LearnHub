@@ -52,7 +52,7 @@ class ProfileFragment : Fragment() {
             val intent = Intent(requireContext(), HistoryPaymentActivity::class.java)
             startActivity(intent)
         }
-        binding.tvLogout.setOnClickListener {
+        binding.constraintLogout.setOnClickListener {
             showConfirmLogoutPressDialog()
         }
         binding.incUserNotLogin.btnLogin.setOnClickListener {

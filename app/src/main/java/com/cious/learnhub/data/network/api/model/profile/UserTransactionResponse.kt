@@ -6,7 +6,7 @@ import androidx.annotation.Keep
 import com.cious.learnhub.model.UserTransaction
 
 @Keep
-data class UserTransactionRespon(
+data class UserTransactionResponse(
     @SerializedName("data")
     val data : List<UserTransactionItemResponse>,
     @SerializedName("message")

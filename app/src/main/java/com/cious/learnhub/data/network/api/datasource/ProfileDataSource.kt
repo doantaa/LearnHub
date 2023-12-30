@@ -4,14 +4,14 @@ import com.cious.learnhub.data.network.api.model.profile.ChangePasswordResponse
 import com.cious.learnhub.data.network.api.model.profile.ChangePasswordRequest
 import com.cious.learnhub.data.network.api.model.profile.ProfileRequest
 import com.cious.learnhub.data.network.api.model.profile.ProfileResponse
-import com.cious.learnhub.data.network.api.model.profile.UserTransactionRespon
+import com.cious.learnhub.data.network.api.model.profile.UserTransactionResponse
 import com.cious.learnhub.data.network.api.service.ProfileService
 
 interface ProfileDataSource {
     suspend fun getProfile():  ProfileResponse
     suspend fun editData(profileRequest:ProfileRequest):  ProfileResponse
     suspend fun changePassword(changePasswordRequest: ChangePasswordRequest): ChangePasswordResponse
-    suspend fun getUserTransaction(): UserTransactionRespon
+    suspend fun getUserTransaction(): UserTransactionResponse
 }
 
 class ProfileDataSourceImpl(
@@ -29,7 +29,7 @@ class ProfileDataSourceImpl(
         return service.changePassword(changePasswordRequest)
     }
 
-    override suspend fun getUserTransaction(): UserTransactionRespon {
+    override suspend fun getUserTransaction(): UserTransactionResponse {
         return service.getUserTransaction()
     }
 

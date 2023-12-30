@@ -6,12 +6,10 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.cious.learnhub.core.ViewHolderBinder
-import com.cious.learnhub.databinding.ItemListHistoryPaymentPaidBinding
-import com.cious.learnhub.databinding.ItemListHistoryPaymentUnpaidBinding
+import com.cious.learnhub.databinding.ItemListHistoryPaymentBinding
 import com.cious.learnhub.model.HistoryPayment
 import com.cious.learnhub.model.UserTransaction
 import com.cious.learnhub.ui.historypayment.viewholder.HistoryPaymentPaidViewHolder
-import com.cious.learnhub.ui.historypayment.viewholder.HistoryPaymentUnPaidViewHolder
 
 class HistoryPaymentAdapter (
 //        var courseTypeAdapter: HistoryPaymentTypeAdapter,
@@ -36,35 +34,10 @@ class HistoryPaymentAdapter (
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryPaymentPaidViewHolder {
             return HistoryPaymentPaidViewHolder(
-                binding = ItemListHistoryPaymentPaidBinding.inflate(LayoutInflater.from(parent.context),parent,false),
+                binding = ItemListHistoryPaymentBinding.inflate(LayoutInflater.from(parent.context),parent,false),
                 onItemClick
             )
 
-//
-//            {
-//                HistoryPaymentTypeAdapter.PAID.ordinal -> (
-//                        HistoryPaymentPaidViewHolder(
-//                            binding = ItemListHistoryPaymentPaidBinding.inflate(
-//                                LayoutInflater.from(parent.context),
-//                                parent,
-//                                false
-//                            ),
-//                            onItemClick
-//
-//                        )
-//                        )
-//
-//                else -> {
-//                    HistoryPaymentUnPaidViewHolder(
-//                        binding = ItemListHistoryPaymentUnpaidBinding.inflate(
-//                            LayoutInflater.from(parent.context),
-//                            parent,
-//                            false
-//                        ),
-//                        onItemClick
-//                    )
-//                }
-//            }
         }
 
         fun setData(data: List<UserTransaction>) {

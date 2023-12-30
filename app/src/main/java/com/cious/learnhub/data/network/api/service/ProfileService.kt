@@ -5,7 +5,7 @@ import com.cious.learnhub.data.network.api.model.profile.ChangePasswordResponse
 import com.cious.learnhub.data.network.api.model.profile.ChangePasswordRequest
 import com.cious.learnhub.data.network.api.model.profile.ProfileRequest
 import com.cious.learnhub.data.network.api.model.profile.ProfileResponse
-import com.cious.learnhub.data.network.api.model.profile.UserTransactionRespon
+import com.cious.learnhub.data.network.api.model.profile.UserTransactionResponse
 import com.cious.learnhub.utils.AuthInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -24,7 +24,7 @@ interface ProfileService {
     @GET("user-transaction")
     suspend fun  getUserTransaction(
 
-    ): UserTransactionRespon
+    ): UserTransactionResponse
 
     @PATCH("auth/profile/edit/data")
     suspend fun editData(@Body profileRequest: ProfileRequest): ProfileResponse
