@@ -3,14 +3,18 @@ package com.cious.learnhub.ui.payment.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
+import com.cious.learnhub.R
 import com.cious.learnhub.databinding.ActivityPaymentDetailBinding
+import com.cious.learnhub.databinding.BottomSheetToLoginBinding
 import com.cious.learnhub.model.Enrollment
 import com.cious.learnhub.ui.payment.midtrans.PaymentMidtransActivity.Companion.navigateToPaymentMidtrans
+import com.cious.learnhub.utils.ApiException
+import com.cious.learnhub.utils.MethodCommon.Companion.navigateToLogin
 import com.cious.learnhub.utils.proceedWhen
 import com.cious.learnhub.utils.toCurrencyFormat
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -33,19 +37,40 @@ class PaymentDetailActivity : AppCompatActivity() {
     }
 
     private fun observePaymentSendStatus() {
-        viewModel.paymentData.observe(this){
+        viewModel.paymentData.observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
                     val url = it.payload?.redirectUrl.orEmpty()
                     val id = viewModel.extraCourse?.id ?: 0
                     navigateToPaymentMidtrans(this, url, id)
+                },
+                doOnError = {
+                    if (it.exception is ApiException) {
+                        val httpCode = it.exception.httpCode
+                        if (httpCode == 401) {
+                            showBottomSheet()
+                        }
+                    }
                 }
             )
         }
     }
 
+    private fun showBottomSheet() {
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetTheme)
+        val loginBottomSheetbinding: BottomSheetToLoginBinding by lazy {
+            BottomSheetToLoginBinding.inflate(layoutInflater)
+        }
+        bottomSheetDialog.setContentView(loginBottomSheetbinding.root)
+        bottomSheetDialog.show()
+        loginBottomSheetbinding.btnLogin.setOnClickListener {
+            navigateToLogin(this)
+        }
+
+    }
+
+
     private fun bindCourseData() {
-        Log.d("INI EXTRA", viewModel.extraCourse.toString())
         viewModel.extraCourse.apply {
             binding.incPaymentDetail.ivCourseImage.load(this?.imageUrl)
             binding.incPaymentDetail.tvCourseCategory.text = this?.categoryName
@@ -62,7 +87,6 @@ class PaymentDetailActivity : AppCompatActivity() {
             viewModel.createPayment(courseId)
         }
     }
-
 
 
     companion object {
