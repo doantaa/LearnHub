@@ -1,19 +1,17 @@
 package com.cious.learnhub.ui.authentication.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.R
 import com.cious.learnhub.data.network.api.model.login.LoginRequest
 import com.cious.learnhub.databinding.ActivityLoginBinding
-import com.cious.learnhub.model.LoginData
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
 import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordActivity
+import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.utils.ApiException
-import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
@@ -82,7 +80,6 @@ class LoginActivity : AppCompatActivity() {
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
                     binding.btnLogin.isVisible = true
-                    saveToken(it.payload)
                     navigateToHome()
                 },
                 doOnError = {
@@ -100,12 +97,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveToken(loginData: LoginData?) {
-        val token = loginData?.token
-        if (viewModel.isLogin) {
-            token?.let { viewModel.saveAuthToken(it) }
-        }
-    }
 
     private fun navigateToHome() {
         startActivity(Intent(this, MainActivity::class.java).apply {

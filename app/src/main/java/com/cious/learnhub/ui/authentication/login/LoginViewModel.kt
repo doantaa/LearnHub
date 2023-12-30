@@ -23,12 +23,6 @@ class LoginViewModel(
     val loginRequestResult: LiveData<ResultWrapper<LoginData>>
         get() = _loginRequestResult
 
-    val isLogin = authRepository.isLogin()
-
-    fun saveAuthToken(token: String) {
-        sessionManager.saveAuthToken(token)
-    }
-
     fun doLoginRequest(loginRequest: LoginRequest) {
         viewModelScope.launch(Dispatchers.IO) {
             authRepository.doLogin(loginRequest)

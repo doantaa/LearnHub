@@ -2,11 +2,12 @@ package com.cious.learnhub.ui.authentication.otp
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.cious.learnhub.R
@@ -15,13 +16,12 @@ import com.cious.learnhub.databinding.ActivityOtpBinding
 import com.cious.learnhub.model.AuthenticationData
 import com.cious.learnhub.model.RegisterData
 import com.cious.learnhub.ui.authentication.register.RegisterViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.utils.ApiException
-import com.cious.learnhub.utils.SessionManager
 import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class OtpActivity : AppCompatActivity() {
@@ -99,9 +99,9 @@ class OtpActivity : AppCompatActivity() {
 
     private fun saveToken(registerData: RegisterData?) {
         val token = registerData?.token
-        if (viewModel.isLogin) {
             token?.let { viewModel.saveAuthToken(it) }
-        }
+            Toast.makeText(this, "token saved", Toast.LENGTH_SHORT).show()
+
     }
 
     private fun navigateToHome() {

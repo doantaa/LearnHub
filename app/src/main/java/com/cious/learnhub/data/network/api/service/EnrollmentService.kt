@@ -1,23 +1,19 @@
 package com.cious.learnhub.data.network.api.service
 
-import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
 import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
 import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentDetailResponse
 import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentsResponse
-import com.cious.learnhub.utils.SessionManager
-import okhttp3.Interceptor
 import com.cious.learnhub.data.network.api.model.enrollments.ProgressResponse
+import com.cious.learnhub.utils.AuthInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 interface EnrollmentService {
@@ -42,19 +38,10 @@ interface EnrollmentService {
 
     companion object {
         @JvmStatic
-        operator fun invoke(sessionManager: SessionManager, chucker: ChuckerInterceptor): EnrollmentService {
-            val token = sessionManager.getToken() ?: ""
+        operator fun invoke(authInterceptor: AuthInterceptor, chucker: ChuckerInterceptor): EnrollmentService {
             val client = OkHttpClient.Builder()
                 .addInterceptor(chucker)
-                .addInterceptor(object : Interceptor {
-                    @Throws(IOException::class)
-                    override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-                        val newRequest = chain.request().newBuilder()
-                            .addHeader("Authorization", "Bearer $token")
-                            .build()
-                        return chain.proceed(newRequest)
-                    }
-                })
+                .addInterceptor(authInterceptor)
                 .connectTimeout(120, TimeUnit.SECONDS)
                 .readTimeout(120, TimeUnit.SECONDS)
                 .build()

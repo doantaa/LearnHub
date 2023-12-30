@@ -1,8 +1,7 @@
 package com.cious.learnhub.utils
 
-import android.content.Context
 import android.content.SharedPreferences
-import com.cious.learnhub.R
+import android.util.Log
 
 class SessionManager(private val prefs: SharedPreferences) {
 
@@ -12,6 +11,7 @@ class SessionManager(private val prefs: SharedPreferences) {
 
     fun saveAuthToken(token: String) {
         saveString(USER_TOKEN, token)
+        Log.d("USER TOKEN TOKEN", token)
     }
 
     private fun saveString(key: String, value: String) {
@@ -32,5 +32,6 @@ class SessionManager(private val prefs: SharedPreferences) {
         val editor = prefs.edit()
         editor.clear()
         editor.apply()
+        Log.d("USER TOKEN DIHAPUS", getString(USER_TOKEN).toString())
     }
 }

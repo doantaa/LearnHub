@@ -1,17 +1,14 @@
 package com.cious.learnhub.data.network.api.service
 
-import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
 import com.cious.learnhub.data.network.api.model.payment.PaymentResponse
-import com.cious.learnhub.utils.SessionManager
-import okhttp3.Interceptor
+import com.cious.learnhub.utils.AuthInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.POST
 import retrofit2.http.Path
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 interface PaymentService {
@@ -21,19 +18,10 @@ interface PaymentService {
 
     companion object {
         @JvmStatic
-        operator fun invoke(sessionManager: SessionManager, chucker: ChuckerInterceptor): PaymentService {
-            val token = sessionManager.getToken() ?: ""
+        operator fun invoke(authInterceptor: AuthInterceptor, chucker: ChuckerInterceptor): PaymentService {
             val client = OkHttpClient.Builder()
                 .addInterceptor(chucker)
-                .addInterceptor(object : Interceptor {
-                    @Throws(IOException::class)
-                    override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-                        val newRequest = chain.request().newBuilder()
-                            .addHeader("Authorization", "Bearer $token")
-                            .build()
-                        return chain.proceed(newRequest)
-                    }
-                })
+                .addInterceptor(authInterceptor)
                 .connectTimeout(120, TimeUnit.SECONDS)
                 .readTimeout(120, TimeUnit.SECONDS)
                 .build()

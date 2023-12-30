@@ -32,17 +32,19 @@ class NotificationsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        observeNotificationData()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        observeNotificationData()
+
         observeViewModel()
         checkTokenUser()
         setClickListeners()
     }
+
 
     private fun setClickListeners() {
         binding.incUserNotLogin.btnLogin.setOnClickListener {
