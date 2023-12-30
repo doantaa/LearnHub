@@ -8,7 +8,6 @@ import com.cious.learnhub.R
 import com.cious.learnhub.databinding.BottomSheetPaymentBinding
 import com.cious.learnhub.databinding.ItemChapterHeaderBinding
 import com.cious.learnhub.databinding.ItemCourseChapterBinding
-import com.cious.learnhub.model.Course
 import com.cious.learnhub.model.Enrollment
 import com.cious.learnhub.model.Video
 import com.cious.learnhub.ui.payment.detail.PaymentDetailActivity
@@ -70,6 +69,7 @@ class DataItem(
     private fun setupBottomSheet() {
         binding.btnContinueToDetail.setOnClickListener {
             PaymentDetailActivity.startActivity(context, detailData)
+            bottomSheetDialog.dismiss()
         }
     }
 
@@ -84,6 +84,9 @@ class DataItem(
         binding.itemCourse.tvModuleCount.text = detailData?.moduleCount.toString()
         binding.itemCourse.tvTotalDuration.text = detailData?.totalDuration.toString()
         binding.itemCourse.tvPrice.text = detailData?.price?.toCurrencyFormat()
+        binding.btnCloseDialog.setOnClickListener{
+            bottomSheetDialog.dismiss()
+        }
         bottomSheetDialog.show()
     }
 
