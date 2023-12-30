@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentProfileBinding
 import com.cious.learnhub.ui.historypayment.HistoryPaymentActivity
-import com.cious.learnhub.utils.SessionManager
-import com.cious.learnhub.utils.highLightWord
+import com.cious.learnhub.ui.main.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
@@ -45,8 +43,17 @@ class ProfileFragment : Fragment() {
         }
         binding.tvLogout.setOnClickListener {
             viewModel.clearToken()
+            navigateToHome()
             Toast.makeText(requireContext(), "logout successfully", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun navigateToHome() {
+
+        startActivity(Intent(requireContext(), MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+
     }
 
 }

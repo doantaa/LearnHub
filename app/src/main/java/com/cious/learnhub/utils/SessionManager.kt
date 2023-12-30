@@ -10,8 +10,8 @@ class SessionManager(private val prefs: SharedPreferences) {
     }
 
     fun saveAuthToken(token: String) {
-        saveString(USER_TOKEN, "Bearer $token")
-        Log.d("USER TOKEN TOKEN", "Bearer $token")
+        saveString(USER_TOKEN, token)
+        Log.d("USER TOKEN TOKEN", token)
     }
 
     private fun saveString(key: String, value: String) {

@@ -51,6 +51,7 @@ import com.cious.learnhub.ui.payment.midtrans.PaymentMidtransViewModel
 import com.cious.learnhub.ui.profile.ProfileViewModel
 import com.cious.learnhub.ui.profile.changepassword.ChangePasswordViewModel
 import com.cious.learnhub.ui.profile.editprofile.EditProfileViewModel
+import com.cious.learnhub.utils.AuthInterceptor
 import com.cious.learnhub.utils.SessionManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -64,11 +65,12 @@ object AppModules {
         single<SharedPreferences> {
             androidContext().getSharedPreferences(androidContext().getString(R.string.app_name), Context.MODE_PRIVATE)
         }
-        single { SessionManager(get()) }
+        single<SessionManager> { SessionManager(get()) }
     }
 
     private val networkModule = module {
         single { ChuckerInterceptor(androidContext()) }
+        single { AuthInterceptor(get()) }
         single { CourseService.invoke(get()) }
         single { AuthenticationService.invoke(get(), get()) }
         single { NotificationService.invoke(get(), get()) }

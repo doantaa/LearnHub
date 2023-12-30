@@ -33,6 +33,7 @@ interface AuthRepository {
         loginRequest: LoginRequest
     ): Flow<ResultWrapper<LoginData>>
 
+
     suspend fun sendOtpPassword(
         otpRequest: OtpRequest
     ): Flow<ResultWrapper<OtpData>>
@@ -42,6 +43,7 @@ interface AuthRepository {
     ): Flow<ResultWrapper<VerifyResetPasswordData>>
 
     fun isLogin(): Boolean
+
 }
 
 class AuthRepositoryImpl(
@@ -69,7 +71,9 @@ class AuthRepositoryImpl(
                 otp = otp,
                 hashedOtp = authenticationData.hashOtp
             )
-            dataSource.doRegister(registerRequest).toRegisterData()
+            val result = dataSource.doRegister(registerRequest).toRegisterData()
+            sessionManager.saveAuthToken(result.token)
+            result
         }
     }
 
@@ -77,7 +81,9 @@ class AuthRepositoryImpl(
         loginRequest: LoginRequest
     ): Flow<ResultWrapper<LoginData>> {
         return proceedFlow {
-            dataSource.doLogin(loginRequest).toLoginData()
+            val result = dataSource.doLogin(loginRequest).toLoginData()
+            sessionManager.saveAuthToken(result.token)
+            result
         }
     }
 
@@ -100,4 +106,5 @@ class AuthRepositoryImpl(
     override fun isLogin(): Boolean {
         return !sessionManager.getToken().isNullOrEmpty()
     }
+
 }

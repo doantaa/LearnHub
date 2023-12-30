@@ -1,16 +1,13 @@
 package com.cious.learnhub.data.network.api.service
 
-import android.util.Log
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
 import com.cious.learnhub.data.network.api.model.notification.NotificationResponse
-import com.cious.learnhub.utils.SessionManager
-import okhttp3.Interceptor
+import com.cious.learnhub.utils.AuthInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 interface NotificationService {
@@ -21,21 +18,10 @@ interface NotificationService {
 
     companion object {
         @JvmStatic
-        operator fun invoke(sessionManager: SessionManager, chucker: ChuckerInterceptor): NotificationService {
-            val token = sessionManager.getToken() ?: ""
+        operator fun invoke(chucker: ChuckerInterceptor, authInterceptor: AuthInterceptor): NotificationService {
             val client = OkHttpClient.Builder()
                 .addInterceptor(chucker)
-                .addInterceptor(object : Interceptor {
-                    @Throws(IOException::class)
-
-                    override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-                        Log.d("TOKEN SERVICE NOTIFICATION", token)
-                        val newRequest = chain.request().newBuilder()
-                            .addHeader("Authorization", token)
-                            .build()
-                        return chain.proceed(newRequest)
-                    }
-                })
+                .addInterceptor(authInterceptor)
                 .connectTimeout(120, TimeUnit.SECONDS)
                 .readTimeout(120, TimeUnit.SECONDS)
                 .build()
