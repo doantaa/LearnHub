@@ -2,15 +2,20 @@ package com.cious.learnhub.ui.notifications
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentNotificationsBinding
+import com.cious.learnhub.model.NotificationModel
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
+import com.cious.learnhub.ui.notificationdetailpopup.NotificationDetailBottomSheet
+import com.cious.learnhub.ui.payment.PaymentActivity
 import com.cious.learnhub.utils.ApiException
 import com.cious.learnhub.utils.MethodCommon
 import com.cious.learnhub.utils.highLightWord
@@ -22,7 +27,9 @@ class NotificationsFragment : Fragment() {
     private lateinit var binding: FragmentNotificationsBinding
     private val notificationsAdapter: NotificationsAdapter by lazy {
         NotificationsAdapter {
-
+            NotificationDetailBottomSheet.newInstance(it).show(
+                childFragmentManager,null
+            )
         }
     }
     private val viewModel: NotificationsViewModel by viewModel()
@@ -108,6 +115,7 @@ class NotificationsFragment : Fragment() {
             )
         }
     }
+
 
     private fun observeNotificationData() {
         viewModel.getNotification()

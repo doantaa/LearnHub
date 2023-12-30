@@ -148,4 +148,8 @@ dependencies {
 
     // otp view
     implementation("com.github.mukeshsolanki.android-otpview-pinview:otpview:3.1.0")
+
+    // constraint layout
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.0")
+
 }
