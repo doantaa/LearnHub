@@ -15,7 +15,6 @@ import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentProfileBinding
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
-import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordActivity
 import com.cious.learnhub.ui.historypayment.HistoryPaymentActivity
 import com.cious.learnhub.ui.main.MainActivity
 import com.cious.learnhub.utils.highLightWord
@@ -80,7 +79,7 @@ class ProfileFragment : Fragment() {
 
         builder.setPositiveButton(getString(R.string.text_ya)) { dialogInterface: DialogInterface, _: Int ->
             dialogInterface.dismiss()
-            viewModel.clearToken
+            viewModel.clearToken()
             navigateToHome()
             Toast.makeText(requireContext(),
                 getString(R.string.text_logout_successfully), Toast.LENGTH_SHORT).show()

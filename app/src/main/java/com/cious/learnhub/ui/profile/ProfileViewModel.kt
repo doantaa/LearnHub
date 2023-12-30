@@ -13,5 +13,5 @@ class ProfileViewModel(
 
     val isLogin = authRepository.isLogin()
 
-    val clearToken = authRepository.clearToken()
+    fun clearToken() = authRepository.clearToken()
 }
