@@ -16,6 +16,8 @@ import com.cious.learnhub.data.network.api.datasource.PaymentApiDataSource
 import com.cious.learnhub.data.network.api.datasource.PaymentDataSource
 import com.cious.learnhub.data.network.api.datasource.ProfileDataSource
 import com.cious.learnhub.data.network.api.datasource.ProfileDataSourceImpl
+import com.cious.learnhub.data.network.api.datasource.PaymentApiDataSource
+import com.cious.learnhub.data.network.api.datasource.PaymentDataSource
 import com.cious.learnhub.data.network.api.service.AuthenticationService
 import com.cious.learnhub.data.network.api.service.CourseService
 import com.cious.learnhub.data.network.api.service.EnrollmentService
@@ -30,6 +32,8 @@ import com.cious.learnhub.data.repository.EnrollmentRepository
 import com.cious.learnhub.data.repository.EnrollmentRepositoryImpl
 import com.cious.learnhub.data.repository.NotifiacationRepository
 import com.cious.learnhub.data.repository.NotificationRepositoryImpl
+import com.cious.learnhub.data.repository.ProfileRepository
+import com.cious.learnhub.data.repository.ProfileRepositoryImpl
 import com.cious.learnhub.data.repository.PaymentRepository
 import com.cious.learnhub.data.repository.PaymentRepositoryImpl
 import com.cious.learnhub.data.repository.ProfileRepository
@@ -42,6 +46,7 @@ import com.cious.learnhub.ui.authentication.resetpassword.ResetPasswordViewModel
 import com.cious.learnhub.ui.authentication.resetpassword.VerifyResetPasswordViewModel
 import com.cious.learnhub.ui.course.CourseViewModel
 import com.cious.learnhub.ui.detail.CourseDetailViewModel
+import com.cious.learnhub.ui.historypayment.HistoryPaymentViewModel
 import com.cious.learnhub.ui.home.HomeViewModel
 import com.cious.learnhub.ui.home.search.HomeSearchViewModel
 import com.cious.learnhub.ui.myclass.MyClassViewModel
@@ -114,6 +119,7 @@ object AppModules {
         viewModelOf(::ResetPasswordViewModel)
         viewModel { params -> OtpPasswordViewModel(extras = params.get()) }
         viewModel { params -> VerifyResetPasswordViewModel(extras = params.get(), get()) }
+        viewModelOf(::ChangePasswordViewModel)
         viewModelOf(::PaymentMidtransViewModel)
         viewModelOf(::ChangePasswordViewModel)
         viewModelOf(::HomeSearchViewModel)
