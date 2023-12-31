@@ -1,5 +1,7 @@
 package com.cious.learnhub.ui.detail.pagerfragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,11 +30,20 @@ class AboutFragment : Fragment() {
         observeData()
     }
 
+    private fun intentToTelegram(link: String) {
+        val uri = Uri.parse(link)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+    }
+
     private fun observeData() {
-        viewModel.enrollment.observe(viewLifecycleOwner){
-            it.proceedWhen (
+        viewModel.enrollment.observe(viewLifecycleOwner) {enrollment ->
+            binding.cvTelegramLink.setOnClickListener {
+                    enrollment.payload?.telegramLink?.let { it1 -> intentToTelegram(it1) }.toString()
+            }
+            enrollment.proceedWhen(
                 doOnSuccess = {
-                    it.payload?.let {data ->
+                    it.payload?.let { data ->
                         binding.tvAbout.text = data.about
                         binding.tvObjective.text = data.objective
                     }
