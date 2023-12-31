@@ -112,4 +112,7 @@
     <string name="text_logout_successfully">logout successfully</string>
     <string name="hello_learner">Hello Learner!</string>
     <string name="text_login_to_buy_course">Login dulu untuk beli Kursus Ini</string>
+    <string name="text_success">Success</string>
+    <string name="text_pending">Pending</string>
+    <string name="text_expired">Expired</string>
 </resources>

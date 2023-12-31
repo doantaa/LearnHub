@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.cious.learnhub.R
 import com.cious.learnhub.data.network.api.model.profile.ChangePasswordRequest
 import com.cious.learnhub.databinding.FragmentChangePasswordBinding
+import com.cious.learnhub.utils.ApiException
 import com.cious.learnhub.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -52,7 +53,17 @@ class ChangePasswordFragment : Fragment() {
                     binding.pbLoading.isVisible=false
                     binding.btnSaveChangePassword.isVisible=true
                     Toast.makeText(requireContext(), "Password successfully Changed", Toast.LENGTH_SHORT).show()
+                },
+                doOnError = {
+                    binding.pbLoading.isVisible=false
+                    binding.btnSaveChangePassword.isVisible=true
+                    if (it.exception is ApiException) {
+                        val message = it.exception.getParsedError()?.message.orEmpty()
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    }
+
                 }
+
             )
 
 

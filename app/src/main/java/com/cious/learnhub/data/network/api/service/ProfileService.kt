@@ -1,11 +1,11 @@
 package com.cious.learnhub.data.network.api.service
-
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.BuildConfig
-import com.cious.learnhub.data.network.api.model.profile.ChangePasswordRequest
 import com.cious.learnhub.data.network.api.model.profile.ChangePasswordResponse
+import com.cious.learnhub.data.network.api.model.profile.ChangePasswordRequest
 import com.cious.learnhub.data.network.api.model.profile.ProfileRequest
 import com.cious.learnhub.data.network.api.model.profile.ProfileResponse
+import com.cious.learnhub.data.network.api.model.profile.UserTransactionResponse
 import com.cious.learnhub.utils.AuthInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -21,11 +21,18 @@ interface ProfileService {
     suspend fun  getDataUser(
     ): ProfileResponse
 
+    @GET("user-transaction")
+    suspend fun  getUserTransaction(
+
+    ): UserTransactionResponse
+
     @PATCH("auth/profile/edit/data")
     suspend fun editData(@Body profileRequest: ProfileRequest): ProfileResponse
 
     @PATCH("auth/profile/edit/ubah-password")
     suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): ChangePasswordResponse
+
+
 
 
     companion object {

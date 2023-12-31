@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="20dp"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:paddingBottom="8dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivHistoryPayment"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_example_history_payment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvNameCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:layout_marginTop="5dp"
+                tools:text="UI/UX Design"
+                android:textColor="@color/DARKBLUE05"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivHistoryPayment" />
+
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvTitleCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Belajar Web Designer dengan Figma"
+                android:textColor="@color/NEUTRAL05"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/tvNameCourse"
+                app:layout_constraintTop_toBottomOf="@id/tvNameCourse" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvAuthorCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="by Angela Doe"
+                android:textColor="@color/NEUTRAL05"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/tvTitleCourse"
+                android:paddingBottom="16dp"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleCourse" />
+
+            <TextView
+                android:id="@+id/tv_payment_success"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/ALLERTGREEN"
+                android:textColor="@color/NEUTRAL01"
+                android:visibility="gone"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/ivHistoryPayment"
+                android:layout_marginVertical="12dp"
+                android:paddingVertical="8dp"
+                android:textSize="16sp"
+                android:background="@drawable/rounded_rectangle"
+                android:text="@string/text_success"/>
+            <TextView
+                android:id="@+id/tv_payment_pending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="20dp"
+                android:visibility="gone"
+                android:backgroundTint="@color/ALLERTYELLOW"
+                android:textColor="@color/NEUTRAL01"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/ivHistoryPayment"
+                android:layout_marginVertical="12dp"
+                android:paddingVertical="8dp"
+                android:textSize="16sp"
+                android:background="@drawable/rounded_rectangle"
+                android:text="@string/text_pending"/>
+            <TextView
+                android:id="@+id/tv_payment_expired"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/ALLERTRED"
+                android:textColor="@color/NEUTRAL01"
+                android:paddingHorizontal="16dp"
+                android:visibility="gone"
+                tools:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/ivHistoryPayment"
+                android:layout_marginVertical="12dp"
+                android:paddingVertical="8dp"
+                android:textSize="16sp"
+                android:background="@drawable/rounded_rectangle"
+                android:text="@string/text_expired"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
