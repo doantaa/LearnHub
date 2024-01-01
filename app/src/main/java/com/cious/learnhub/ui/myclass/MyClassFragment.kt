@@ -62,7 +62,7 @@ class MyClassFragment : Fragment() {
         setupRecyclerView()
         observeData()
         checkTokenUser()
-        setupSearchBar()
+        setupSearch()
         setClickListeners()
     }
 
@@ -75,24 +75,18 @@ class MyClassFragment : Fragment() {
         }
     }
 
-    private fun setupSearchBar() {
+    private fun setupSearch() {
         binding.search.etSearch.clearFocus()
         val keyword = binding.search.etSearch.text
         binding.search.btnSearch.setOnClickListener {
-            viewModel.getCourses(title = keyword.toString())
-            binding.search.root.clearFocus()
+            Toast.makeText(requireContext(), keyword, Toast.LENGTH_SHORT).show()
+            binding.search.etSearch.clearFocus()
             hideKeyboard()
-            HomeSearchActivity.startActivity(requireContext(), keyword.toString())
-
         }
-        binding.search.etSearch.setOnFocusChangeListener { view, boolean ->
-            if (boolean) {
-                HomeSearchActivity.startActivity(requireContext(), keyword.toString())
-                hideKeyboard()
-            }
-        }
-        binding.search.etSearch.setOnEditorActionListener { textView, i, keyEvent ->
-            binding.search.root.clearFocus()
+        binding.search.etSearch.setOnEditorActionListener {
+            _, _, _ ->
+            viewModel.getCourses(title = keyword.toString())
+            binding.search.etSearch.clearFocus()
             hideKeyboard()
             return@setOnEditorActionListener true
         }
