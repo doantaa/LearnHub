@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.cious.learnhub.R
@@ -12,11 +13,15 @@ import com.cious.learnhub.databinding.FragmentMyClassBinding
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
 import com.cious.learnhub.ui.detail.CourseDetailActivity
+import com.cious.learnhub.ui.home.search.HomeSearchActivity
 import com.cious.learnhub.ui.myclass.adapter.CategoryMyClassAdapter
 import com.cious.learnhub.ui.myclass.adapter.ProgressiveCourseAdapter
+import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
+import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.math.roundToInt
 
 class MyClassFragment : Fragment() {
 
@@ -57,9 +62,9 @@ class MyClassFragment : Fragment() {
         setupRecyclerView()
         observeData()
         checkTokenUser()
+        setupSearchBar()
         setClickListeners()
     }
-
 
     private fun setClickListeners() {
         binding.incUserNotLogin.btnLogin.setOnClickListener {
@@ -67,6 +72,29 @@ class MyClassFragment : Fragment() {
         }
         binding.incUserNotLogin.tvIntentRegister.highLightWord(getString(R.string.text_highlight_register)) {
             navigateToRegister()
+        }
+    }
+
+    private fun setupSearchBar() {
+        binding.search.etSearch.clearFocus()
+        val keyword = binding.search.etSearch.text
+        binding.search.btnSearch.setOnClickListener {
+            viewModel.getCourses(title = keyword.toString())
+            binding.search.root.clearFocus()
+            hideKeyboard()
+            HomeSearchActivity.startActivity(requireContext(), keyword.toString())
+
+        }
+        binding.search.etSearch.setOnFocusChangeListener { view, boolean ->
+            if (boolean) {
+                HomeSearchActivity.startActivity(requireContext(), keyword.toString())
+                hideKeyboard()
+            }
+        }
+        binding.search.etSearch.setOnEditorActionListener { textView, i, keyEvent ->
+            binding.search.root.clearFocus()
+            hideKeyboard()
+            return@setOnEditorActionListener true
         }
     }
 
@@ -113,7 +141,7 @@ class MyClassFragment : Fragment() {
                 binding.rvClass.isVisible = false
                 binding.layoutState.root.isVisible = false
                 binding.shimmerMyClass.isVisible = true
-            },  doOnEmpty = {
+            }, doOnEmpty = {
                 binding.layoutState.root.isVisible = true
                 binding.shimmerMyClass.isVisible = false
                 binding.rvClass.isVisible = false

@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="200dp"
+    android:layout_width="280dp"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="4dp"
     android:layout_marginBottom="6dp"
@@ -28,7 +28,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="4dp"
             android:textColor="@color/dark_blue_100"
-            android:textSize="11sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:ellipsize="end"
             android:maxLines="1"
@@ -64,13 +64,15 @@
         <TextView
             android:id="@+id/tv_title_class"
             android:layout_width="0dp"
-            android:layout_height="28dp"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
+            android:minLines="2"
             android:paddingHorizontal="10dp"
             android:textColor="@color/black"
-            android:textSize="11sp"
+            android:textSize="14sp"
             android:textStyle="bold"
+            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ll_rate"
@@ -81,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title_class"
             tools:text="@string/text_instructor" />
@@ -97,8 +99,8 @@
             app:layout_constraintTop_toBottomOf="@id/tv_instructor">
 
             <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:src="@drawable/ic_level" />
 
             <TextView
@@ -106,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 tools:text="@string/text_level" />
         </LinearLayout>
 
@@ -121,8 +123,8 @@
             app:layout_constraintTop_toBottomOf="@id/tv_instructor">
 
             <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:src="@drawable/ic_total_modules" />
 
             <TextView
@@ -130,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 tools:text="@string/text_total_module" />
         </LinearLayout>
 
@@ -145,8 +147,8 @@
             app:layout_constraintTop_toBottomOf="@id/ll_level">
 
             <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:src="@drawable/ic_duration" />
 
             <TextView
@@ -154,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 tools:text="@string/text_duration" />
         </LinearLayout>
 
@@ -171,8 +173,8 @@
 
             <ImageView
                 android:id="@+id/iv_progress"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:src="@drawable/ic_progress"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -180,7 +182,7 @@
             <ProgressBar
                 android:id="@+id/progress"
                 android:layout_width="0dp"
-                android:layout_height="10dp"
+                android:layout_height="12dp"
                 android:layout_marginStart="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -196,13 +198,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:textColor="@color/white"
-                android:textSize="8sp"
+                android:textSize="11sp"
                 android:textStyle="bold"
                 tools:text="30 %"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_progress"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
