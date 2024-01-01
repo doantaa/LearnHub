@@ -46,20 +46,14 @@
             android:name=".ui.authentication.otp.OtpActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.authentication.login.LoginActivity"
+            android:name=".ui.authentication.resetpassword.ResetPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".ui.authentication.register.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.authentication.resetpassword.OtpPasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.authentication.resetpassword.ResetPasswordActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.main.MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -70,8 +64,10 @@
             android:name=".ui.historypayment.HistoryPaymentActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.payment.detail.PaymentDetailActivity"
-            android:exported="true" />
+            android:name=".ui.authentication.login.LoginActivity"
+            android:exported="true">
+        </activity>
+
 
         <meta-data
             android:name="preloaded_fonts"
