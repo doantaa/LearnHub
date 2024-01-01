@@ -10,14 +10,9 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import okhttp3.OkHttpClient
-import okhttp3.Response
-import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class CourseApiDataSourceTest {
 
@@ -51,10 +46,10 @@ class CourseApiDataSourceTest {
     fun `get course with category`() {
         runTest {
             val mockResponse = mockk<CoursesResponse>(relaxed = true)
-            coEvery { service.getCourses(category = any()) } returns mockResponse
+            coEvery { service.getCourses(category = any<String>()) } returns mockResponse
 
             val response = dataSource.getCourses(category = "category")
-            coVerify { service.getCourses(category = any()) }
+            coVerify { service.getCourses(category = any<String>()) }
 
             assertEquals(response, mockResponse)
         }
