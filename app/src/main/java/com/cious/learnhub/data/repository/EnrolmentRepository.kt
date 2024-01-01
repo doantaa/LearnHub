@@ -58,7 +58,6 @@ class EnrollmentRepositoryImpl(
                 ?: emptyList()
         }.onStart {
             emit(ResultWrapper.Loading())
-            delay(2000)
         }
     }
 
@@ -67,7 +66,6 @@ class EnrollmentRepositoryImpl(
             enrollmentDataSource.getCoursesById(id).dataDetailResponse.toEnrollment()
         }.onStart {
             emit(ResultWrapper.Loading())
-            delay(2000)
         }
     }
 
