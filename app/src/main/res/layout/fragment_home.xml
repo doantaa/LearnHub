@@ -60,16 +60,6 @@
                     app:layout_constraintStart_toEndOf="@id/iv_profile"
                     app:layout_constraintTop_toBottomOf="@id/tv_greeting_title" />
 
-                <Button
-                    android:id="@+id/btn_go_to_login"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Login"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include
@@ -171,6 +161,7 @@
                         android:id="@+id/iv_last_course_item_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/tv_last_course_item_title"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"

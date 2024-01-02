@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -100,7 +99,6 @@ class OtpActivity : AppCompatActivity() {
     private fun saveToken(registerData: RegisterData?) {
         val token = registerData?.token
             token?.let { viewModel.saveAuthToken(it) }
-            Toast.makeText(this, "token saved", Toast.LENGTH_SHORT).show()
 
     }
 
