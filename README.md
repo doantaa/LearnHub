@@ -17,7 +17,7 @@ Learnhub is a cutting-edge Android application designed to provide a seamless an
 
 ## Features
 
-- Authorization (Register, Login, Reset Password)
+- Authentication (Register, Login, Reset Password)
 - Online course video with Youtube player
 - Course Discovery
 - Course management
