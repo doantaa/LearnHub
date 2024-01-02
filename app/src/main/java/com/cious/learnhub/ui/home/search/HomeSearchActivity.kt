@@ -3,7 +3,6 @@ package com.cious.learnhub.ui.home.search
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.cious.learnhub.R
@@ -44,7 +43,6 @@ class HomeSearchActivity : AppCompatActivity() {
         binding.fieldSearch.etSearch.setText(viewModel.title)
         val keyword = binding.fieldSearch.etSearch.text
         binding.fieldSearch.btnSearch.setOnClickListener {
-            Toast.makeText(this, keyword, Toast.LENGTH_SHORT).show()
             viewModel.getCourse(title = keyword.toString())
             binding.fieldSearch.etSearch.clearFocus()
             hideKeyboard(it)

@@ -3,29 +3,17 @@ package com.cious.learnhub.ui.profile.editprofile
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.R
-import com.cious.learnhub.data.network.api.datasource.NotificationDataSourceImpl
-import com.cious.learnhub.data.network.api.datasource.ProfileDataSource
-import com.cious.learnhub.data.network.api.datasource.ProfileDataSourceImpl
 import com.cious.learnhub.data.network.api.model.profile.ProfileRequest
-import com.cious.learnhub.data.network.api.service.NotificationService
-import com.cious.learnhub.data.network.api.service.ProfileService
-import com.cious.learnhub.data.repository.NotificationRepositoryImpl
-import com.cious.learnhub.data.repository.ProfileRepositoryImpl
 import com.cious.learnhub.databinding.FragmentEditProfileBinding
-import com.cious.learnhub.ui.notifications.NotificationsViewModel
-import com.cious.learnhub.utils.GenericViewModelFactory
 import com.cious.learnhub.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -50,7 +38,7 @@ class EditProfileFragment : Fragment() {
         observeEditProfile()
 
         binding.btnBack.setOnClickListener {
-            findNavController().navigate(R.id.action_editProfileFragment_to_navigation_profile)
+            navigateToProfile()
         }
         binding.constraintCircle.setOnClickListener {
             openFileChooser()
@@ -58,6 +46,10 @@ class EditProfileFragment : Fragment() {
         binding.btnSave.setOnClickListener {
             doEditData()
         }
+    }
+
+    private fun navigateToProfile() {
+        findNavController().navigate(R.id.action_editProfileFragment_to_navigation_profile)
     }
 
     private fun observeEditProfile() {
@@ -70,13 +62,16 @@ class EditProfileFragment : Fragment() {
                 doOnSuccess = {
                     binding.btnSave.isVisible = true
                     binding.pbLoading.isVisible = false
-                    Toast.makeText(requireContext(), "edit profile success", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(),
+                        getString(R.string.edit_profile_success), Toast.LENGTH_SHORT)
                         .show()
+                    navigateToProfile()
                 },
                 doOnError = {
                     binding.btnSave.isVisible = true
                     binding.pbLoading.isVisible = false
-                    Toast.makeText(requireContext(), "edit profile failed", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(),
+                        getString(R.string.edit_profile_failed), Toast.LENGTH_SHORT)
                         .show()
                 }
 

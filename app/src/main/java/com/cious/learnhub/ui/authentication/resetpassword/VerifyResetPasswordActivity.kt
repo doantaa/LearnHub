@@ -2,10 +2,10 @@ package com.cious.learnhub.ui.authentication.resetpassword
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.cious.learnhub.R
@@ -14,6 +14,7 @@ import com.cious.learnhub.databinding.ActivityVerifyPasswordBinding
 import com.cious.learnhub.model.UserOtpPasswordData
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.utils.ApiException
+import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -28,7 +29,6 @@ class VerifyResetPasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         setClickListeners()
         observeResult()
     }
@@ -39,6 +39,7 @@ class VerifyResetPasswordActivity : AppCompatActivity() {
         }
         binding.btnSave.setOnClickListener {
             processResetPassword()
+            hideKeyboard(binding.root)
         }
     }
 

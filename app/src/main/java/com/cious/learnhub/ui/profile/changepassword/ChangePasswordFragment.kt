@@ -35,12 +35,18 @@ class ChangePasswordFragment : Fragment() {
         observeResult()
 
         binding.btnBack.setOnClickListener {
-            findNavController().navigate(R.id.action_changePasswordFragment_to_navigation_profile)
+            navigateToProfile()
+
         }
         binding.btnSaveChangePassword.setOnClickListener {
             doChangePassword()
         }
     }
+
+    private fun navigateToProfile() {
+        findNavController().navigate(R.id.action_changePasswordFragment_to_navigation_profile)
+    }
+
 
     private fun observeResult() {
         viewModel.changePasswordRequestResult.observe(viewLifecycleOwner){
@@ -53,6 +59,7 @@ class ChangePasswordFragment : Fragment() {
                     binding.pbLoading.isVisible=false
                     binding.btnSaveChangePassword.isVisible=true
                     Toast.makeText(requireContext(), "Password successfully Changed", Toast.LENGTH_SHORT).show()
+                    navigateToProfile()
                 },
                 doOnError = {
                     binding.pbLoading.isVisible=false

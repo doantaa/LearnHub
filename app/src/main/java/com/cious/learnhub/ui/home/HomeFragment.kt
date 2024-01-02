@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -79,7 +78,6 @@ class HomeFragment : Fragment() {
         }
         binding.search.etSearch.setOnFocusChangeListener { view, boolean ->
             if (boolean) {
-                Toast.makeText(requireContext(), boolean.toString(), Toast.LENGTH_SHORT).show()
                 HomeSearchActivity.startActivity(requireContext(), keyword.toString())
                 hideKeyboard()
             }
