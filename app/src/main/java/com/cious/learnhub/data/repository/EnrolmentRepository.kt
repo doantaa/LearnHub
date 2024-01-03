@@ -48,8 +48,7 @@ class EnrollmentRepositoryImpl(
                 title,
                 courseType,
                 level
-            ).data?.toEnrollmentList()
-                ?: emptyList()
+            ).data?.toEnrollmentList() ?: emptyList()
         }.onStart {
             emit(ResultWrapper.Loading())
         }
