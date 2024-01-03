@@ -25,13 +25,15 @@ class HomeViewModel(
     val courses: LiveData<ResultWrapper<List<Course>>>
         get() = _courses
 
-    private val _categories = MutableLiveData<ResultWrapper<List<Category>>>()
+
 
 
     private val _userData = MutableLiveData<ResultWrapper<ProfileModel>>()
     val userData: LiveData<ResultWrapper<ProfileModel>>
         get() = _userData
 
+
+    private val _categories = MutableLiveData<ResultWrapper<List<Category>>>()
     val categories: LiveData<ResultWrapper<List<Category>>>
         get() = _categories
 

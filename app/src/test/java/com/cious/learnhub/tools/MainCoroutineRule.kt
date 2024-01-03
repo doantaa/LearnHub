@@ -1,4 +1,4 @@
-package com.bitohur.foodapp.tools
+package com.cious.learnhub.tools
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
