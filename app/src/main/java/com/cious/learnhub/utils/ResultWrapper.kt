@@ -39,19 +39,6 @@ fun <T> ResultWrapper<T>.proceedWhen(
     }
 }
 
-suspend fun <T> proceed(block: suspend () -> T): ResultWrapper<T> {
-    return try {
-        val result = block.invoke()
-        if (result is Collection<*> && result.isEmpty()) {
-            ResultWrapper.Empty(result)
-        } else {
-            ResultWrapper.Success(result)
-        }
-    } catch (e: Exception) {
-        ResultWrapper.Error<T>(exception = Exception(e))
-    }
-}
-
 fun <T> proceedFlow(block: suspend () -> T): Flow<ResultWrapper<T>> {
     return flow<ResultWrapper<T>> {
         val result = block.invoke()

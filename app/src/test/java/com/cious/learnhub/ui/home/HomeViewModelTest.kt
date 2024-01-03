@@ -111,7 +111,7 @@ class HomeViewModelTest {
 
 
     @Test
-    fun `get categories live data`(){
+    fun `invoke categories live data`(){
         viewModel.getCategories()
     //        verify { courseRepository.getCategories() }
 //        Assert.assertEquals(result.payload?.size, 2)
