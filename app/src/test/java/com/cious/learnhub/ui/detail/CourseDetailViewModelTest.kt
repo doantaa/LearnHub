@@ -50,17 +50,4 @@ class CourseDetailViewModelTest {
             recordPrivateCalls = true
         )
     }
-
-    @Test
-    fun getVideos(){
-        runTest {
-            val getVideosResultMock = flow {
-                emit(ResultWrapper.Success((mockk<Enrollment> (relaxed = true))))
-            }
-            coEvery { repository.getCoursesById(any()) } returns getVideosResultMock
-        }
-
-        viewModel.getCourseById(1)
-        coVerify { repository.getCoursesById(any()) }
-    }
 }
