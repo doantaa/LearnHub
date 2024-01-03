@@ -4,6 +4,8 @@ import android.content.Context
 import app.cash.turbine.test
 import com.cious.learnhub.data.network.api.datasource.CourseApiDataSource
 import com.cious.learnhub.data.network.api.datasource.EnrollmentApiDataSource
+import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
+import com.cious.learnhub.data.network.api.model.category.CategoryItemResponse
 import com.cious.learnhub.data.network.api.model.course.CourseItemResponse
 import com.cious.learnhub.data.network.api.model.course.CoursesResponse
 import com.cious.learnhub.data.network.api.model.enrollments.Data
@@ -44,7 +46,7 @@ class EnrollmentRepositoryImplTest {
     }
 
     @Test
-    fun `get enrollment, result loading`(){
+    fun `get enrollment, result loading`() {
         val mockkResponse = mockk<EnrollmentsResponse>()
         runTest {
             coEvery { enrollmentApiDataSource.getEnrollment() } returns mockkResponse
@@ -61,7 +63,7 @@ class EnrollmentRepositoryImplTest {
     }
 
     @Test
-    fun `get enrollment, result success`(){
+    fun `get enrollment, result success`() {
         val mockItemResponse = mockk<Data>(relaxed = true)
         val mockResponse = EnrollmentsResponse(true, "String", data = listOf(mockItemResponse))
         runTest {
@@ -80,7 +82,7 @@ class EnrollmentRepositoryImplTest {
     }
 
     @Test
-    fun `get enrollment by id, loading`(){
+    fun `get enrollment by id, loading`() {
         val mockResponse = mockk<EnrollmentDetailResponse>(relaxed = true)
         runTest {
             coEvery {
@@ -100,19 +102,19 @@ class EnrollmentRepositoryImplTest {
     }
 
     @Test
-    fun `get enrollment by id, success`(){
-        val mockItemResponse = mockk<Data>()
-        val mockResponse = EnrollmentDetailResponse( mockItemResponse, "String", true)
+    fun `get enrollment by id, success`() {
+        val mockItemResponse = mockk<Data>(relaxed = true)
+        val mockResponse = EnrollmentDetailResponse(mockItemResponse, "String", true)
 
         runTest {
             coEvery { enrollmentApiDataSource.getCoursesById(any()) } returns mockResponse
-            repository.getCoursesById(2).map {
+            repository.getCoursesById(1).map {
                 delay(100)
                 it
             }.test {
                 delay(3110)
                 val data = expectMostRecentItem()
-                println(data)
+                println("ini data $data")
                 assertTrue(data is ResultWrapper.Success)
                 coVerify { enrollmentApiDataSource.getCoursesById(any()) }
             }
