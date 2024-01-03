@@ -51,7 +51,6 @@ class CourseRepositoryImpl(
                 ?: emptyList()
         }.onStart {
             emit(ResultWrapper.Loading())
-            delay(2000)
         }
     }
 
@@ -64,9 +63,6 @@ class CourseRepositoryImpl(
         return proceedFlow {
             courseDataSource.getCourses(category, title, courseType, level).data?.toCourseList()
                 ?: emptyList()
-        }.onStart {
-            emit(ResultWrapper.Loading())
-            delay(2000)
         }
     }
 
@@ -77,7 +73,6 @@ class CourseRepositoryImpl(
             courseDataSource.getCoursesById(id).dataDetailResponse
         }.onStart {
             emit(ResultWrapper.Loading())
-            delay(2000)
         }
     }
 

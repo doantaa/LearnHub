@@ -114,8 +114,13 @@ class EditProfileFragment : Fragment() {
                         binding.inputCountryLay.setText(it.country)
                         binding.inputCityLay.setText(it.city)
                         binding.imgAbout.load(it.profileUrl)
+                        binding.pbLoading.isVisible = false
+                        binding.svProfile.isVisible  = true
                     }
-
+                },
+                doOnLoading = {
+                    binding.pbLoading.isVisible = true
+                    binding.svProfile.isVisible = false
                 }
             )
         }

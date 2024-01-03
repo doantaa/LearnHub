@@ -1,7 +1,6 @@
 package com.cious.learnhub.ui.home
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,7 +13,6 @@ import coil.load
 import com.cious.learnhub.R
 import com.cious.learnhub.databinding.FragmentHomeBinding
 import com.cious.learnhub.model.Category
-import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.detail.CourseDetailActivity
 import com.cious.learnhub.ui.home.adapter.HomeCourseListAdapter
 import com.cious.learnhub.ui.home.search.HomeSearchActivity
@@ -48,14 +46,6 @@ class HomeFragment : Fragment() {
         invokeData()
         observeData()
         setupSearchBar()
-        setButtonListener()
-    }
-
-    private fun setButtonListener() {
-        binding.btnGoToLogin.setOnClickListener {
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
-        }
     }
 
 
@@ -142,7 +132,6 @@ class HomeFragment : Fragment() {
                         binding.ivProfile.load(it.profileUrl)
                         val name = it.name
                         binding.tvGreetingTitle.text = getString(R.string.hello, name)
-                        binding.btnGoToLogin.isVisible = false
                     }
                 },
                 doOnError = {

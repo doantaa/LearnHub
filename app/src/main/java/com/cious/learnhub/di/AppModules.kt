@@ -12,10 +12,10 @@ import com.cious.learnhub.data.network.api.datasource.EnrollmentApiDataSource
 import com.cious.learnhub.data.network.api.datasource.EnrollmentDataSource
 import com.cious.learnhub.data.network.api.datasource.NotificaitonDataSource
 import com.cious.learnhub.data.network.api.datasource.NotificationDataSourceImpl
-import com.cious.learnhub.data.network.api.datasource.ProfileDataSource
-import com.cious.learnhub.data.network.api.datasource.ProfileDataSourceImpl
 import com.cious.learnhub.data.network.api.datasource.PaymentApiDataSource
 import com.cious.learnhub.data.network.api.datasource.PaymentDataSource
+import com.cious.learnhub.data.network.api.datasource.ProfileDataSource
+import com.cious.learnhub.data.network.api.datasource.ProfileDataSourceImpl
 import com.cious.learnhub.data.network.api.service.AuthenticationService
 import com.cious.learnhub.data.network.api.service.CourseService
 import com.cious.learnhub.data.network.api.service.EnrollmentService
@@ -30,10 +30,10 @@ import com.cious.learnhub.data.repository.EnrollmentRepository
 import com.cious.learnhub.data.repository.EnrollmentRepositoryImpl
 import com.cious.learnhub.data.repository.NotifiacationRepository
 import com.cious.learnhub.data.repository.NotificationRepositoryImpl
-import com.cious.learnhub.data.repository.ProfileRepository
-import com.cious.learnhub.data.repository.ProfileRepositoryImpl
 import com.cious.learnhub.data.repository.PaymentRepository
 import com.cious.learnhub.data.repository.PaymentRepositoryImpl
+import com.cious.learnhub.data.repository.ProfileRepository
+import com.cious.learnhub.data.repository.ProfileRepositoryImpl
 import com.cious.learnhub.ui.authentication.login.LoginViewModel
 import com.cious.learnhub.ui.authentication.otp.OtpViewModel
 import com.cious.learnhub.ui.authentication.register.RegisterViewModel
@@ -47,8 +47,8 @@ import com.cious.learnhub.ui.home.HomeViewModel
 import com.cious.learnhub.ui.home.search.HomeSearchViewModel
 import com.cious.learnhub.ui.main.MainViewModel
 import com.cious.learnhub.ui.myclass.MyClassViewModel
-import com.cious.learnhub.ui.notifications.notificationdetail.NotificationDetailViewModel
 import com.cious.learnhub.ui.notifications.NotificationsViewModel
+import com.cious.learnhub.ui.notifications.notificationdetail.NotificationDetailViewModel
 import com.cious.learnhub.ui.payment.detail.PaymentViewModel
 import com.cious.learnhub.ui.payment.midtrans.PaymentMidtransViewModel
 import com.cious.learnhub.ui.profile.ProfileViewModel
@@ -99,7 +99,7 @@ object AppModules {
         single<CourseRepository> { CourseRepositoryImpl(get()) }
         single<AuthRepository> { AuthRepositoryImpl(get(), get()) }
         single<NotifiacationRepository> { NotificationRepositoryImpl(get()) }
-        single<EnrollmentRepository> { EnrollmentRepositoryImpl(get(), get(), androidContext()) }
+        single<EnrollmentRepository> { EnrollmentRepositoryImpl(get())}
         single<PaymentRepository> { PaymentRepositoryImpl(get()) }
         single <ProfileRepository> { ProfileRepositoryImpl(get())  }
     }
