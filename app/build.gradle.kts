@@ -125,6 +125,8 @@ dependencies {
     testImplementation("io.mockk:mockk-agent:1.13.8")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
     testImplementation("app.cash.turbine:turbine:1.0.0")
+    testImplementation ("org.mockito:mockito-core:3.12.4")
+
     //GLide
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("com.squareup.picasso:picasso:2.8")
