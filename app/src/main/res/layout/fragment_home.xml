@@ -159,9 +159,9 @@
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/iv_last_course_item_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toEndOf="@id/tv_last_course_item_title"
+                        android:layout_width="150dp"
+                        android:scaleType="centerCrop"
+                        android:layout_height="100dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -229,7 +229,6 @@
                             android:background="@drawable/rounded_outline_16dp"
                             android:backgroundTint="@color/NEUTRAL02"
                             />
-
 
 
                         <TextView

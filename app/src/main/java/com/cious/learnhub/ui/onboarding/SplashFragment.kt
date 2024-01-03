@@ -2,7 +2,6 @@ package com.cious.learnhub.ui.onboarding
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +17,12 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Handler().postDelayed({
             if(onBoardingFinished()){
                 findNavController().navigate(R.id.action_splashFragment_to_navigation_home)
             }else{
                 findNavController().navigate(R.id.action_splashFragment_to_viewPagerFragment)
             }
-        },0)
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }

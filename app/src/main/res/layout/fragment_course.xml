@@ -114,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:paddingHorizontal="12dp"
+                android:paddingHorizontal="7dp"
                 android:paddingBottom="10dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="5"

@@ -118,4 +118,5 @@
     <string name="edit_profile_success">Edit profile success</string>
     <string name="edit_profile_failed">Edit profile failed</string>
     <string name="login">Login</string>
+    <string name="simpan_profil_saya">Simpan Profil Saya</string>
 </resources>
