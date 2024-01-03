@@ -3,6 +3,7 @@ package com.cious.learnhub.data.network.api.datasource
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
 import com.cious.learnhub.data.network.api.model.course.CoursesResponse
+import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentDetailResponse
 import com.cious.learnhub.data.network.api.service.CourseService
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -72,7 +73,14 @@ class CourseApiDataSourceTest {
 
     @Test
     fun getCoursesById() {
+        runTest {
+            val mockResponse = mockk<EnrollmentDetailResponse>(relaxed = true)
+            coEvery { service.getCourseById(any()) } returns mockResponse
 
+            val response = dataSource.getCoursesById(1)
+            assertEquals(response,mockResponse)
+
+        }
     }
 
     @Test
