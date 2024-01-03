@@ -255,10 +255,6 @@ class RegisterActivity : AppCompatActivity() {
                         val message = it.exception.getParsedError()?.message.orEmpty()
                         binding.tvMessage.text = message
                     }
-                },
-                doOnEmpty = {
-                    binding.pbLoading.isVisible = false
-                    binding.btnRegister.isVisible = true
                 }
             )
         }

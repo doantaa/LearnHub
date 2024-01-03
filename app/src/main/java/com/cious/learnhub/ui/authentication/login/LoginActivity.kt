@@ -91,8 +91,7 @@ class LoginActivity : AppCompatActivity() {
                         val message = it.exception.getParsedError()?.message.orEmpty()
                         binding.tvMessage.text = message
                     }
-                },
-                doOnEmpty = {}
+                }
             )
         }
     }
