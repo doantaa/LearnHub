@@ -4,14 +4,9 @@ import android.content.Context
 import app.cash.turbine.test
 import com.cious.learnhub.data.network.api.datasource.CourseApiDataSource
 import com.cious.learnhub.data.network.api.datasource.EnrollmentApiDataSource
-import com.cious.learnhub.data.network.api.model.category.CategoriesResponse
-import com.cious.learnhub.data.network.api.model.category.CategoryItemResponse
-import com.cious.learnhub.data.network.api.model.course.CourseItemResponse
-import com.cious.learnhub.data.network.api.model.course.CoursesResponse
 import com.cious.learnhub.data.network.api.model.enrollments.Data
 import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentDetailResponse
 import com.cious.learnhub.data.network.api.model.enrollments.EnrollmentsResponse
-import com.cious.learnhub.model.Enrollment
 import com.cious.learnhub.utils.ResultWrapper
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -21,8 +16,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
-
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -42,7 +36,7 @@ class EnrollmentRepositoryImplTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        repository = EnrollmentRepositoryImpl(enrollmentApiDataSource, courseApiDataSource, context)
+        repository = EnrollmentRepositoryImpl(enrollmentApiDataSource)
     }
 
     @Test
