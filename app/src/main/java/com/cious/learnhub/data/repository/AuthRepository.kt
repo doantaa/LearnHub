@@ -20,25 +20,25 @@ import com.cious.learnhub.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
-    suspend fun sendOtpRegister(
+    fun sendOtpRegister(
         otpRequest: OtpRequest
     ): Flow<ResultWrapper<OtpData>>
 
-    suspend fun doRegister(
+    fun doRegister(
         authenticationData: AuthenticationData,
         otp: String
     ): Flow<ResultWrapper<RegisterData>>
 
-    suspend fun doLogin(
+    fun doLogin(
         loginRequest: LoginRequest
     ): Flow<ResultWrapper<LoginData>>
 
 
-    suspend fun sendOtpPassword(
+    fun sendOtpPassword(
         otpRequest: OtpRequest
     ): Flow<ResultWrapper<OtpData>>
 
-    suspend fun doResetPassword(
+    fun doResetPassword(
         verifyResetPasswordRequest: VerifyResetPasswordRequest
     ): Flow<ResultWrapper<VerifyResetPasswordData>>
 
@@ -51,7 +51,7 @@ class AuthRepositoryImpl(
     private val dataSource: AuthDataSource,
     private val sessionManager: SessionManager
 ) : AuthRepository {
-    override suspend fun sendOtpRegister(
+    override fun sendOtpRegister(
         otpRequest: OtpRequest
     ): Flow<ResultWrapper<OtpData>> {
         return proceedFlow {
@@ -59,7 +59,7 @@ class AuthRepositoryImpl(
         }
     }
 
-    override suspend fun doRegister(
+    override fun doRegister(
         authenticationData: AuthenticationData,
         otp: String
     ): Flow<ResultWrapper<RegisterData>> {
@@ -78,7 +78,7 @@ class AuthRepositoryImpl(
         }
     }
 
-    override suspend fun doLogin(
+    override fun doLogin(
         loginRequest: LoginRequest
     ): Flow<ResultWrapper<LoginData>> {
         return proceedFlow {
@@ -88,7 +88,7 @@ class AuthRepositoryImpl(
         }
     }
 
-    override suspend fun sendOtpPassword(
+    override fun sendOtpPassword(
         otpRequest: OtpRequest
     ): Flow<ResultWrapper<OtpData>> {
         return proceedFlow {
@@ -96,7 +96,7 @@ class AuthRepositoryImpl(
         }
     }
 
-    override suspend fun doResetPassword(
+    override fun doResetPassword(
         verifyResetPasswordRequest: VerifyResetPasswordRequest
     ): Flow<ResultWrapper<VerifyResetPasswordData>> {
         return proceedFlow {
