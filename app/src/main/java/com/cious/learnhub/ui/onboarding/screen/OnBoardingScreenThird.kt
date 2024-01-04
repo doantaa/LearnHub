@@ -3,10 +3,10 @@ package com.cious.learnhub.ui.onboarding.screen
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.cious.learnhub.R
 import com.cious.learnhub.ui.authentication.login.LoginActivity
@@ -27,9 +27,11 @@ class OnBoardingScreenThird : Fragment() {
 
         view.findViewById<MaterialButton>(R.id.btn_daftar).setOnClickListener {
             startActivity(Intent(requireActivity(),RegisterActivity::class.java))
+            onBoardingFinished()
         }
         view.findViewById<MaterialTextView>(R.id.tv_masuk_disini).setOnClickListener {
             startActivity(Intent(requireActivity(),LoginActivity::class.java))
+            onBoardingFinished()
         }
         view.findViewById<MaterialTextView>(R.id.tv_masuk_tanpa_login).setOnClickListener {
             findNavController().navigate(R.id.action_viewPagerFragment_to_navigation_home)
