@@ -39,13 +39,13 @@ class LoginViewModelTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        viewModel = spyk(
-            LoginViewModel(repository)
-        )
+
         val mockLoginData = mockk<LoginData>(relaxed = true)
         coEvery { repository.doLogin(any()) } returns flow {
             emit(ResultWrapper.Success(mockLoginData))
         }
+
+        viewModel = spyk(LoginViewModel(repository))
     }
 
     @Test
