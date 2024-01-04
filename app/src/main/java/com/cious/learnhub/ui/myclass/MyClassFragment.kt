@@ -13,15 +13,12 @@ import com.cious.learnhub.databinding.FragmentMyClassBinding
 import com.cious.learnhub.ui.authentication.login.LoginActivity
 import com.cious.learnhub.ui.authentication.register.RegisterActivity
 import com.cious.learnhub.ui.detail.CourseDetailActivity
-import com.cious.learnhub.ui.home.search.HomeSearchActivity
 import com.cious.learnhub.ui.myclass.adapter.CategoryMyClassAdapter
 import com.cious.learnhub.ui.myclass.adapter.ProgressiveCourseAdapter
 import com.cious.learnhub.utils.hideKeyboard
 import com.cious.learnhub.utils.highLightWord
 import com.cious.learnhub.utils.proceedWhen
-import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.math.roundToInt
 
 class MyClassFragment : Fragment() {
 
@@ -120,7 +117,7 @@ class MyClassFragment : Fragment() {
     }
 
     private fun observeCourseData() {
-        viewModel.courses.observe(viewLifecycleOwner) {
+        viewModel.enrollment.observe(viewLifecycleOwner) {
             it.proceedWhen(doOnSuccess = {
                 binding.shimmerMyClass.isVisible = false
                 binding.rvClass.apply {

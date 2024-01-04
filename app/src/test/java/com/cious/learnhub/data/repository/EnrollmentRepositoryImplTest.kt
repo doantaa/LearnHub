@@ -25,12 +25,6 @@ class EnrollmentRepositoryImplTest {
     @MockK
     lateinit var enrollmentApiDataSource: EnrollmentApiDataSource
 
-    @MockK
-    lateinit var courseApiDataSource: CourseApiDataSource
-
-    @MockK
-    private lateinit var context: Context
-
     private lateinit var repository: EnrollmentRepository
 
     @Before

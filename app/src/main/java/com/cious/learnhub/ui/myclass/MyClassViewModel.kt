@@ -17,7 +17,7 @@ class MyClassViewModel(
     private val authRepository: AuthRepository
 ) : ViewModel() {
     private val _enrollment = MutableLiveData<ResultWrapper<List<Enrollment>>>()
-    val courses: LiveData<ResultWrapper<List<Enrollment>>>
+    val enrollment: LiveData<ResultWrapper<List<Enrollment>>>
         get() = _enrollment
 
     val categories = repository.getCategories().asLiveData(Dispatchers.IO)
