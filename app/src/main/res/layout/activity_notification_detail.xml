@@ -34,7 +34,7 @@
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="12dp"
@@ -47,7 +47,7 @@
 
     <TextView
         android:id="@+id/tv_description"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="16dp"
@@ -56,5 +56,5 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title"
-        tools:text="Syarat dan Ketentuan berlaku!" />
+        tools:text="Syarat dan Keasdfl;kashdf;asldfh;asdlfhas;dflhsdf;lkshdf;slakdhf;sasdfhsalkdjfhsldfkjhsdftentuan berlaku!" />
 </androidx.constraintlayout.widget.ConstraintLayout>
