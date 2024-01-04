@@ -70,8 +70,6 @@ class CourseRepositoryImpl(
     ): Flow<ResultWrapper<Data>> {
         return proceedFlow {
             courseDataSource.getCoursesById(id).dataDetailResponse
-        }.onStart {
-            emit(ResultWrapper.Loading())
         }
     }
 
