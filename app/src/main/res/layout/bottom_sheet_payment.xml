@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageButton
+        android:id="@+id/close_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -21,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Selangkah lagi menuju"
+        android:text="@string/selangkah_lagi_menuju"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -34,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Kelas Premium"
+        android:text="@string/kelas_premium"
         android:textColor="@color/dark_blue"
         android:textSize="20sp"
         android:textStyle="bold"

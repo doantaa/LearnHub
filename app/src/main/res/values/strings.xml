@@ -119,4 +119,10 @@
     <string name="edit_profile_failed">Edit profile failed</string>
     <string name="login">Login</string>
     <string name="simpan_profil_saya">Simpan Profil Saya</string>
+    <string name="beli_sekarang">Beli Sekarang</string>
+    <string name="kelas_ini_ditujukan_untuk">Kelas ini ditujukan untuk</string>
+    <string name="tentang_kelas">Tentang Kelas</string>
+    <string name="join_grup_telegram">Join Grup Telegram</string>
+    <string name="kelas_premium">Kelas Premium</string>
+    <string name="selangkah_lagi_menuju">Selangkah lagi menuju</string>
 </resources>
