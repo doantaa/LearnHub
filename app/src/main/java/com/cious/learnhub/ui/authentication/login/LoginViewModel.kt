@@ -14,9 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val authRepository: AuthRepository,
-    private val prefs: SharedPreferences,
-    private val sessionManager: SessionManager
+    private val authRepository: AuthRepository
 ): ViewModel() {
 
     private val _loginRequestResult = MutableLiveData<ResultWrapper<LoginData>>()
@@ -25,8 +23,7 @@ class LoginViewModel(
 
     fun doLoginRequest(loginRequest: LoginRequest) {
         viewModelScope.launch(Dispatchers.IO) {
-            authRepository.doLogin(loginRequest)
-                .collect {
+            authRepository.doLogin(loginRequest).collect {
                     _loginRequestResult.postValue(it)
                 }
         }
