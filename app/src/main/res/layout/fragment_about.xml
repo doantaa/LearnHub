@@ -21,14 +21,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="22dp"
+            android:gravity="center"
             android:layout_marginVertical="4dp">
 
             <TextView
                 android:id="@+id/tv_text_join"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Join Grup Telegram"
+                android:text="@string/join_grup_telegram"
                 android:textColor="@color/white"
+                android:paddingVertical="8dp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -45,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
         android:layout_marginTop="16dp"
-        android:text="Tentang Kelas"
+        android:text="@string/tentang_kelas"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -66,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
         android:layout_marginTop="16dp"
-        android:text="Tentang Kelas"
+        android:text="@string/kelas_ini_ditujukan_untuk"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
