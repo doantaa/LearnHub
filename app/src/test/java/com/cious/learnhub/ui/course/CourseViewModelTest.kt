@@ -72,6 +72,23 @@ class CourseViewModelTest {
     }
 
     @Test
+    fun `get courses live data with string category`(){
+        coEvery { repository.getCourses("Category") } returns flow {
+            emit(
+                ResultWrapper.Success(
+                    listOf(mockk(relaxed = true), mockk(relaxed = true))
+                )
+            )
+        }
+        viewModel.getCourses()
+        val result = viewModel.courses.getOrAwaitValue()
+        Assert.assertEquals(result.payload?.size, 2)
+        println(result.payload?.size)
+        coVerify { repository.getCourses() }
+    }
+
+
+    @Test
     fun `get categories live data`(){
         val result = viewModel.categories.getOrAwaitValue()
         Assert.assertEquals(result.payload?.size, 2)
