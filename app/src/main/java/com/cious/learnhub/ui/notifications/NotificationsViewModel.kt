@@ -3,16 +3,12 @@ package com.cious.learnhub.ui.notifications
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.room.PrimaryKey
 import com.cious.learnhub.data.repository.AuthRepository
 import com.cious.learnhub.data.repository.NotifiacationRepository
-import com.cious.learnhub.model.MarkAsReadNotification
 import com.cious.learnhub.model.NotificationModel
 import com.cious.learnhub.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class NotificationsViewModel(
@@ -35,16 +31,10 @@ class NotificationsViewModel(
         }
     }
 
-    private val _markAsRead = MutableLiveData<ResultWrapper<MarkAsReadNotification>>()
-    val markAsRead:LiveData<ResultWrapper<MarkAsReadNotification>>
-        get() = _markAsRead
 
     fun markAsReadNotification(id:Int){
         viewModelScope.launch (Dispatchers.IO){
             notifRepository.markAsReadNotification(id)
-                .collect{
-                    _markAsRead.postValue(it)
-                }
         }
     }
 }
