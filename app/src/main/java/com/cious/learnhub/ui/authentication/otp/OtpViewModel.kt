@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 class OtpViewModel(
     private val extras: Bundle?,
     private val authRepository: AuthRepository,
-    private val prefs: SharedPreferences,
     private val sessionManager: SessionManager
 ): ViewModel() {
 
