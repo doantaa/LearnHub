@@ -2,7 +2,7 @@ repo_name: doantaa/LearnHub
 report_id: 7a8e82cd125eedea066edfab996066d4
 version: 0.1
 repo_type: Public
-timestamp: '2024-01-02T04:29:36+00:00'
+timestamp: '2024-01-05T08:12:54+00:00'
 requested_by: doantaa
 provider: github
 branch: master
@@ -16,6 +16,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/3750/pCfEzr6L.png
+  detection_source_url: https://github.com/doantaa/LearnHub
   detection_source: Repo Metadata
 - name: Android SDK
   description: An SDK that provides you the API libraries and developer tools necessary
@@ -26,6 +27,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Frameworks (Full Stack)
   image_url: https://img.stackshare.io/service/1010/m8jf0po4imu8t5eemjdd.png
+  detection_source_url: https://github.com/doantaa/LearnHub/blob/master/app/build.gradle.kts
   detection_source: app/build.gradle.kts
   last_updated_by: noorizamodiss
   last_updated_on: 2023-12-30 10:56:21.000000000 Z
@@ -37,6 +39,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Version Control System
   image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/doantaa/LearnHub
   detection_source: Repo Metadata
 - name: Gradle
   description: A powerful build system for the JVM
@@ -47,6 +50,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Java Build Tools
   image_url: https://img.stackshare.io/service/975/gradlephant-social-black-bg.png
+  detection_source_url: https://github.com/doantaa/LearnHub/blob/master/gradlew
   detection_source: gradlew
   last_updated_by: doantaa
   last_updated_on: 2023-11-21 04:51:24.000000000 Z
@@ -58,6 +62,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Operating Systems
   image_url: https://img.stackshare.io/service/9586/ZvmtaSXW_400x400.jpg
+  detection_source_url: https://github.com/doantaa/LearnHub/blob/master/app/build.gradle.kts
   detection_source: app/build.gradle.kts
   last_updated_by: noorizamodiss
   last_updated_on: 2023-12-30 10:56:21.000000000 Z
